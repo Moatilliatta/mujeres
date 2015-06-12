@@ -1,0 +1,227 @@
+<?php
+session_start();//Habilitamos uso de variables de sesión
+
+//Incluimos cabecera
+include('../../inc/header.php');
+
+//Incluimos modelos a usar
+include_once($_SESSION['model_path'].'mujeres_avanzando.php');
+include_once($_SESSION['model_path'].'log_mujeres_avanzando.php');
+
+//Variable de respuesta
+
+//Si requerimos obtener totales por fecha
+$fecha_creacion = ($_GET['fecha_creacion'] != NULL)? $_GET['fecha_creacion']: NULL;
+$id_caravana = ($_GET['id_caravana'] != NULL)? $_GET['id_caravana'] : NULL;
+
+//Listamos los programas del beneficiario
+list($lista,$p) = logMujeresAvanzando::listaLog(null,null,$id_caravana,$fecha_creacion);                                        
+
+//Obtenemos caravanas disponibles
+//$db->where ('activo', 1);
+$caravanas = $db->get('caravana');
+
+//Obtenemos totales por folio
+$folios_caravana = mujeresAvanzando::folio_car($fecha_creacion);
+$total_folios_car = mujeresAvanzando::total_folios_car();
+
+//Obtenemos totales por caravana
+$cartillas_car = mujeresAvanzando::cartillas_car($fecha_creacion);
+$total_cartillas_car = mujeresAvanzando::total_cartillas_car();
+
+
+//Obtenemos totales de cartillas entregadas en caravana
+$cartillas_en_car = mujeresAvanzando::cartillas_en_car($fecha_creacion);
+$total_cart_en_car = mujeresAvanzando::total_cartillas_en_car();
+
+//Obtenemos totales de cartillas entregadas de forma extratemporal
+$cartillas_ext = mujeresAvanzando::cartillas_ext($fecha_creacion);
+$total_cart_ext = mujeresAvanzando::total_cartillas_ext();
+
+//Obtenemos total de impresiones
+$impresionesCaravana = logMujeresAvanzando::impresionesCaravana();
+$totalesImp = logMujeresAvanzando::totalImpresiones();
+
+//Mensaje respuesta
+$respuesta = ($_GET['r'] == NULL && $lista == NULL)? 8 : $_GET['r'];
+list($mensaje,$clase) = Permiso::mensajeRespuesta($respuesta);
+
+?>
+<script lang="JavaScript" type="text/javascript" src="<?php echo $_SESSION['js_path']?>combobox.js"></script>
+<script lang="JavaScript" type="text/javascript" src="<?php echo $_SESSION['js_path']?><?php echo $_SESSION['module_name']?>/valida.js"></script>
+<script lang="javascript" type="text/javascript" src="<?php echo $_SESSION['js_path'];?>jquery.tablesorter.min.js"></script>
+<script type="text/javascript">
+$(function() {
+    $("table").tablesorter({widgets: ['zebra']});
+});
+</script>
+
+<div id="principal">
+
+   <div id="contenido">
+    <h2 class="centro">Estad&iacute;sticas Generales Mujeres Avanzando</h2>
+
+    <?php if($respuesta > 0){?>
+    
+    <div class="mensaje <?php echo $clase; ?>"><?php echo $mensaje;?></div>
+    
+    <?php } ?>
+
+    <div class="centro">       
+       
+        <form method="GET" action="<?php echo $_SERVER['PHP_SELF']; ?>" >
+        <table>
+        <tr>
+            <th>Caravana</th>
+            <td>
+                <select id="id_caravana" name="id_caravana">
+                    <option value="">Seleccione Caravana</option>
+                    <?php foreach($caravanas as $c): 
+                    $selected = ($c['id'] == $id_caravana )? 'selected' : ''; 
+                    ?>
+                        <option value='<?php echo $c['id'] ?>'  <?php echo $selected;?> > 
+                            <?php echo $c['descripcion'];?>
+                        </option>
+                    <?php endforeach; ?>                       
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <th>Fecha Creaci&oacute;n</th>
+            <td>
+                <input type="text" id="fecha_creacion" class="fecha" name="fecha_creacion"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>&nbsp;</td>
+            <td><input type="submit" value ="Filtrar"/></td>
+        </tr>
+        </table>
+    </form> 
+
+    <div style="float:left; width: 400px; margin: 3em">   
+
+    <table class="tablesorter">
+    <thead>
+    <tr>
+        <th>No.</th>
+        <th>Nombre de Caravana</th>        
+        <th>Cartillas Entregadas</th>
+        <th>Entregada en Caravana</th>
+        <th>Entregado Extratemp</th>
+        <th>Total Folios</th>
+    </tr>        
+    </thead>
+
+    <tbody>
+    <?php foreach ($cartillas_car as $k => $c):?>
+        <tr>
+            <td><?php echo $c['id']; ?></td>                        
+            <td><?php echo $c['caravana']; ?></td>            
+            <td><?php echo $c['cartilla_car']; ?></td>
+            <td><?php echo $cartillas_en_car[$c['id']]['en_car']; ?></td>
+            <td><?php echo $cartillas_ext[$c['id']]['foto_ext']; ?></td>
+            <td><?php echo $folios_caravana[$c['id']]['folios_car']; ?></td>
+        </tr>
+    <?php endforeach;?>                    
+    </tbody>
+    </table>    
+
+    <table class="tablesorter">
+        <thead>
+            <tr>
+            <th>Totales</th>
+            <td><?php echo $total_cartillas_car['total_cartilla_car'] ?></td>
+            <td><?php echo $total_cart_en_car['total_en_car'] ?></td>
+            <td><?php echo $total_cart_ext['total_foto_ext'] ?></td>
+            <td><?php echo $total_folios_car['total_folios_car'] ?></td>
+        </tr>    
+        </thead> 
+        <tbody></tbody>       
+    </table>           
+    </div>
+
+    <div style="float:left; width: auto; margin: 3em">
+        
+    <table class="tablesorter" >
+    <thead>
+        <tr>
+            <th>Nombre de Caravana</th>
+            <th>Total Impresiones</th>        
+        </tr>        
+    </thead>
+
+    <tbody>
+    <?php foreach ($impresionesCaravana as $k => $c):?>
+        <tr>
+            <td><?php echo $c['caravana']; ?></td>
+            <td><?php echo $c['total_imp'];?></td>            
+        </tr>
+    <?php endforeach;?>        
+    </tbody>
+    </table>   
+
+    <table class="tablesorter">
+        <thead>
+        <tr>
+            <th>Totales</th>
+            <td><?php echo $totalesImp ?></td>
+        </tr>    
+        </thead>
+        <tbody></tbody>
+    </table>      
+    </div>
+
+    
+    <div>
+    
+    <?php if($lista != NULL){  
+        //Si tenemos listado ?>       
+        <table class="tablesorter">
+        <thead>
+        <tr>
+            <th>Folio</th>
+            <th>Nombres</th>
+            <th>A. Paterno</th>
+            <th>A. Materno</th>
+            <th>Caravama</th>        
+            <th>Fecha Foto</th>
+            <th>Fecha Impresi&oacute;n</th>        
+            <th>Fecha Creaci&oacute;n</th>
+        </tr>            
+        </thead>
+
+        <tbody>
+            <?php foreach($lista as $l): ?>
+            <tr>
+                <td><?php echo $l['folio']; ?></td>
+                <td><?php echo $l['nombres']; ?></td>
+                <td><?php echo $l['paterno']; ?></td>
+                <td><?php echo $l['materno'];?></td>
+                <td><?php echo $l['caravana'];?></td>            
+                <td><?php echo $l['fecha_foto'];?></td>
+                <td><?php echo $l['fecha_impresion'];?></td>            
+                <td><?php echo $l['fecha_creacion'];?></td>
+            </tr>
+            <?php endforeach; ?>
+        </tbody>
+        </table>
+
+         <p>
+          <?php echo $p->display();?>
+        </p> 
+
+     <?php } ?>
+
+    </div>
+  
+  </div>
+ </div>
+
+</div>
+ 
+<?php 
+//Incluimos pie
+include($_SESSION['inc_path'].'/footer.php');
+?>

@@ -1,0 +1,406 @@
+@charset "utf-8";
+/* CSS Document */
+@font-face { font-family: Arial,"Benefits"; src: url(../files/swz721c-webfont.ttf) format("truetype"); }
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,700);
+/*******************************************/
+/*html*/	
+/*******************************************/
+*{
+	/*text-rendering: optimizeLegibility;*/
+	font-family: Arial,'Open Sans', sans-serif;
+	margin:0;}
+	
+a{ 
+	color: #883D89;
+    cursor: pointer;
+    text-decoration: none;}
+a:link, a:visited {
+    color: #990066;
+    cursor: pointer;
+    text-decoration: none;
+}
+a:hover{
+	opacity:0.7;}
+
+p{
+	margin-bottom:5px;}
+	
+h1{
+	font-size:24px;
+	font-weight:normal;
+	color:#666666;}
+h2{
+    font-size: 20px;}
+h3{
+    font-size: 18px;}
+h4{
+    font-size: 14px;
+	color:#666666;}
+h5{
+    font-size: 12px;
+	font-weight:bold;
+	}
+h6{
+    font-size: 11px;
+	font-weight:bold;
+	color:#666666;
+	}
+
+h1, h2, h3, h4{
+	font-family: arial,"Open Sans", 'lucida grande', tahoma, verdana, sans-serif;
+    letter-spacing: -0.05em;
+	font-weight:normal;
+}
+
+
+textarea, select, input[type="date"], input[type="datetime"], input[type="datetime-local"], input[type="email"], input[type="month"], input[type="number"], input[type="password"], input[type="search"], input[type="tel"], input[type="text"], input[type="time"], input[type="url"], input[type="week"] {
+    -moz-box-sizing: border-box;
+    background: #fefef;
+background: #d6d6d6;
+background: -moz-linear-gradient(top, #d6d6d6 0%, #ededed 15%, #f7f7f7 100%);
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #d6d6d6), color-stop(15%, #ededed), color-stop(100%, #f7f7f7));
+background: -webkit-linear-gradient(top, #d6d6d6 0%, #ededed 15%, #f7f7f7 100%);
+background: -o-linear-gradient(top, #d6d6d6 0%, #ededed 15%, #f7f7f7 100%);
+background: -ms-linear-gradient(top, #d6d6d6 0%, #ededed 15%, #f7f7f7 100%);
+background: linear-gradient(to bottom, #d6d6d6 0%, #ededed 15%, #f7f7f7 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d6d6d6', endColorstr='#f7f7f7', GradientType=0 );
+    border: 1px solid #B5B5B5;
+    border-radius: 3px 3px 3px 3px;
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.05);
+    color: #000000;
+    font-family: arial,"Open Sans",'lucida grande',tahoma,verdana,sans-serif;
+    font-size: 13px;
+    height: 30px;
+    outline: medium none;
+    padding: 2px 3px;
+}
+hr{
+	margin:10px 0;
+	border:none;
+	background: #f2f2f2; /* Old browsers */
+/* IE9 SVG, needs conditional override of 'filter' to 'none' */
+background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIxJSIgc3RvcC1jb2xvcj0iI2YyZjJmMiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjUyJSIgc3RvcC1jb2xvcj0iI2NjY2NjYyIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNmMmYyZjIiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+background: -moz-linear-gradient(left,  #f2f2f2 1%, #cccccc 52%, #f2f2f2 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, right top, color-stop(1%,#f2f2f2), color-stop(52%,#cccccc), color-stop(100%,#f2f2f2)); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(left,  #f2f2f2 1%,#cccccc 52%,#f2f2f2 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(left,  #f2f2f2 1%,#cccccc 52%,#f2f2f2 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(left,  #f2f2f2 1%,#cccccc 52%,#f2f2f2 100%); /* IE10+ */
+background: linear-gradient(to right,  #f2f2f2 1%,#cccccc 52%,#f2f2f2 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f2f2f2', endColorstr='#f2f2f2',GradientType=1 ); /* IE6-8 */
+height:2px;
+}
+th{
+	font-weight:bold;}
+label{
+	margin:5px 5px 5px 10px;
+	font-size:14px;
+	vertical-align:top;
+	font-weight:bold;
+	color:#666;}
+/*******************************************/
+/*zonas*/	
+/*******************************************/
+#header{
+	background:url(../img/head_bar.jpg) repeat-x center bottom;
+	}
+
+#principal{
+	background: rgb(215,215,215); /* Old browsers */
+/* IE9 SVG, needs conditional override of 'filter' to 'none' */
+background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2Q3ZDdkNyIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9Ijk5JSIgc3RvcC1jb2xvcj0iI2VkZWRlZCIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgPC9saW5lYXJHcmFkaWVudD4KICA8cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIiBmaWxsPSJ1cmwoI2dyYWQtdWNnZy1nZW5lcmF0ZWQpIiAvPgo8L3N2Zz4=);
+background: -moz-linear-gradient(top,  rgba(215,215,215,1) 0%, rgba(237,237,237,1) 99%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(215,215,215,1)), color-stop(99%,rgba(237,237,237,1))); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top,  rgba(215,215,215,1) 0%,rgba(237,237,237,1) 99%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top,  rgba(215,215,215,1) 0%,rgba(237,237,237,1) 99%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top,  rgba(215,215,215,1) 0%,rgba(237,237,237,1) 99%); /* IE10+ */
+background: linear-gradient(to bottom,  rgba(215,215,215,1) 0%,rgba(237,237,237,1) 99%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d7d7d7', endColorstr='#ededed',GradientType=0 ); /* IE6-8 */
+}
+#contenido{
+	color:#333;
+	font-size:12px;
+	box-sizing:border-box;
+-webkit-box-sizing:border-box;
+-moz-box-sizing:border-box;
+-o-box-sizing:border-box;
+-ms-box-sizing:border-box;
+	padding:10px 20px;
+	width:960px;
+	margin:0 auto;
+	background: url(../img/hojas.jpg) no-repeat top right #FFF;
+	-webkit-box-shadow:  0px 4px 4px 0px rgba(0, 0, 0, 0.3);
+        
+        box-shadow:  0px 4px 4px 0px rgba(0, 0, 0, 0.3);}
+#header_superior{
+	display:table;
+	width:960px;
+	min-height:	170px;
+	margin:0 auto;
+	clear:both;}
+#header_inferior{
+	background:url(../img/shin.png) no-repeat center 24px;
+	display:table;
+	width:960px;
+	margin:0 auto;
+	clear:both;
+	padding-top:2px;}
+/*******************************************/
+/* header */
+/*******************************************/
+#titulo_header{
+	font-family: Arial,'Benefits', sans-serif;
+	color:#666;
+	font-size:28px;
+	background:url(../img/shadow_logo.png) no-repeat left top;
+	display:inline-block;
+	height:82px;
+	margin: 20px 0 0 20px;
+    padding: 24px 0 0 24px;}
+
+#logo_bienestar{
+	text-align:right;
+	float:right;
+	margin-top:33px;}
+#menu_principal{
+	font-size:12px;
+	height:43px;
+	float: right;
+}
+#menu_principal li{
+	display:inline-block;
+	padding: 0 4px;
+}
+#menu_principal li,
+#menu_principal li a{
+	color:#333;}
+#bloque_usuario{
+	font-size:12px;
+	float:right;}
+	
+#logo_dif{
+	margin:27px 20px 0 10px;
+	float:left;}
+	
+.bloque_menu {
+	margin: auto;
+	width: 960px;
+	background: #303030;
+}
+
+#precontenido {
+	background: #d7d7d7;
+}
+
+#cintillo {
+	display: block;
+	width: 960px;
+	background: #99bb77;
+	margin: auto;
+	text-align: right;
+	line-height: 30px;
+}
+
+#cintillo label {
+	font-size: 21px;
+	color: #303030;
+}
+	
+/* footer*/
+#logo_dif_footer{
+	padding:20px 20px 10px 20px; }
+#footer{
+	background:#555555;}
+#footer_superior{
+		margin:0 auto;
+		width:960px;}
+#footer_inferior{
+		margin:0 auto;
+		width:960px;}
+#titulo_footer{
+	text-align:left;
+	color:#B8B8B8;
+	font-size:12px;	
+	margin-bottom:20px;}
+#footer_inferior{
+	text-align:center;
+	color:#B8B8B8;
+	font-size:12px;	}
+
+/**
+* Color de fondo cuando se quiere agregar una vialidad
+*/
+.formulario_new_via table{
+    background-color: #f3aff4;
+  }
+
+/**
+ *
+ */
+select:disabled {
+	color: #c0c0c0;
+}
+
+/**
+* Menú inicial de módulos
+*/
+.subnivel {
+	display: inline-block;
+    width: 300px;
+    height: 165px;
+    background: #f0f9ff; /* Old browsers */
+	background: -moz-linear-gradient(top,  #f0f9ff 0%, #f9f9f9 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f0f9ff), color-stop(100%,#f9f9f9)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #f0f9ff 0%,#f9f9f9 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  #f0f9ff 0%,#f9f9f9 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  #f0f9ff 0%,#f9f9f9 100%); /* IE10+ */
+	background: linear-gradient(to bottom,  #f0f9ff 0%,#f9f9f9 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f0f9ff', endColorstr='#f9f9f9',GradientType=0 ); /* IE6-9 */
+	border: solid 1px #f0f0f0;
+	margin: 0 2px 15px 0;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+}
+
+.subnivel label a {
+	color: #666666;
+	font-family: 'Lucida Grande', 'Lucida Sans', sans-serif;
+	font-size: 14px;
+	line-height: 2em;
+}
+
+
+/**
+ * Tablas
+ */
+
+tr.par {
+	background: #f0f0f0;
+}
+tr.non {
+	background: #fcfcfc;
+}
+
+/**
+* Estilos Trabajo Social
+*/
+.nombre_asp {
+	text-transform: uppercase;
+}
+
+.fieldset:expediente {
+	width: 620px;
+	float: left;
+}
+
+#formbusqueda fieldset div div div {
+	width: 179px;
+	display: inline-block;
+	float: left;
+	text-align: left;
+}
+
+#formbusqueda .boton_busqueda {
+	float: right;
+}
+
+#formbusqueda label {
+	display: block;
+}
+
+#contenido .tablesorter {
+	border: solid 1px #ffffff;
+	border-collapse: collapse;
+}
+
+fieldset.expediente {
+	width: 450px;
+}
+
+fieldset.expediente select {
+	width: 400px;
+}
+
+fieldset.datos_registro {
+	width: 450px;
+}
+
+/**
+ * Estilos menú inferior Mujeres
+ */
+#footer_superior {
+	padding-top: 1em;
+	min-height: 200px;
+}
+
+ul.enlaces_externos {
+	list-style-type: none;
+	float: right;
+}
+
+ul.enlaces_externos a {
+	color: #c0c0c0;
+	font-size: 8pt;
+}
+
+ul.enlaces_externos a:hover {
+	text-decoration: underline;
+}
+
+.link_ce,
+.link_prosoc,
+.link_cultura,
+.link_sedeco,
+.link_seder,
+.link_sedis,
+.link_se,
+.link_secyt {
+	margin-left: 0em;
+}
+
+.link_semadet,
+.link_semov,
+.link_sepaf,
+.link_ssj,
+.link_stps,
+.link_secturjal,
+.link_ijs,
+.link_code,
+.link_sistemadif {
+	margin-left: 20em;
+}
+
+.link_semadet {
+	margin-top: -10.7em;
+}
+
+/*
+Estilos para barra de progreso
+ */
+
+/*form {display: block; background: #333; padding: 15px}*/
+
+.progress {
+  margin: 30px auto;
+  position:relative; 
+  width:400px; 
+  border: 1px solid #ddd; 
+  padding: 1px; 
+  border-radius: 3px;  
+}
+
+.bar {
+  margin-left:auto; 
+  margin-right: auto;
+  background-color: #B4F5B4; 
+  width:0%; 
+  height:20px; 
+  border-radius: 3px; 
+}
+
+.percent {
+  position:absolute; 
+  display:inline-block; 
+  top:3px; 
+  left:48%;
+}

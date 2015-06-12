@@ -1,0 +1,281 @@
+.centro{
+
+
+
+    margin: 35px auto;
+
+
+
+    text-align: center; 
+
+
+
+}
+
+
+
+
+
+
+
+.mensaje{
+
+
+
+border-radius: 10px 10px 10px 10px;
+
+
+
+border-style:solid;
+
+
+
+border-width:1px;
+
+
+
+border-color:#BDBDBD;
+
+
+
+margin: 0 auto 35px auto;
+
+
+
+width:75%;
+
+
+
+font-family: Arial,verdana;
+
+
+
+padding: 10px;
+
+
+
+color: #666;
+
+
+
+font-weight: bolder;
+
+
+
+font-size: 15px;   
+
+
+
+text-align: center;
+
+background-color: white;
+
+}
+
+
+
+
+
+
+
+.page_login{
+
+
+
+-moz-box-sizing: border-box;
+
+
+
+    background: url("../../img/hojas_log.jpg") no-repeat scroll right bottom #FFFFFF;
+
+
+
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.3);
+
+
+
+    color: #333333;
+
+
+
+    font-size: 12px;
+
+
+
+    margin: 100px auto;
+
+
+
+    padding: 10px 20px;
+
+
+
+    width: 450px;
+
+
+
+}
+
+
+
+
+
+
+
+.page_login table{
+
+
+
+    width: 250px;
+
+
+
+}
+
+
+
+
+
+
+
+#contenido {
+
+
+
+    -moz-box-sizing: none;
+
+
+
+    background: none;
+
+
+
+    box-shadow: none;
+
+
+
+    color: #333333;
+
+
+
+    font-size: 12px;
+
+
+
+    margin: 0 auto;
+
+
+
+    padding: 10px 20px;
+
+
+
+    width: 960px;
+
+
+
+}
+
+
+
+
+
+
+
+.lista{
+
+
+
+    float:left;
+
+
+
+    margin: 2px;
+
+
+
+}
+
+
+
+p{
+
+
+
+    margin: 15px 0;
+
+
+
+}
+
+
+
+.obligatorio{
+
+
+
+    color : #990066;
+
+
+
+    font-weight: bolder;
+
+
+
+    vertical-align: central !important;
+
+
+
+    margin: 3px;
+
+
+
+}
+
+
+
+#formBen input[type="text"],textarea{
+
+
+
+    text-transform: uppercase;
+
+
+
+}
+
+
+
+
+
+
+
+#contenido table{
+
+
+
+    text-align: left;
+
+
+
+}
+
+
+
+
+
+
+
+textarea{
+
+
+
+    width :350px;
+
+
+
+    height: 80px;
+
+
+
+}

@@ -1,0 +1,5 @@
+Options -Indexes
+#Errordocument 403 /proyecto/index.php
+#Errordocument 404 /proyecto/error.php
+Errordocument 403 /home/wronks/www/proyecto/index.php
+Errordocument 404 /home/wronks/www/proyecto/error.php

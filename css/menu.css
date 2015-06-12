@@ -1,0 +1,71 @@
+
+#menu * {
+	margin: 0px;
+	padding: 0px; 
+	outline: 0;
+}
+
+#menu {width: 100%;}
+
+#menu*{
+    background: #366;
+	font-family: inherit;
+}
+
+#menu {
+	text-align: center;
+	font-size: 12px;
+	width: 860px;
+	margin: 0 auto;
+	/*font-weight: bold;*/
+}
+#menu ul {list-style-type: none;
+}
+#menu ul li {
+	width: 106px;
+}
+#menu ul li.nivel1 { float: left;
+margin-right: 1px;
+}
+#menu ul li a {display: block;
+text-decoration: none;
+color: #000;
+background-color: #CCC;
+border: solid 1px #000;
+/*padding: 0px;*/
+padding: 2px 5px;
+/*border-radius: 3px 3px 3px 3px;*/
+position: relative;
+}
+#menu ul li a.nivel2, #menu ul li a.nivel2ie {color: #000;
+}
+#menu ul li a.nivel1, #menu ul li a.nivel2 {display: block!important;display: none;
+position: relative;
+}
+#menu ul li:hover {position: relative;
+}
+#menu ul li a:hover, #menu ul li:hover a.nivel1 {background-color: #F6F8F8;
+color: #000;
+position: relative;
+}
+#menu ul li ul {display: none;
+}
+#menu ul li:hover  ul.nivel2, #menu ul li a:hover  ul.nivel2{display: block;
+position: absolute;left: 0px;
+}
+#menu ul li ul li a:hover ul.nivel3, #menu ul li ul li:hover ul.nivel3 {display: block;
+position: absolute;
+left: 120px!important;left: 120px;
+top:0px!important;top: -21px;
+}
+#menu ul li ul li a {
+/*width: 103Px;*/
+/*padding: 8px 0px;*/
+padding: 7px 5px;
+border-top-color: transparent;
+}
+#menu ul li ul li a:hover {border-top-color: #000;
+position: relative;
+}
+#menu ul li ul li ul li a.primera {border-top-color: #fff;
+}

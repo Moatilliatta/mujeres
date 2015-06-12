@@ -1,0 +1,82 @@
+body{
+		font-family: Arial;
+		font-size: 9pt;
+		font-weight: bold;
+		margin: 1cm 0;
+	}
+	
+	.foto{
+		position: absolute;
+		display: block;
+		top: 1.6cm;
+		left: 0.74cm;
+		width: 2.37cm;
+		height: 2.75cm;
+	}
+
+	#contenedor{
+		width: 21.5cm;
+		/*border: 1px solid green;*/
+		float: left;
+	}
+	.recorte{
+		border: 1px dashed silver;
+		float: left;
+		padding: 0.2cm;
+	}
+	.cartilla{
+		display: block;
+		position: relative;
+		width: 10.29cm;
+		height: 13.29cm;
+		background: url(../img/cred_base.jpg) no-repeat top left;
+		background-size:  100% auto;
+		/* border: 1px solid black; */
+		float: left;
+	}
+	.car{
+		/*border: 1px solid green;*/
+		position: absolute;		
+		height: 0.4cm;
+		padding: 0.9mm 0.7mm;
+	}
+	.car_1{width: 4.2cm;}
+	.car_2{width: 8.6cm;}
+	.car_3{width: 2.1cm;}
+	.car_4{width: 5.4cm;}
+
+	.car_folio{			
+		top: 1.87cm;
+		left: 4.66cm;
+	}
+	.car_tel{				
+		top: 3cm;
+		left: 4.66cm;
+		overflow: hidden;
+	    top: 3cm;
+	    width: 4.9cm;
+	}
+	.car_nombre{				
+		top: 4.9cm;
+		left: 0.8cm;
+	}
+	.car_apellido{				
+		top: 5.66cm;
+		left: 0.8cm;
+	}
+	.car_edad{		
+		top: 6.86cm;
+		left: 0.8cm;
+	}
+	.car_grado{		
+		top: 6.86cm;
+		left: 3.35cm;
+	}
+	.car_dom{top: 8.05cm;}
+	.car_col{top: 9.24cm;}
+	.car_mun{top: 10.4cm;}
+	.car_cp{top: 11.57cm;}
+	.car_firma{
+		top: 0.41cm;		
+		height: 0.85cm;
+	}

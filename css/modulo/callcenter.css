@@ -1,0 +1,62 @@
+.centro{
+    margin: 35px auto;
+    text-align: center; 
+}
+
+.mensaje{
+border-radius: 10px 10px 10px 10px;
+border-style:solid;
+border-width:1px;
+border-color:#BDBDBD;
+margin: 0 auto 35px auto;
+width:75%;
+font-family: arial,verdana;
+padding: 10px;   
+color: #666;
+font-weight: bolder;
+font-size: 15px;   
+text-align: center;
+}
+
+.lista{
+    float:left;
+    margin: 2px;
+}
+
+p{
+    margin: 15px 0;
+}
+
+.obligatorio{
+    color : #990066;
+    font-weight: bolder;
+    vertical-align: central !important;
+    margin: 3px;
+}
+
+#formBen input[type="text"],textarea{
+    text-transform: uppercase;
+}
+
+#contenido table{
+    text-align: left;
+}
+
+.texto_largo{
+    width :350px;    
+}
+
+textarea{
+    width :350px;
+    height: 80px;
+}
+
+fieldset{
+    margin: 50px 0;
+}
+
+.mensaje_carga{
+    border: 1px solid #c0c0c0;
+    padding: 1.5em;
+    display: none; 
+}
