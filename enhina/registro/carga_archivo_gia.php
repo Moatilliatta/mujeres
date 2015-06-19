@@ -6,7 +6,12 @@ include ($_SESSION['inc_path']."conecta.php");
  
 //Librería de permisos
 //para poder utilizar las funciones de la clase modelo
-include_once($_SESSION['inc_path'].'libs/CargaExcelGIA.php');
+
+//1er formato
+//include_once($_SESSION['inc_path'].'libs/CargaExcelGIA.php');
+
+//2do formato
+include_once($_SESSION['inc_path'].'libs/CargaExcelGIA2.php');
 
 //Obtenemos código de error
 $error = $_FILES['archivo']['error'];

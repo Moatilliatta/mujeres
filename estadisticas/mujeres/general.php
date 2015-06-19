@@ -7,6 +7,7 @@ include('../../inc/header.php');
 //Incluimos modelos a usar
 include_once($_SESSION['model_path'].'mujeres_avanzando.php');
 include_once($_SESSION['model_path'].'log_mujeres_avanzando.php');
+include_once($_SESSION['model_path'].'log_mujeres_cart.php');
 
 //Variable de respuesta
 
@@ -41,6 +42,13 @@ $total_cart_ext = mujeresAvanzando::total_cartillas_ext();
 //Obtenemos total de impresiones
 $impresionesCaravana = logMujeresAvanzando::impresionesCaravana();
 $totalesImp = logMujeresAvanzando::totalImpresiones();
+
+
+//Obtenemos total de reposiciones
+$reposicionesCart = logMujeresAvanzando::reposicionesCartilla();
+
+//Obtenemos reposiciones de la tabla log_mujeres_cart
+$repLogMujeresCart = logMujeresCart::listaLogMujeresCart();
 
 //Mensaje respuesta
 $respuesta = ($_GET['r'] == NULL && $lista == NULL)? 8 : $_GET['r'];
@@ -98,83 +106,9 @@ $(function() {
             <td><input type="submit" value ="Filtrar"/></td>
         </tr>
         </table>
-    </form> 
+    </form>     
 
-    <div style="float:left; width: 400px; margin: 3em">   
-
-    <table class="tablesorter">
-    <thead>
-    <tr>
-        <th>No.</th>
-        <th>Nombre de Caravana</th>        
-        <th>Cartillas Entregadas</th>
-        <th>Entregada en Caravana</th>
-        <th>Entregado Extratemp</th>
-        <th>Total Folios</th>
-    </tr>        
-    </thead>
-
-    <tbody>
-    <?php foreach ($cartillas_car as $k => $c):?>
-        <tr>
-            <td><?php echo $c['id']; ?></td>                        
-            <td><?php echo $c['caravana']; ?></td>            
-            <td><?php echo $c['cartilla_car']; ?></td>
-            <td><?php echo $cartillas_en_car[$c['id']]['en_car']; ?></td>
-            <td><?php echo $cartillas_ext[$c['id']]['foto_ext']; ?></td>
-            <td><?php echo $folios_caravana[$c['id']]['folios_car']; ?></td>
-        </tr>
-    <?php endforeach;?>                    
-    </tbody>
-    </table>    
-
-    <table class="tablesorter">
-        <thead>
-            <tr>
-            <th>Totales</th>
-            <td><?php echo $total_cartillas_car['total_cartilla_car'] ?></td>
-            <td><?php echo $total_cart_en_car['total_en_car'] ?></td>
-            <td><?php echo $total_cart_ext['total_foto_ext'] ?></td>
-            <td><?php echo $total_folios_car['total_folios_car'] ?></td>
-        </tr>    
-        </thead> 
-        <tbody></tbody>       
-    </table>           
-    </div>
-
-    <div style="float:left; width: auto; margin: 3em">
-        
-    <table class="tablesorter" >
-    <thead>
-        <tr>
-            <th>Nombre de Caravana</th>
-            <th>Total Impresiones</th>        
-        </tr>        
-    </thead>
-
-    <tbody>
-    <?php foreach ($impresionesCaravana as $k => $c):?>
-        <tr>
-            <td><?php echo $c['caravana']; ?></td>
-            <td><?php echo $c['total_imp'];?></td>            
-        </tr>
-    <?php endforeach;?>        
-    </tbody>
-    </table>   
-
-    <table class="tablesorter">
-        <thead>
-        <tr>
-            <th>Totales</th>
-            <td><?php echo $totalesImp ?></td>
-        </tr>    
-        </thead>
-        <tbody></tbody>
-    </table>      
-    </div>
-
-    
-    <div>
+    <div style="text-align:center;">
     
     <?php if($lista != NULL){  
         //Si tenemos listado ?>       
@@ -215,9 +149,156 @@ $(function() {
      <?php } ?>
 
     </div>
-  
-  </div>
- </div>
+
+        <div style="float:right; width: auto; margin: 3em">
+        
+        <table class="tablesorter" >
+        <thead>
+            <tr>
+                <th colspan="2">Reposiciones de Cartillas (Hist&oacute;rico)</th>
+            </tr>
+            <tr>
+                <th>Folio</th>
+                <th>Total de Reposiciones</th>        
+            </tr>        
+        </thead>
+
+        <tbody>
+        <?php foreach ($reposicionesCart as $key => $l):?>
+            <tr>
+                <td><?php echo $l['folio']; ?></td>
+                <td><?php echo $l['tot_folio'];?></td>            
+            </tr>
+        <?php endforeach;?>        
+        </tbody>
+        </table>   
+
+        <table class="tablesorter">
+            <thead>
+            <tr>
+                <th>Totales</th>
+                <td><?php echo count($reposicionesCart) ?></td>
+            </tr>    
+            </thead>
+            <tbody></tbody>
+        </table>   
+
+        </div>    
+
+    <div style=" width: 400px; margin: 3em">   
+    <table class="tablesorter">
+        <thead>
+        <tr>
+            <th>No.</th>
+            <th>Nombre de Caravana</th>        
+            <th>Cartillas Entregadas</th>
+            <th>Entregada en Caravana</th>
+            <th>Entregado Extratemp</th>
+            <th>Total Folios</th>
+        </tr>        
+        </thead>
+
+        <tbody>
+        <?php foreach ($cartillas_car as $k => $c):?>
+            <tr>
+                <td><?php echo $c['id']; ?></td>                        
+                <td><?php echo $c['caravana']; ?></td>            
+                <td><?php echo $c['cartilla_car']; ?></td>
+                <td><?php echo $cartillas_en_car[$c['id']]['en_car']; ?></td>
+                <td><?php echo $cartillas_ext[$c['id']]['foto_ext']; ?></td>
+                <td><?php echo $folios_caravana[$c['id']]['folios_car']; ?></td>
+            </tr>
+        <?php endforeach;?>                    
+        </tbody>
+        </table>    
+
+        <table class="tablesorter">
+            <thead>
+                <tr>
+                <th>Totales</th>
+                <td><?php echo $total_cartillas_car['total_cartilla_car'] ?></td>
+                <td><?php echo $total_cart_en_car['total_en_car'] ?></td>
+                <td><?php echo $total_cart_ext['total_foto_ext'] ?></td>
+                <td><?php echo $total_folios_car['total_folios_car'] ?></td>
+            </tr>    
+            </thead> 
+            <tbody></tbody>       
+        </table>           
+        </div>
+
+        <div style="width: 400px; margin: 3em">
+            
+        <table class="tablesorter" >
+        <thead>
+            <tr>
+                <th>Nombre de Caravana</th>
+                <th>Total Impresiones</th>        
+            </tr>        
+        </thead>
+
+        <tbody>
+        <?php foreach ($impresionesCaravana as $k => $c):?>
+            <tr>
+                <td><?php echo $c['caravana']; ?></td>
+                <td><?php echo $c['total_imp'];?></td>            
+            </tr>
+        <?php endforeach;?>        
+        </tbody>
+        </table>   
+
+        <table class="tablesorter">
+            <thead>
+            <tr>
+                <th>Totales</th>
+                <td><?php echo $totalesImp ?></td>
+            </tr>    
+            </thead>
+            <tbody></tbody>
+        </table>      
+        </div>
+
+
+        <div style="width: 400px; margin: 3em">
+            
+        <table class="tablesorter" >
+        <thead>
+            <tr>
+                <th colspan="3">Reposiciones de Cartillas (desde 25-Mayo-2015)</th>
+            </tr>
+            <tr>
+                <th>Folio</th>
+                <th>Nombre Completo</th>
+                <th>Total Reimpresiones</th>        
+            </tr>        
+        </thead>
+
+        <tbody>
+        <?php foreach ($repLogMujeresCart as $k => $c):?>
+            <tr>
+                <td><?php echo $c['folio']; ?></td>
+                <td><?php echo $c['nombre_completo'];?></td>
+                <td><?php echo $c['num_rep']; ?></td>
+            </tr>
+        <?php endforeach;?>        
+        </tbody>
+        </table>   
+
+        <table class="tablesorter">
+            <thead>
+            <tr>
+                <th>Totales</th>
+                <td><?php echo $totalesImp ?></td>
+            </tr>    
+            </thead>
+            <tbody></tbody>
+        </table>      
+        </div>
+
+    </div>
+
+    
+
+    </div>
 
 </div>
  

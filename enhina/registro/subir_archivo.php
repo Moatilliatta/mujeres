@@ -102,18 +102,42 @@ $(function() {
       <td>Total de Personas Registradas:</td>
       <td><?php echo $totales['total_familiares'];?></td>
     </tr>
+    
+    <?php if($totales['total_prog_mac'] > 0){ ?>
     <tr>
       <td>Total Encuestados en Programa MAC:</td> 
       <td><?php echo $totales['total_prog_mac'];?></td>
     </tr>
+    <?php } ?>
+
+    <?php if($totales['total_prog_map'] > 0){ ?>
     <tr>
       <td>Total Encuestados en Programa MAP:</td>
       <td><?php echo $totales['total_prog_map'];?></td>
     </tr>
+    <?php } ?>
+
+    <?php if($totales['total_prog_mas'] > 0){ ?>
     <tr>
       <td>Total Encuestados en Programa MAS:</td>
       <td><?php echo $totales['total_prog_mas'];?></td>
     </tr>
+    <?php } ?>
+
+    <?php if($totales['total_prog_sol'] > 0){ ?>
+    <tr>
+      <td>Total Encuestados en Programa SOL:</td> 
+      <td><?php echo $totales['total_prog_sol'];?></td>
+    </tr>
+    <?php } ?>
+
+    <?php if($totales['total_prog_pio'] > 0){ ?>
+    <tr>
+      <td>Total Encuestados en Programa PIO:</td> 
+      <td><?php echo $totales['total_prog_pio'];?></td>
+    </tr>
+    <?php } ?>
+
     <tr>
        <td>Total Duplicados:</td>
        <td><?php echo $totales['total_duplicados']?></td>

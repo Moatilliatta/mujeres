@@ -4,9 +4,14 @@ session_start();
 //Librería de conexión
 include ($_SESSION['inc_path']."conecta.php");
  
-//Librería de permisos
-//para poder utilizar las funciones de la clase modelo
-include_once($_SESSION['inc_path'].'libs/CargaExcel.php');
+//Primer Formato
+//include_once($_SESSION['inc_path'].'libs/CargaExcel.php');
+
+//2do formato con encabezados que ocupan más filas
+//include_once($_SESSION['inc_path'].'libs/CargaExcel2.php');
+
+//3er formato usado a partir de SEDESOL
+include_once($_SESSION['inc_path'].'libs/CargaExcel3.php');
 
 //Obtenemos código de error
 $error = $_FILES['archivo']['error'];
@@ -59,7 +64,7 @@ if($error == 0) {
           
           }else if(move_uploaded_file($_FILES['archivo']['tmp_name'],$destino)){
               
-              list($resp,$totales) = CargaExcel::carga($nombre,null,$id_caravana,$visita,$extension);    
+              list($resp,$totales) = CargaExcel3::carga($nombre,null,$id_caravana,$visita,$extension);    
 
               //Creamos variable de sesión para tener los totales de la carga
               $_SESSION['totales'] = $totales;
