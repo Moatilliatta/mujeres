@@ -15,18 +15,18 @@ include_once($_SESSION['model_path'].'familiares_mujer.php');
 include_once($_SESSION['model_path'].'caravana.php');
 
 //Valores de la búsqueda
-$id_caravana=$_GET['id_caravana'];
-$tipo_filtro=$_GET['tipo_filtro'];
-$busqueda=$_GET['busqueda'];
-$respuesta=$_GET['r'];
-$id_dif=$_GET['id_dif'];
+$id_caravana = ($_GET['id_caravana'])? $_GET['id_caravana'] : NULL;
+$tipo_filtro = ($_GET['tipo_filtro'])? $_GET['tipo_filtro'] : NULL;
+$busqueda = ($_GET['busqueda'])? $_GET['busqueda'] : NULL;
+$respuesta = ($_GET['r'])? $_GET['r'] : NULL;
+$id_dif = ($_GET['id_dif'])? $_GET['id_dif'] : NULL;
+
+//Listados
 $lista_familiar = NULL;
 $p = NULL;
 $lista = NULL;
 $pm = NULL;
 
-//echo 'r '.$respuesta;
-//exit;
 //Obtenemos listado de acciones
 list($lista,$pm) = mujeresAvanzando::listaMujer($busqueda,
                                                $tipo_filtro,
@@ -39,7 +39,7 @@ list($lista,$pm) = mujeresAvanzando::listaMujer($busqueda,
                                                $id_caravana);
 
 //Si tenemos algún filtro o búsqueda
-if($tipo_filtro != NULL){
+if($busqueda != NULL){
 
   //Obtenemos datos de los familiares del titular
   list($lista_familiar,$p) = FamiliaresMujer::listaFamiliaresMujer($busqueda,
@@ -76,6 +76,7 @@ if($lista == NULL && $respuesta == NULL){
     list($mensaje,$respuesta) = Permiso::mensajeRespuesta(8);
     $respuesta = 1;
 }
+
 $db->where ('activo', 1);
 $caravanas = Caravana::listadoCaravana();
 

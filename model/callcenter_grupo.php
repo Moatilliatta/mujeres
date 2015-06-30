@@ -92,7 +92,8 @@ class CallCenterGrupo extends MysqliDb{
         return $msg_no;
     }
     
-    public function listaCallCenterGrupo($descripcion=null,$fecha_instalacion=null,$activo=1){
+    public function listaCallCenterGrupo($nombre=null,$fecha_instalacion=null,
+        $id_caravana = NULL,$activo=1){
 
        $sql = 
        'SELECT
@@ -109,33 +110,38 @@ class CallCenterGrupo extends MysqliDb{
         //Parámetros de la sentencia
         $params = array(1);
         
-       /*
-         //Buscamos nombre propio           
-        if($descripcion !=null){
+       
+         //Buscamos nombre            
+        if($nombre !=null){
                     
-          $sql .= ' AND b.descripcion like ? ';
-          $params[] = '%'.$descripcion.'%';
+          $sql .= ' AND cg.nombre LIKE ? ';
+          $params[] = '%'.$nombre.'%';
 
         }
 
-        //Apellido paterno
+        //Fecha Instalación
         if($fecha_instalacion !=null){
-          //echo $paterno;
-          //exit;
             
-          $sql .= ' AND b.fecha_instalacion = ? ';
+          $sql .= ' AND cg.fecha_creado = ? ';
           $params[] = $fecha_instalacion;
+
+        }
+
+        if($id_caravana !=null){
+            
+          $sql .= ' AND cg.id_caravana = ? ';
+          $params[] = $id_caravana;
 
         }
 
         //Apellido materno
         if($activo !=null){
 
-          $sql .= ' AND b.activo = ? ';
+          $sql .= ' AND cg.activo = ? ';
           $params[] = $activo;
 
         }        
-      */
+      
         //Regresamos consulta y parámetros
         return Paginador::paginar($sql,$params); 
 

@@ -41,7 +41,6 @@ $central = Permiso::arregloMenu('asigna_capacitacion','center');
 //exit;
 
 ?>
-<script lang="javascript" type="text/javascript" src="<?php echo $_SESSION['js_path'];?>jquery-ui-1.10.3.custom.min.js"></script>
 <script lang="javascript" type="text/javascript" src="<?php echo $_SESSION['js_path'];?>jquery.tablesorter.min.js"></script>
 <script lang="JavaScript" type="text/javascript" src="<?php echo $_SESSION['js_path']?><?php echo $_SESSION['module_name']?>/valida_asign.js"></script>
 <script lang="JavaScript" type="text/javascript" src="<?php echo $_SESSION['js_path']?><?php echo $_SESSION['module_name']?>/valida.js"></script>
@@ -64,11 +63,14 @@ $central = Permiso::arregloMenu('asigna_capacitacion','center');
             //if($mujeres_avanzando != NULL){ ?>
             
 <script lang="javascript" type="text/javascript" src="<?php echo $_SESSION['js_path'];?>jquery.tablesorter.min.js"></script>
+<script lang="JavaScript" type="text/javascript" src="<?php echo $_SESSION['js_path']?><?php echo $_SESSION['module_name']?>/valida.js"></script>
+
 <script type="text/javascript">
 $(function() {
     $("table").tablesorter({widgets: ['zebra']});
 });
 </script>
+
 <style type="text/css">
     .foto_cred{
         /*position: absolute;*/
@@ -106,62 +108,60 @@ $(function() {
        </tr>    
     </tbody>   
   </table>   
-  
-            
-                <input type="hidden" name="id_edicion" value="<?php echo $c_mujeres_avanzando_detalle['ID_MUJERES_AVANZANDO_DETALLE']; ?>" />
-                <input type="hidden" name="id_mujeres_avanzando" value="<?php echo $id_mujeres_avanzando; ?>" />
-                <div id="tabs">
-                <ul>
-                <li><a href="#tabs-1">Servicios/Apoyos Otorgados</a></li>
-                <li><a href="#tabs-2">Otorgar Servicios/Apoyos</a></li>
-                </ul>
-                            
-                <div id="tabs-1">
-                <div class="centro"> 
-                <?php include($_SESSION['inc_path'].'/seguimiento/lista_capacitacion.php'); ?> 
-                </div>
-                <div>
-                <?php include($_SESSION['inc_path'].'/seguimiento/lista_huerto.php'); ?>
-                </div>
-                <div>
-                <?php include($_SESSION['inc_path'].'/seguimiento/lista_apoyos_serv.php'); ?>
-                </div>
-                <div>
-                <!-- listamos las capacitaciones guardadas de la mujer -->
-                <?php include($_SESSION['inc_path'].'/seguimiento/lista_actividad_com.php'); ?>
-                </div>
-                <div>
-                <!-- listamos programas estatales -->
-                <?php include($_SESSION['inc_path'].'/seguimiento/lista_prog_estatal.php'); ?>
-                </div>
-                </div>
-                
 
-                <div id="tabs-2">
-                     <?php //if(array_key_exists('asigna_capacitacion',$central)){ ?> 
-                    <div class="centro">
-                        <?php include($_SESSION['inc_path'].'/seguimiento/asigna_capacitacion.php');?> 
-                    </div>
-                    <?php //} ?>
-                    
-                    <?php if(array_key_exists('asigna_huerto',$central)){ ?> 
-                    <div class="centro"> 
-                      <?php include($_SESSION['inc_path'].'/seguimiento/asigna_huerto.php'); ?>
-                    </div>
-                    <?php } ?> 
+  <input type="hidden" name="id_edicion" value="<?php echo $c_mujeres_avanzando_detalle['ID_MUJERES_AVANZANDO_DETALLE']; ?>" />
+  <input type="hidden" name="id_mujeres_avanzando" value="<?php echo $id_mujeres_avanzando; ?>" />
+  <div id="tabs">
+    <ul>
+        <li><a href="#tabs-1">Servicios/Apoyos Otorgados</a></li>
+        <li><a href="#tabs-2">Otorgar Servicios/Apoyos</a></li>
+    </ul>
 
-                    <?php if(array_key_exists('asigna_apoyo_serv',$central)){ ?> 
-                    <div class="centro">
-                        <?php include($_SESSION['inc_path'].'/seguimiento/asigna_apoyo_serv.php'); ?>    
-                    </div>
-                    <?php } ?>
+    <div id="tabs-1">
+        <div class="centro"> 
+            <?php include($_SESSION['inc_path'].'/seguimiento/lista_capacitacion.php'); ?> 
+        </div>
+        <div>
+            <?php include($_SESSION['inc_path'].'/seguimiento/lista_huerto.php'); ?>
+        </div>
+        <div>
+            <?php include($_SESSION['inc_path'].'/seguimiento/lista_apoyos_serv.php'); ?>
+        </div>
+        <div>
+            <!-- listamos las capacitaciones guardadas de la mujer -->
+            <?php include($_SESSION['inc_path'].'/seguimiento/lista_actividad_com.php'); ?>
+        </div>
+        <div>
+            <!-- listamos programas estatales -->
+            <?php include($_SESSION['inc_path'].'/seguimiento/lista_prog_estatal.php'); ?>
+        </div>
+    </div>
 
-                    <?php if(array_key_exists('asigna_actividad_com',$central)){ ?> 
-                    <div class="centro"> 
-                      <?php include($_SESSION['inc_path'].'/seguimiento/asigna_actividad_com.php'); ?>
-                    </div>
-                    <?php } ?> 
-                </div> 
+    <div id="tabs-2">
+        <?php //if(array_key_exists('asigna_capacitacion',$central)){ ?> 
+        <div class="centro">
+            <?php include($_SESSION['inc_path'].'/seguimiento/asigna_capacitacion.php');?> 
+        </div>
+        <?php //} ?>
+
+        <?php if(array_key_exists('asigna_huerto',$central)){ ?> 
+        <div class="centro"> 
+            <?php include($_SESSION['inc_path'].'/seguimiento/asigna_huerto.php'); ?>
+        </div>
+        <?php } ?> 
+
+        <?php if(array_key_exists('asigna_apoyo_serv',$central)){ ?> 
+        <div class="centro">
+            <?php include($_SESSION['inc_path'].'/seguimiento/asigna_apoyo_serv.php'); ?>    
+        </div>
+        <?php } ?>
+
+        <?php if(array_key_exists('asigna_actividad_com',$central)){ ?> 
+        <div class="centro"> 
+            <?php include($_SESSION['inc_path'].'/seguimiento/asigna_actividad_com.php'); ?>
+        </div>
+        <?php } ?> 
+    </div> 
                
     
         

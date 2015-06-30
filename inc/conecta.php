@@ -15,8 +15,8 @@
 	//incluimos la clase MyqliDb por que es externo a la clase 
     include('libs/MysqliDb.php');
     //hacemos una instancia ala clase MysqliDb en la variable $db
-    //$db = new MysqliDb('localhost', 'root', '', 'mujeres_avanzando');
-	$db = new MysqliDb('localhost', 'root', 'difJalisc0', 'mujeres_avanzando');
+    $db = new MysqliDb('localhost', 'root', '', 'mujeres_avanzando');
+	//$db = new MysqliDb('localhost', 'root', 'difJalisc0', 'mujeres_avanzando');
     
     /* Comprueba la conexión */
     if (mysqli_connect_errno()) {

@@ -6,8 +6,9 @@ include_once($_SESSION['model_path'].'mujeres_avanzando.php');
 include_once($_SESSION['model_path'].'familiares_mujer.php');
 include_once($_SESSION['model_path'].'registro_excel_enhina.php');
 include_once($_SESSION['inc_path'].'libs/Permiso.php');
+include_once($_SESSION['inc_path'].'libs/Fechas.php');
 
-class CargaExcel extends MysqliDb{
+class CargaExcel2 extends MysqliDb{
     
     // Variables
     var $Hojas;    
@@ -30,31 +31,36 @@ class CargaExcel extends MysqliDb{
     $maxFila = $hoja_1->getHighestRow();
 	
 	//Obtenemos columnas que necesitaremos	
-	$B = $hoja_1->rangeToArray('B2:B'.$maxFila,null,null,false,true);//Entrevista id
-	$D = $hoja_1->rangeToArray('D2:D'.$maxFila,null,null,false,true);// Folio
-	$R = $hoja_1->rangeToArray('R2:R'.$maxFila,null,null,false,true);// CP
-	$U = $hoja_1->rangeToArray('U2:U'.$maxFila,null,null,false,true);// cve_mun
-	$Z = $hoja_1->rangeToArray('Z2:Z'.$maxFila,null,null,false,true);// completa 'true'
-	$AH = $hoja_1->rangeToArray('AH2:AH'.$maxFila,null,null,false,true); //encuestador 'mac'
+	$B = $hoja_1->rangeToArray('B9:B'.$maxFila,null,null,false,true);//Entrevista id
+	$C = $hoja_1->rangeToArray('C9:C'.$maxFila,null,null,false,true);// Folio
+	$Q = $hoja_1->rangeToArray('Q9:Q'.$maxFila,null,null,false,true);// CP
+	$T = $hoja_1->rangeToArray('T9:T'.$maxFila,null,null,false,true);// cve_mun
+	$Y = $hoja_1->rangeToArray('Y9:Y'.$maxFila,null,null,false,true);// completa 'true'
+	$AE = $hoja_1->rangeToArray('AE9:AE'.$maxFila,null,null,false,true); //encuestador 'mac'
 
     //CALLE, NÚMERO EXTERIOR, NÚMERO INTERIOR, COLONIA, REFERENCIA
-	$AJ_AN = $hoja_1->rangeToArray('AJ2:AN'.$maxFila,null,null,false,true);
+	$AG_AK = $hoja_1->rangeToArray('AG9:AK'.$maxFila,null,null,false,true);
 
     //IndiceGlobal, Nivel Socioeconomico, Calidad Dieta, Diversidad, Variedad, ELCSA
-	$FU_FZ = $hoja_1->rangeToArray('FU2:FZ'.$maxFila,null,null,false,true);	
+	$FZ_GE = $hoja_1->rangeToArray('FZ9:GE'.$maxFila,null,null,false,true);	
 
 	//Recorremos cada registro y solo guardamos los que tengan datos
 	for ($i=0; $i <= $maxFila ; $i++) { 
 
-		if($B[$i]['B'] != NULL && $D[$i]['D'] != NULL){
+		if($B[$i]['B'] != NULL && $C[$i]['C'] != NULL){
 
-			$H[] =$B[$i]+$D[$i]+$R[$i]+$U[$i]+$Z[$i]+$AH[$i]+$AJ_AN[$i]+$FU_FZ[$i];
+			$H[] =$B[$i]+$C[$i]+$Q[$i]+$T[$i]+$Y[$i]+$AE[$i]+$AG_AK[$i]+$FZ_GE[$i];
 			
 			//Validamos total de datos y columnas
 			if(count($H[$j]) == 17){
 
 				//Obtenemos los entrevistados
-		        if(trim($H[$j]['Z']) == 'True'){
+                $entrevistado = trim(strtoupper($H[$j]['Y']));
+
+                //echo $entrevistado.' - '.$H[$j]['Y'];
+                //exit;
+
+		        if($entrevistado == 'TRUE' || $entrevistado == 'VERDADERO' || $entrevistado == 1){
 		            //Guardamos arreglo
 		            $datos_h1[] = $H[$j];
 
@@ -77,8 +83,7 @@ class CargaExcel extends MysqliDb{
 	/*
 	echo'Hoja1: ';
 	print_r($H);
-	exit;
-	*/
+    */
 
 	return array($H,$datos_h1,$datos_h1_false,$msg_no);
 
@@ -99,18 +104,18 @@ class CargaExcel extends MysqliDb{
      $maxFila = $hoja_2->getHighestRow();
      
      //Obtenemos columnas que necesitaremos
-     $C = $hoja_2->rangeToArray('C2:C'.$maxFila,null,null,false,true);//Entrevista id
-     $N = $hoja_2->rangeToArray('N2:N'.$maxFila,null,null,false,true);//Ocupación
-     $X = $hoja_2->rangeToArray('X2:X'.$maxFila,null,null,false,true);//Persona Entrevistada
+     $C = $hoja_2->rangeToArray('C9:C'.$maxFila,null,null,false,true);//Entrevista id
+     $N = $hoja_2->rangeToArray('N9:N'.$maxFila,null,null,false,true);//Ocupación
+     $X = $hoja_2->rangeToArray('X9:X'.$maxFila,null,null,false,true);//Persona Entrevistada
 
      //Paterno, Materno, Nombre, FechaNacimiento
-     $E_H = $hoja_2->rangeToArray('E2:H'.$maxFila,null,null,false,true);
+     $E_H = $hoja_2->rangeToArray('E9:H'.$maxFila,null,null,false,true);
 
      //Genero, Escolaridad
-     $J_K = $hoja_2->rangeToArray('J2:K'.$maxFila,null,null,false,true);     
+     $J_K = $hoja_2->rangeToArray('J9:K'.$maxFila,null,null,false,true);     
 
      //Madre Soltera
-     $AD = $hoja_2->rangeToArray('AD2:AD'.$maxFila,null,null,false,true);
+     $AD = $hoja_2->rangeToArray('AD9:AD'.$maxFila,null,null,false,true);
 
      //Recorremos cada registro y solo guardamos los que tengan datos
      for ($i=0; $i <= $maxFila ; $i++) { 
@@ -380,8 +385,10 @@ class CargaExcel extends MysqliDb{
 	    //Recorremos la hoja
 	    foreach ($hoja1 as $key => $value):	        
 
-	    	//Obtenemos los entrevistados
-	       if(trim($value['Z']) == 'True'){
+            $entrevistado = trim(strtoupper($value['Y']));
+	       
+           //Obtenemos los entrevistados
+	       if($entrevistado == 'TRUE' || $entrevistado == 'VERDADERO' || $entrevistado == 1){
 
 	            //Guardamos arreglo
 	            $datos_h1[] = $value;
@@ -431,12 +438,6 @@ class CargaExcel extends MysqliDb{
 
     }
 
-     private static function convertir_fecha($numero = 0){
-    	
-    	$UNIX_DATE = ($numero - 25569) * 86400;
-		return gmdate("Y-m-d", $UNIX_DATE);
-    }
-
     /**
      * Armamos arreglo para guardar registro en mujeres_avanzando
      * @param  [type] $datos_h1    Arreglo con la información de la hoja 1
@@ -450,17 +451,29 @@ class CargaExcel extends MysqliDb{
 	//Obtenemos id de la entrevista
 	$id_entrevista_h1 = $datos_h1['B'];
 	$id_entrevista_h2 = $datos_h2['C'];
-    $gr = $datos_h1['FU'];
+    
+    //Índice Global
+    $gr = $datos_h1['GE'];
     $grados = 0;
-    $n = $datos_h1['FV'];
+
+    //Nivel Socioeconómico
+    $n = $datos_h1['FZ'];
     $niveles = 0;
-    $cd = $datos_h1['FW'];
+
+    //Calidad de dieta
+    $cd = $datos_h1['GC'];
     $dietas = 0;
-    $d = $datos_h1['FX'];
+
+    //Diversidad de dieta
+    $d = $datos_h1['GA'];    
     $diversidadades = 0;
-    $v = $datos_h1['FY'];
+
+    //Variedad Dieta
+    $v = $datos_h1['GB'];
     $variedades = 0;
-    $elc = $datos_h1['FZ'];
+
+    //ELCSA
+    $elc = $datos_h1['GD'];
     $elcs = 0;
     
     switch (strtoupper(trim($elc))) {
@@ -581,7 +594,7 @@ class CargaExcel extends MysqliDb{
 		if($obj == NULL){
 
 		//Obtenemos programa
-        $prog = substr($datos_h1['AH'], 0,3);
+        $prog = substr($datos_h1['AE'], 0,3);//Encuestador
         $fecha = substr($datos_h2['H'],0,10);
         
         //echo $prog;
@@ -594,11 +607,11 @@ class CargaExcel extends MysqliDb{
 			$materno = $datos_h2['F'];
             $nombres = $datos_h2['G'];			
 
-            /*if(intval($fecha) > 0){
-        	   $fecha_nacimiento = substr(self::convertir_fecha($datos_h2['H']),0,10);
-        	}else{*/
+            if(intval($fecha) > 0){
+        	$fecha_nacimiento = substr(Fechas::convertir_fecha_excel($datos_h2['H']),0,10);
+        	}else{
         		$fecha_nacimiento = Fechas::fechadmyAymd($fecha);
-        	//}
+        	}
 
 
 			$genero = $datos_h2['J'];
@@ -606,19 +619,19 @@ class CargaExcel extends MysqliDb{
             $ocupacion = $datos_h2['N'];   
             $es_madre_soltera = $datos_h2['AD'];         
 
-            $folio = $datos_h1['D'];
-            $CODIGO = $datos_h1['R'];
+            $folio = $datos_h1['C'];
+            $CODIGO = $datos_h1['Q'];
             //$id_ocupacion = $datos_h1['N'];
             //$id_escolaridad = $datos_h1['K'];
-			$id_cat_municipio = str_pad($datos_h1['U'],3,"0",STR_PAD_LEFT);
+			$id_cat_municipio = str_pad($datos_h1['T'],3,"0",STR_PAD_LEFT);
 			//$id_cat_localidad = str_pad($datos_h1['W'],4,"0",STR_PAD_LEFT);			
 			$id_grado = $grados;					
-			$desc_ubicacion = 'CALLE: '.$datos_h1['AJ'].' COLONIA: '.$datos_h1['AM'];
-            $calle = $datos_h1['AJ'];
-            $num_ext = $datos_h1['AK'];
-			$num_int = $datos_h1['AL'];
-            $colonia =$datos_h1['AM'];
-	        $referencia = Permiso::procesa_tel($datos_h1['AN']);
+			$desc_ubicacion = 'CALLE: '.$datos_h1['AG'].' COLONIA: '.$datos_h1['AJ'];
+            $calle = $datos_h1['AG'];
+            $num_ext = $datos_h1['AH'];
+			$num_int = $datos_h1['AI'];
+            $colonia =$datos_h1['AJ'];
+	        $referencia = Permiso::procesa_tel($datos_h1['AK']);
 
             //$referencia=$datos_h1['AN'];
 	        $programa = strtoupper($prog);

@@ -10,8 +10,15 @@ include_once($_SESSION['model_path'].'callcenter_grupo.php');
 //Variable de respuesta
 $respuesta = intval($_GET['r']);
 
+//Obtenemos valores de búsqueda
+$nombre = ($_GET['nombre'])? $_GET['nombre'] : NULL;
+$fecha_instalacion = ($_GET['fecha_instalacion'])? $_GET['fecha_instalacion'] : NULL;
+$id_caravana = ($_GET['id_caravana'])? $_GET['id_caravana'] : NULL;
+
 //Obtenemos listado de grupos                                      
-list($lista,$p) = CallCenterGrupo::listaCallCenterGrupo();
+list($lista,$p) = CallCenterGrupo::listaCallCenterGrupo($nombre,
+                                                        $fecha_instalacion,
+                                                        $id_caravana);
 
 if(count($lista) == 0){
     $respuesta = 8;    
@@ -20,6 +27,8 @@ if(count($lista) == 0){
 //Mensaje respuesta
 list($mensaje,$class) = Permiso::mensajeRespuesta($respuesta);
 
+$caravanas = $db->get('caravana');
+
 //Obtenemos acciones del menú
 $central = Permiso::arregloMenu(substr(basename(__file__),0,-4),'center');
 
@@ -27,6 +36,7 @@ $central = Permiso::arregloMenu(substr(basename(__file__),0,-4),'center');
 
 <script language="javascript" type="text/javascript" src="<?php echo $_SESSION['js_path']?>jquery.timers-1.0.0.js"></script>
 <script lang="JavaScript" type="text/javascript" src="<?php echo $_SESSION['js_path']?><?php echo $_SESSION['module_name']?>/filtro.js"></script>
+<script lang="JavaScript" type="text/javascript" src="<?php echo $_SESSION['js_path']?><?php echo $_SESSION['module_name']?>/valida.js"></script>
 <script lang="JavaScript" type="text/javascript" src="<?php echo $_SESSION['js_path']?>combobox.js"></script>
 
 <script lang="javascript" type="text/javascript" src="<?php echo $_SESSION['js_path'];?>jquery.tablesorter.min.js"></script>
@@ -50,7 +60,7 @@ $(function() {
     <div class="centro">       
         <div  align="center">
      
-       <form id='formbusqueda' method="get" action='listado_caravana.php'>
+       <form id='formbusqueda' method="get" action='lista_grupo_callcenter.php'>
             <fieldset>
             <table>
             <legend>
@@ -71,26 +81,33 @@ $(function() {
 
             <tr>
               <td colspan="2">
-                <label for="descripcion">Descripci&oacute;n</label>
+                <label for="nombre">Nombre</label>
               </td>
               <td colspan="2">
-                <label for="direccion">Direcci&oacute;n</label>
+                <label for="fecha_instalacion">Fecha Instalaci&oacute;n</label>
               </td>
               <td colspan="2">
-                <label for="lugar">Lugar</label>
-              </td>
+                <label for="id_caravana">Caravana</label>
+              </td>              
             </tr>
 
             <tr>          
               <td colspan="2">
-                <input type = 'text' id = 'descripcion' name = 'descripcion' class="direccion"/>
+                <input type = 'text' id = 'nombre' name = 'nombre' />
               </td>
               <td colspan="2">
                 <input type = 'text' id = 'fecha_instalacion' name = 'fecha_instalacion' class="fecha date"/>
+              </td>     
+              <td colspan="2">
+                <select id="id_caravana" name="id_caravana" class="combobox">
+                    <option value="">Seleccione Caravana</option>
+                    <?php foreach($caravanas as $c): ?>
+                        <option value='<?php echo $c['id'] ?>'  <?php echo $selected;?> > 
+                            <?php echo $c['descripcion'];?>
+                        </option>
+                    <?php endforeach; ?>                       
+                </select>     
               </td>              
-              <td>
-                 <input type = 'text' id='status' name='status' class="nom_num"/>
-              </td>
               <td colspan="6">
                 <input type="submit" id="boton"  value="Buscar" />
               </td>

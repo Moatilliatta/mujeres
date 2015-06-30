@@ -42,8 +42,6 @@ function buscaNombre($nombres,$paterno,$materno){
     }
 
     return $beneficario;
-	print_R($beneficiario);
-	exit;
 }
 
 /*

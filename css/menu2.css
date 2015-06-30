@@ -2,10 +2,21 @@
 #menu {
     text-align: center;
     font-size: 12px;
+    background-color: #322f32;
+    border: 1px solid #484548 !important;
+}
+
+#menu *{
+    color: #FFF !important;    
+}
+
+#menu ul{
+    background-color: #322f32; 
+    border: 1px solid #484548 !important; 
 }
 
 #menu li {
-    display: inline-block;
+    display: inline-block;    
 }
 
 .ui-menu {
@@ -25,6 +36,7 @@
     margin: 0;
     padding: 0;
     width: auto;
+    background-color: #322f32; 
 }
 
 #menu li a span.ui-icon-carat-1-e {
@@ -32,7 +44,7 @@
     position:static;
     margin-top:2px;
     width:16px;
-    height:16px;  
+    height:16px;      
     background:url(smoothness/images/ui-icons_883D89_256x240.png) no-repeat -64px -16px;
 }
 
@@ -43,3 +55,22 @@
 .ui-menu .ui-menu-item li a span.ui-icon-carat-1-e {
     background:url(smoothness/images/ui-icons_883D89_256x240.png) no-repeat -32px -16px !important;
 }
+
+#menu .ui-state-active, #menu .ui-widget-content .ui-state-active, 
+#menu .ui-widget-header .ui-state-active{
+    background-color: #322f32 !important;
+    border: 1px solid #484548 !important;
+}
+
+#menu .ui-state-hover,
+#menu .ui-widget-content .ui-state-hover,
+#menu .ui-widget-header .ui-state-hover,
+#menu .ui-state-focus,
+#menu .ui-widget-content .ui-state-focus,
+#menu .ui-widget-header .ui-state-focus {
+ background-color: #322f32 !important;
+ border: 1px solid #484548 !important;   
+ color: white;
+ background: #322f32 url(images/ui-bg_glass_65_ffffff_1x400.png) 50% 50% repeat-x;
+}
+

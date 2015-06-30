@@ -28,8 +28,6 @@ list($lista,$p) = SegCapacitacionMujer::listaCapacitacionMujer($id_mujeres_avanz
 
 ?>
 
-<script lang="JavaScript" type="text/javascript" src="<?php echo $_SESSION['js_path']?><?php echo $_SESSION['module_name']?>/valida.js"></script>
-<script lang="javascript" type="text/javascript" src="<?php echo $_SESSION['js_path'];?>jquery.tablesorter.min.js"></script>
     <script type="text/javascript">
     $(function() {
     $("table").tablesorter({widgets: ['zebra']});

@@ -148,9 +148,9 @@ class SegCapacitacionMujer extends MysqliDb{
      * @return [type]                        [description]
      */
     private static function listCapacitacionMujer($id_mujeres_avanzando = NULL,
-      $id_seg_punto_rosa = NULL,$tipo = NULL,$activo = 1) {
+      $id_seg_punto_rosa = NULL,$tipo = null ,$activo = 1) {
         
-        //echo $tipo;
+        //echo $id_mujeres_avanzando;
         //exit;
         
          $sql = 
@@ -167,7 +167,6 @@ class SegCapacitacionMujer extends MysqliDb{
           FROM seg_capacitacion_mujer scm
           LEFT JOIN mujeres_avanzando m on m.id = scm.id_mujeres_avanzando
           LEFT JOIN seg_punto_rosa_capacitacion sprc on sprc.id = scm.id_seg_punto_rosa_capacitacion 
-           -- LEFT JOIN punto_rosa p on p.id = sprc.id_seg_punto_rosa
           LEFT JOIN seg_punto_rosa p on p.id = sprc.id_seg_punto_rosa
           INNER JOIN seg_capacitacion sc on sc.id = sprc.id_seg_capacitacion 
           where 1';
@@ -175,7 +174,7 @@ class SegCapacitacionMujer extends MysqliDb{
           //Parámetros de la sentencia
           $params = array('',' ','',' ','');
           
-           if($id_mujeres_avanzando !=null){
+           if($tipo!=null ){
                     
           $sql .= ' AND sc.tipo = ? ';
           $params[] = $tipo;
@@ -205,7 +204,7 @@ class SegCapacitacionMujer extends MysqliDb{
           $params[] = $activo;
 
         }        
-
+        
         return array($sql,$params);          
      }
 
@@ -232,10 +231,14 @@ class SegCapacitacionMujer extends MysqliDb{
     public static function listadoCapacitacionMujer($id_mujeres_avanzando = NULL,
       $id_seg_punto_rosa = NULL,$tipo = NULL){
         
+        //echo $id_mujeres_avanzando;
+        //exit;
       list($sql,$params) = self::listCapacitacionMujer($id_mujeres_avanzando,
                                                          $id_seg_punto_rosa,
                                                          $tipo);
-
+         //print_r($params);
+         //echo $sql;
+        // exit;
        
         $obj = self::executar($sql,$params);
         
@@ -247,7 +250,8 @@ class SegCapacitacionMujer extends MysqliDb{
         foreach ($obj as $key => $value):
           $l[] = $value['id_seg_punto_rosa_capacitacion'];
         endforeach;
-
+        //print_r($l);
+        //exit;
         //Regresamos resultado
         return  $l;
          

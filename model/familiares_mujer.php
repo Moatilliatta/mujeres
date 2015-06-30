@@ -371,7 +371,7 @@ class FamiliaresMujer extends MysqliDb{
 
         if(is_array($id_entrevista_noc) && count($id_entrevista_noc) > 0){
 
-            $lista = self::getInstance()->where('id_entrevista', $id_entrevista_noc,'IN')
+            $lista = self::getInstance()->where('id_entrevista', Array( 'IN' => $id_entrevista_noc))
                                         ->groupby('CONCAT(nombres,paterno,materno)')
                                         ->get('familiares_mujer');            
         }

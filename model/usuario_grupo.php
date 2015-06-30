@@ -2,7 +2,7 @@
 /**
  * Clase que nos permite administrar lo relacionado a la tabla Usuario
  * **/ 
-
+include_once($_SESSION['inc_path'].'libs/Paginador.php');
 class UsuarioGrupo extends MysqliDb
 {
 

@@ -24,7 +24,7 @@ class MysqliDb
      * 
      * @var string
      */
-    protected static $_prefix;
+    public static $prefix;
     /**
      * MySQLi instance
      *
@@ -220,7 +220,7 @@ class MysqliDb
      */
     public function setPrefix($prefix = '')
     {
-        self::$_prefix = $prefix;
+        self::$prefix = $prefix;
         return $this;
     }
 
@@ -333,7 +333,7 @@ class MysqliDb
 
         $column = is_array($columns) ? implode(', ', $columns) : $columns; 
         $this->_query = 'SELECT ' . implode(' ', $this->_queryOptions) . ' ' .
-                        $column . " FROM " .self::$_prefix . $tableName;
+                        $column . " FROM " .self::$prefix . $tableName;
         $stmt = $this->_buildQuery($numRows);
 
         if ($this->isSubQuery)
@@ -396,7 +396,7 @@ class MysqliDb
         if ($this->isSubQuery)
             return;
 
-        $this->_query = "INSERT INTO " .self::$_prefix . $tableName;
+        $this->_query = "INSERT INTO " .self::$prefix . $tableName;
         $stmt = $this->_buildQuery(null, $insertData);
         $stmt->execute();
         $this->_stmtError = $stmt->error;
@@ -439,7 +439,7 @@ class MysqliDb
         if ($this->isSubQuery)
             return;
 
-        $this->_query = "UPDATE " . self::$_prefix . $tableName;
+        $this->_query = "UPDATE " . self::$prefix . $tableName;
 
         $stmt = $this->_buildQuery (null, $tableData);
         $status = $stmt->execute();
@@ -464,7 +464,7 @@ class MysqliDb
         if ($this->isSubQuery)
             return;
 
-        $this->_query = "DELETE FROM " . self::$_prefix . $tableName;
+        $this->_query = "DELETE FROM " . self::$prefix . $tableName;
 
         $stmt = $this->_buildQuery($numRows);
         $stmt->execute();
@@ -531,7 +531,7 @@ class MysqliDb
             die ('Wrong JOIN type: '.$joinType);
 
         if (!is_object ($joinTable))
-            $joinTable = self::$_prefix . filter_var($joinTable, FILTER_SANITIZE_STRING);
+            $joinTable = self::$prefix . filter_var($joinTable, FILTER_SANITIZE_STRING);
 
         $this->_join[] = Array ($joinType,  $joinTable, $joinCondition);
 
@@ -552,6 +552,12 @@ class MysqliDb
         $allowedDirection = Array ("ASC", "DESC");
         $orderbyDirection = strtoupper (trim ($orderbyDirection));
         $orderByField = preg_replace ("/[^-a-z0-9\.\(\),_`]+/i",'', $orderByField);
+
+        // Add table prefix to orderByField if needed. 
+        //FIXME: We are adding prefix only if table is enclosed into `` to distinguish aliases
+        // from table names
+        $orderByField = preg_replace('/(\`)([`a-zA-Z0-9_]*\.)/', '\1' . self::$prefix.  '\2', $orderByField);
+
 
         if (empty($orderbyDirection) || !in_array ($orderbyDirection, $allowedDirection))
             die ('Wrong order direction: '.$orderbyDirection);
@@ -905,7 +911,7 @@ class MysqliDb
                         $this->_bindParams ($val);
                     else if ($val === null)
                         $this->_query .= $operator . " NULL";
-                    else if ($val != 'DBNULL')
+                    else if ($val != 'DBNULL' || $val == '0')
                         $this->_query .= $this->_buildPair ($operator, $val);
             }
         }
@@ -1022,7 +1028,7 @@ class MysqliDb
             $val = $vals[$i++];
             if (is_object ($val))
                 $val = '[object]';
-            if ($val == NULL)
+            if ($val === NULL)
                 $val = 'NULL';
             $newStr .= substr ($str, 0, $pos) . "'". $val . "'";
             $str = substr ($str, $pos + 1);

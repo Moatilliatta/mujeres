@@ -705,5 +705,13 @@ class Fechas{
 
 		return $dias_diferencia;
 	}
-}
+
+
+	}
+
+	public static function convertir_fecha_excel($numero = 0){
+    	
+    	$UNIX_DATE = ($numero - 25569) * 86400;
+		return gmdate("Y-m-d", $UNIX_DATE);
+    }
 }
