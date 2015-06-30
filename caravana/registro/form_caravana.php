@@ -107,12 +107,12 @@ if(intval($id_edicion)>0){
 
     <tr>
       <td>
-        <label for="activo">Lugar</label>
+        <label for="id_tipo_lugar">Lugar</label>
       </td>
     </tr>
     <tr>
       <td>
-        <select id="activo" name="activo">
+        <select id="id_tipo_lugar" name="id_tipo_lugar">
           <?php foreach($lugar as $l){                         
               $selected = ($l['id'] == $caravana['id_tipo_lugar'])? "selected" : '' ;
               ?>

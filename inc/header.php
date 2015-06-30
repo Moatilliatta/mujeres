@@ -115,8 +115,8 @@ basename($_SERVER['PHP_SELF']) !=  'clave_usuario.php'){
    <?php 
     //Mostramos menú de acciones si no estamos en un menú principal
     //if(basename($_SERVER['PHP_SELF']) != 'menu.php'){         
-        //include($_SESSION['inc_path'].'menu_acciones2.php');
-        include($_SESSION['inc_path'].'menu_acciones.php');
+        include($_SESSION['inc_path'].'menu_acciones2.php');
+        //include($_SESSION['inc_path'].'menu_acciones.php');
     //}
     ?>    
     <div id="cintillo">

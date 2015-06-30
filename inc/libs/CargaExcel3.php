@@ -6,8 +6,9 @@ include_once($_SESSION['model_path'].'mujeres_avanzando.php');
 include_once($_SESSION['model_path'].'familiares_mujer.php');
 include_once($_SESSION['model_path'].'registro_excel_enhina.php');
 include_once($_SESSION['inc_path'].'libs/Permiso.php');
+include_once($_SESSION['inc_path'].'libs/Fechas.php');
 
-class CargaExcel extends MysqliDb{
+class CargaExcel3 extends MysqliDb{
     
     // Variables
     var $Hojas;    
@@ -17,9 +18,9 @@ class CargaExcel extends MysqliDb{
 
     public static function hoja1($hoja_1){
 
-    //Columnas: B,D,R,U,Z,AH,AJ,AK,AL,AM,AN,FU,FV,FW,FX,FY,FZ
+    //Columnas: B,C,Q,T,Y,AE,AG,AH,AI,AJ,AK,FZ,GA,GB,GC,GD,GE
 
-    //Variable donde guardaremos la Hoja 2
+    //Variable donde guardaremos la Hoja 1
     $H = NULL;
 	$datos_h1 = NULL;
 	$datos_h1_false = NULL;
@@ -31,30 +32,35 @@ class CargaExcel extends MysqliDb{
 	
 	//Obtenemos columnas que necesitaremos	
 	$B = $hoja_1->rangeToArray('B2:B'.$maxFila,null,null,false,true);//Entrevista id
-	$D = $hoja_1->rangeToArray('D2:D'.$maxFila,null,null,false,true);// Folio
-	$R = $hoja_1->rangeToArray('R2:R'.$maxFila,null,null,false,true);// CP
-	$U = $hoja_1->rangeToArray('U2:U'.$maxFila,null,null,false,true);// cve_mun
-	$Z = $hoja_1->rangeToArray('Z2:Z'.$maxFila,null,null,false,true);// completa 'true'
-	$AH = $hoja_1->rangeToArray('AH2:AH'.$maxFila,null,null,false,true); //encuestador 'mac'
+	$C = $hoja_1->rangeToArray('C2:C'.$maxFila,null,null,false,true);// Folio
+	$Q = $hoja_1->rangeToArray('Q2:Q'.$maxFila,null,null,false,true);// CP
+	$T = $hoja_1->rangeToArray('T2:T'.$maxFila,null,null,false,true);// cve_mun
+	$Y = $hoja_1->rangeToArray('Y2:Y'.$maxFila,null,null,false,true);// completa 'true'
+	$AE = $hoja_1->rangeToArray('AE2:AE'.$maxFila,null,null,false,true); //encuestador 'mac'
 
     //CALLE, NÚMERO EXTERIOR, NÚMERO INTERIOR, COLONIA, REFERENCIA
-	$AJ_AN = $hoja_1->rangeToArray('AJ2:AN'.$maxFila,null,null,false,true);
+	$AG_AK = $hoja_1->rangeToArray('AG2:AK'.$maxFila,null,null,false,true);
 
     //IndiceGlobal, Nivel Socioeconomico, Calidad Dieta, Diversidad, Variedad, ELCSA
-	$FU_FZ = $hoja_1->rangeToArray('FU2:FZ'.$maxFila,null,null,false,true);	
+	$FZ_GE = $hoja_1->rangeToArray('FZ2:GE'.$maxFila,null,null,false,true);	
 
 	//Recorremos cada registro y solo guardamos los que tengan datos
 	for ($i=0; $i <= $maxFila ; $i++) { 
 
-		if($B[$i]['B'] != NULL && $D[$i]['D'] != NULL){
+		if($B[$i]['B'] != NULL && $C[$i]['C'] != NULL){
 
-			$H[] =$B[$i]+$D[$i]+$R[$i]+$U[$i]+$Z[$i]+$AH[$i]+$AJ_AN[$i]+$FU_FZ[$i];
+			$H[] =$B[$i]+$C[$i]+$Q[$i]+$T[$i]+$Y[$i]+$AE[$i]+$AG_AK[$i]+$FZ_GE[$i];
 			
 			//Validamos total de datos y columnas
 			if(count($H[$j]) == 17){
 
 				//Obtenemos los entrevistados
-		        if(trim($H[$j]['Z']) == 'True'){
+                $entrevistado = trim(strtoupper($H[$j]['Y']));
+
+                //echo $entrevistado.' - '.$H[$j]['Y'];
+                //exit;
+
+		        if($entrevistado == 'TRUE' || $entrevistado == 'VERDADERO' || $entrevistado == 1){
 		            //Guardamos arreglo
 		            $datos_h1[] = $H[$j];
 
@@ -77,8 +83,7 @@ class CargaExcel extends MysqliDb{
 	/*
 	echo'Hoja1: ';
 	print_r($H);
-	exit;
-	*/
+    */
 
 	return array($H,$datos_h1,$datos_h1_false,$msg_no);
 
@@ -86,7 +91,7 @@ class CargaExcel extends MysqliDb{
 
     public static function hoja2($hoja_2){
      
-     //Columnas "C","E","F","G","H","J","K","N","X"
+     //Columnas "C","E","J","N","X","AD"
 
      //Variable donde guardaremos la Hoja 2
      $H2 = NULL;
@@ -173,6 +178,8 @@ class CargaExcel extends MysqliDb{
     $total_prog_mac = 0;
     $total_prog_map = 0;
     $total_prog_mas = 0;
+    $total_prog_sol = 0;
+    $total_prog_pio = 0;
     $total_registrados = 0;
     $total_duplicados = 0;
     $total_no_coinciden = 0;
@@ -254,7 +261,7 @@ class CargaExcel extends MysqliDb{
 		            break;
 		    case 22://No coinciden ID de entrevista
 		    		$total_no_coinciden++;
-		    		$id_entrevista_noc[$value['D']]=$value['B'];
+		    		$id_entrevista_noc[$value['C']]=$value['B'];
 		    		$id_entrevista_dup[]=$beneficiarias[$k]['C'];
 		    		break;
 		    default:$id_entrevista_dup[]=$beneficiarias[$k]['C'];
@@ -262,7 +269,7 @@ class CargaExcel extends MysqliDb{
 		}
 
 		//Obtenemos programa
-		$prog = substr($value['AH'], 0,3);
+		$prog = substr($value['AE'], 0,3);
         
         //echo $prog;
         //exit;
@@ -274,12 +281,16 @@ class CargaExcel extends MysqliDb{
 			case 'MAP': $total_prog_map++;
 						break;
             case 'MAS': $total_prog_mas++;
-						break;            
+						break;
+            case 'SOL': $total_prog_sol++;
+                        break;
+			case 'PIO': $total_prog_pio++;
+                        break;
 			default: break;
 		}
 
 		//Obtenemos grado de inseguridad
-		$grado_ins = $value['FU'];
+		$grado_ins = $value['GE'];
 
 		//Dependiendo el programa evaluamos
 		switch (trim(strtoupper($grado_ins))){
@@ -321,6 +332,8 @@ class CargaExcel extends MysqliDb{
 						'total_prog_mac' => $total_prog_mac,
 						'total_prog_map' => $total_prog_map,
                         'total_prog_mas' => $total_prog_mas,
+                        'total_prog_sol' => $total_prog_sol,
+                        'total_prog_pio' => $total_prog_pio,
 						'total_registrados' => $total_registrados,
 						'total_duplicados' => $total_duplicados,
 						'total_no_coinciden' => $total_no_coinciden,
@@ -380,8 +393,10 @@ class CargaExcel extends MysqliDb{
 	    //Recorremos la hoja
 	    foreach ($hoja1 as $key => $value):	        
 
-	    	//Obtenemos los entrevistados
-	       if(trim($value['Z']) == 'True'){
+            $entrevistado = trim(strtoupper($value['Y']));
+	       
+           //Obtenemos los entrevistados
+	       if($entrevistado == 'TRUE' || $entrevistado == 'VERDADERO' || $entrevistado == 1){
 
 	            //Guardamos arreglo
 	            $datos_h1[] = $value;
@@ -431,12 +446,6 @@ class CargaExcel extends MysqliDb{
 
     }
 
-     private static function convertir_fecha($numero = 0){
-    	
-    	$UNIX_DATE = ($numero - 25569) * 86400;
-		return gmdate("Y-m-d", $UNIX_DATE);
-    }
-
     /**
      * Armamos arreglo para guardar registro en mujeres_avanzando
      * @param  [type] $datos_h1    Arreglo con la información de la hoja 1
@@ -450,17 +459,29 @@ class CargaExcel extends MysqliDb{
 	//Obtenemos id de la entrevista
 	$id_entrevista_h1 = $datos_h1['B'];
 	$id_entrevista_h2 = $datos_h2['C'];
-    $gr = $datos_h1['FU'];
+    
+    //Índice Global
+    $gr = $datos_h1['GE'];
     $grados = 0;
-    $n = $datos_h1['FV'];
+
+    //Nivel Socioeconómico
+    $n = $datos_h1['FZ'];
     $niveles = 0;
-    $cd = $datos_h1['FW'];
+
+    //Calidad de dieta
+    $cd = $datos_h1['GC'];
     $dietas = 0;
-    $d = $datos_h1['FX'];
+
+    //Diversidad de dieta
+    $d = $datos_h1['GA'];    
     $diversidadades = 0;
-    $v = $datos_h1['FY'];
+
+    //Variedad Dieta
+    $v = $datos_h1['GB'];
     $variedades = 0;
-    $elc = $datos_h1['FZ'];
+
+    //ELCSA
+    $elc = $datos_h1['GD'];
     $elcs = 0;
     
     switch (strtoupper(trim($elc))) {
@@ -484,7 +505,7 @@ class CargaExcel extends MysqliDb{
     }
     
     switch (strtoupper(trim($v))) {
-    	case 'NO VARIADA':
+    	case 'NO VARIADA': case 'MONOTONA': case 'MONÓTONA':
     		$variedades = 1;
     		break;
     	case 'POCO VARIADA':
@@ -569,7 +590,7 @@ class CargaExcel extends MysqliDb{
     //exit;
     
 	//Programas válidos
-	$programas = array('MAP','MAC','MAS');
+	$programas = array('MAP','MAC','MAS','SOL','PIO');
 
 	//Los ID de ambas hojas deben coincidir
 	if($id_entrevista_h1 == $id_entrevista_h2){
@@ -581,7 +602,7 @@ class CargaExcel extends MysqliDb{
 		if($obj == NULL){
 
 		//Obtenemos programa
-        $prog = substr($datos_h1['AH'], 0,3);
+        $prog = substr($datos_h1['AE'], 0,3);//Encuestador
         $fecha = substr($datos_h2['H'],0,10);
         
         //echo $prog;
@@ -594,11 +615,11 @@ class CargaExcel extends MysqliDb{
 			$materno = $datos_h2['F'];
             $nombres = $datos_h2['G'];			
 
-            /*if(intval($fecha) > 0){
-        	   $fecha_nacimiento = substr(self::convertir_fecha($datos_h2['H']),0,10);
-        	}else{*/
+            if(intval($fecha) > 0){
+        	$fecha_nacimiento = substr(Fechas::convertir_fecha_excel($datos_h2['H']),0,10);
+        	}else{
         		$fecha_nacimiento = Fechas::fechadmyAymd($fecha);
-        	//}
+        	}
 
 
 			$genero = $datos_h2['J'];
@@ -606,19 +627,19 @@ class CargaExcel extends MysqliDb{
             $ocupacion = $datos_h2['N'];   
             $es_madre_soltera = $datos_h2['AD'];         
 
-            $folio = $datos_h1['D'];
-            $CODIGO = $datos_h1['R'];
+            $folio = $datos_h1['C'];
+            $CODIGO = $datos_h1['Q'];
             //$id_ocupacion = $datos_h1['N'];
             //$id_escolaridad = $datos_h1['K'];
-			$id_cat_municipio = str_pad($datos_h1['U'],3,"0",STR_PAD_LEFT);
+			$id_cat_municipio = str_pad($datos_h1['T'],3,"0",STR_PAD_LEFT);
 			//$id_cat_localidad = str_pad($datos_h1['W'],4,"0",STR_PAD_LEFT);			
 			$id_grado = $grados;					
-			$desc_ubicacion = 'CALLE: '.$datos_h1['AJ'].' COLONIA: '.$datos_h1['AM'];
-            $calle = $datos_h1['AJ'];
-            $num_ext = $datos_h1['AK'];
-			$num_int = $datos_h1['AL'];
-            $colonia =$datos_h1['AM'];
-	        $referencia = Permiso::procesa_tel($datos_h1['AN']);
+			$desc_ubicacion = 'CALLE: '.$datos_h1['AG'].' COLONIA: '.$datos_h1['AJ'];
+            $calle = $datos_h1['AG'];
+            $num_ext = $datos_h1['AH'];
+			$num_int = $datos_h1['AI'];
+            $colonia =$datos_h1['AJ'];
+	        $referencia = Permiso::procesa_tel($datos_h1['AK']);
 
             //$referencia=$datos_h1['AN'];
 	        $programa = strtoupper($prog);

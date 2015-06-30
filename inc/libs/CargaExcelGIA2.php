@@ -1,13 +1,17 @@
 <?php
+/**
+ * ATENCIÓN : La información corresponde a la clase CargaExcel3.php
+ */
+
 //Librería para leer/crear exceles
 include_once('PHPExcel.php');
 //Obtenemos el modelo de mujeres avanzando
 include_once($_SESSION['model_path'].'mujeres_avanzando.php');
-include_once($_SESSION['model_path'].'familiares_mujer.php');
+include_once($_SESSION['model_path'].'historico_gia.php');
 include_once($_SESSION['model_path'].'registro_excel_enhina.php');
 include_once($_SESSION['inc_path'].'libs/Permiso.php');
 
-class CargaExcel extends MysqliDb{
+class CargaExcelGIA extends MysqliDb{
     
     // Variables
     var $Hojas;    
@@ -17,7 +21,7 @@ class CargaExcel extends MysqliDb{
 
     public static function hoja1($hoja_1){
 
-    //Columnas: B,D,R,U,Z,AH,AJ,AK,AL,AM,AN,FU,FV,FW,FX,FY,FZ
+    //Columnas: B,C,Y,AE,FZ,GA,GB,GC,GD,GE
 
     //Variable donde guardaremos la Hoja 2
     $H = NULL;
@@ -29,32 +33,33 @@ class CargaExcel extends MysqliDb{
     //Variable donde guardaremos la Hoja 1
     $maxFila = $hoja_1->getHighestRow();
 	
-	//Obtenemos columnas que necesitaremos	
+    //Obtenemos columnas que necesitaremos	
 	$B = $hoja_1->rangeToArray('B2:B'.$maxFila,null,null,false,true);//Entrevista id
-	$D = $hoja_1->rangeToArray('D2:D'.$maxFila,null,null,false,true);// Folio
-	$R = $hoja_1->rangeToArray('R2:R'.$maxFila,null,null,false,true);// CP
-	$U = $hoja_1->rangeToArray('U2:U'.$maxFila,null,null,false,true);// cve_mun
-	$Z = $hoja_1->rangeToArray('Z2:Z'.$maxFila,null,null,false,true);// completa 'true'
-	$AH = $hoja_1->rangeToArray('AH2:AH'.$maxFila,null,null,false,true); //encuestador 'mac'
-
-    //CALLE, NÚMERO EXTERIOR, NÚMERO INTERIOR, COLONIA, REFERENCIA
-	$AJ_AN = $hoja_1->rangeToArray('AJ2:AN'.$maxFila,null,null,false,true);
+	$C = $hoja_1->rangeToArray('C2:C'.$maxFila,null,null,false,true);// Folio
+	$Y = $hoja_1->rangeToArray('Y2:Y'.$maxFila,null,null,false,true);// completa 'true'
+	$AE = $hoja_1->rangeToArray('AE2:AE'.$maxFila,null,null,false,true); //encuestador 'mac'
 
     //IndiceGlobal, Nivel Socioeconomico, Calidad Dieta, Diversidad, Variedad, ELCSA
-	$FU_FZ = $hoja_1->rangeToArray('FU2:FZ'.$maxFila,null,null,false,true);	
+	$FZ_GE = $hoja_1->rangeToArray('FZ2:GE'.$maxFila,null,null,false,true);	
 
 	//Recorremos cada registro y solo guardamos los que tengan datos
 	for ($i=0; $i <= $maxFila ; $i++) { 
 
-		if($B[$i]['B'] != NULL && $D[$i]['D'] != NULL){
+		if($B[$i]['B'] != NULL && $C[$i]['C'] != NULL){
 
-			$H[] =$B[$i]+$D[$i]+$R[$i]+$U[$i]+$Z[$i]+$AH[$i]+$AJ_AN[$i]+$FU_FZ[$i];
+			$H[] =$B[$i]+$C[$i]+$Y[$i]+$AE[$i]+$FZ_GE[$i];
 			
 			//Validamos total de datos y columnas
-			if(count($H[$j]) == 17){
+			if(count($H[$j]) == 10){
 
 				//Obtenemos los entrevistados
-		        if(trim($H[$j]['Z']) == 'True'){
+		         $entrevistado = trim(strtoupper($H[$j]['Y']));
+
+                //echo $entrevistado.' - '.$H[$j]['Y'];
+                //exit;
+
+		        if($entrevistado == 'TRUE' || $entrevistado == 'VERDADERO' || $entrevistado == 1){
+
 		            //Guardamos arreglo
 		            $datos_h1[] = $H[$j];
 
@@ -64,9 +69,9 @@ class CargaExcel extends MysqliDb{
 
 			}else{
 			
-			//Número incorrecto de columnas y/o datos incorrectos
-			$msg_no = 20;
-			break;
+				//Número incorrecto de columnas y/o datos incorrectos
+				$msg_no = 20;
+				break;
 
 			}			
 
@@ -86,7 +91,7 @@ class CargaExcel extends MysqliDb{
 
     public static function hoja2($hoja_2){
      
-     //Columnas "C","E","F","G","H","J","K","N","X"
+     //Columnas "C","E","F","G","H","J","X"
 
      //Variable donde guardaremos la Hoja 2
      $H2 = NULL;
@@ -98,28 +103,22 @@ class CargaExcel extends MysqliDb{
      //Obtenemos la fila más grande
      $maxFila = $hoja_2->getHighestRow();
      
-     //Obtenemos columnas que necesitaremos
+      //Obtenemos columnas que necesitaremos
      $C = $hoja_2->rangeToArray('C2:C'.$maxFila,null,null,false,true);//Entrevista id
-     $N = $hoja_2->rangeToArray('N2:N'.$maxFila,null,null,false,true);//Ocupación
      $X = $hoja_2->rangeToArray('X2:X'.$maxFila,null,null,false,true);//Persona Entrevistada
+     $J = $hoja_2->rangeToArray('J2:J'.$maxFila,null,null,false,true);//Genero
 
      //Paterno, Materno, Nombre, FechaNacimiento
-     $E_H = $hoja_2->rangeToArray('E2:H'.$maxFila,null,null,false,true);
-
-     //Genero, Escolaridad
-     $J_K = $hoja_2->rangeToArray('J2:K'.$maxFila,null,null,false,true);     
-
-     //Madre Soltera
-     $AD = $hoja_2->rangeToArray('AD2:AD'.$maxFila,null,null,false,true);
+     $E_H = $hoja_2->rangeToArray('E2:H'.$maxFila,null,null,false,true);     
 
      //Recorremos cada registro y solo guardamos los que tengan datos
      for ($i=0; $i <= $maxFila ; $i++) { 
 		if($C[$i]['C'] != NULL){
 
-			$H2[] =$C[$i]+$E_H[$i]+$J_K[$i]+$N[$i]+$X[$i]+$AD[$i];	
+			$H2[] =$C[$i]+$X[$i]+$J[$i]+$E_H[$i];	
 
 			//Validamos total de datos y columnas
-			if(count($H2[$j]) == 10){
+			if(count($H2[$j]) == 7){
 
 				//Obtenemos los entrevistados
 	       		if(trim($H2[$j]['X']) == 'SI'){
@@ -162,29 +161,29 @@ class CargaExcel extends MysqliDb{
 	*    	 int $msg_no Mensaje generado
 	*		 int $id_generado ID generado
     **/
-    public static function carga($nombre,$ruta = NULL,$id_caravana=0,$visita = 1,$ext = 'xls'){
+    public static function carga($nombre,$ruta = NULL,$id_caravana=0,$visita = 0,$ext = 'xls'){
       
 
     //Inicializamos variables
     $msg_no = 0;
     $total_encuestados = 0;
     $total_enc_completo = 0;
-    $total_familiares = 0;
     $total_prog_mac = 0;
     $total_prog_map = 0;
     $total_prog_mas = 0;
     $total_registrados = 0;
-    $total_duplicados = 0;
     $total_no_coinciden = 0;
-    $total_enc_inc = 0;
-    $id_entrevista_dup = NULL;
+    $total_no_encontrado = 0;
     $id_entrevista_noc = NULL;
-	$total_enc_inc = NULL;    
+    $total_enc_inc = 0;
 	$total_severa = 0;
 	$total_moderada = 0;
 	$total_leve = 0;
 	$total_segura = 0;
 	$total_otra = 0;
+
+	//Arreglo de personas no encontradas en sistema
+	$no_encontradas = array();
 
      //Obtenemos ruta
      $ruta = ($ruta == NULL)? $_SESSION['files_path'] : $ruta ;
@@ -247,22 +246,30 @@ class CargaExcel extends MysqliDb{
 		switch ($msg_no) {
 			case 1:$total_registrados++;
 					break;
-			case 21://Registro de Beneficiario duplicado
-		            $total_duplicados++;
-		            //Guardamos el ID de entrevista para no duplicar los familiares
-		            $id_entrevista_dup[]=$beneficiarias[$k]['C'];
-		            break;
 		    case 22://No coinciden ID de entrevista
 		    		$total_no_coinciden++;
-		    		$id_entrevista_noc[$value['D']]=$value['B'];
-		    		$id_entrevista_dup[]=$beneficiarias[$k]['C'];
+		    		$id_entrevista_noc[$value['C']]=$value['B'];
 		    		break;
-		    default:$id_entrevista_dup[]=$beneficiarias[$k]['C'];
+
+			case 30:$total_no_encontrado++;
+					
+					$fecha = substr($beneficiarias[$k]['H'],0,10);
+        			$fecha_nacimiento = Fechas::fechadmyAymd($fecha);
+
+					$no_enc['id_entrevista']=$beneficiarias[$k]['C'];
+					$no_enc['folio']=$value['C'];
+					$no_enc['paterno']=$beneficiarias[$k]['E'];
+					$no_enc['materno']=$beneficiarias[$k]['F'];
+					$no_enc['nombre']=$beneficiarias[$k]['G'];
+					$no_enc['fecha_nacimiento']=$fecha_nacimiento;
+					$no_encontradas[] = $no_enc;
+		            break;
+		    default:
 		    		break;
 		}
 
 		//Obtenemos programa
-		$prog = substr($value['AH'], 0,3);
+		$prog = substr($value['AE'], 0,3);
         
         //echo $prog;
         //exit;
@@ -297,46 +304,31 @@ class CargaExcel extends MysqliDb{
 
 		endforeach;
 
-		$id_entrevista_dup = ($id_entrevista_dup == NULL)? array(0) : $id_entrevista_dup ;
-		$id_entrevista_noc = ($id_entrevista_noc == NULL)? array() : $id_entrevista_noc ;
 		$datos_h1_false = ($datos_h1_false == NULL)? array(0) : $datos_h1_false ;
-
-		//Recorremos los registro de los familiares
-		if(count($familiares) > 0 ){
-			foreach ($familiares as $key => $valor):
-				
-				if(!in_array($valor['C'], $id_entrevista_dup) && 
-					!in_array($valor['C'], $datos_h1_false)){
-					$msg_no = FamiliaresMujer::guardaFamiliares($valor);
-					$total_familiares++;
-				}				
-
-			endforeach;
-		}		
+		$id_entrevista_noc = ($id_entrevista_noc == NULL)? array() : $id_entrevista_noc ;
+		
 
 		$totales = array('total_encuestados' => $total_encuestados,
 						'total_enc_completo' => $total_enc_completo,
 						'total_enc_inc' => $total_enc_inc,
-						'total_familiares' => $total_familiares,
 						'total_prog_mac' => $total_prog_mac,
 						'total_prog_map' => $total_prog_map,
                         'total_prog_mas' => $total_prog_mas,
 						'total_registrados' => $total_registrados,
-						'total_duplicados' => $total_duplicados,
 						'total_no_coinciden' => $total_no_coinciden,
-						'id_entrevista_noc' => $id_entrevista_noc,
+						'total_no_encontrado' => $total_no_encontrado,
 						'total_severa' => $total_severa,
 						'total_moderada' => $total_moderada,
 						'total_leve' => $total_leve,
 						'total_segura' => $total_segura,
 						'total_otra' => $total_otra,
+						'id_entrevista_noc' => $id_entrevista_noc,
 						'nombre' => $nombre);
 
 		Registro_excel::saveRegistroexcel($totales); 
 
-	}                            		
-			
-	return array($msg_no,$totales);
+	}    
+	return array($msg_no,$totales,$no_encontradas);
 
     }
 
@@ -381,7 +373,7 @@ class CargaExcel extends MysqliDb{
 	    foreach ($hoja1 as $key => $value):	        
 
 	    	//Obtenemos los entrevistados
-	       if(trim($value['Z']) == 'True'){
+	       if(trim($value['Y']) == 'True'){
 
 	            //Guardamos arreglo
 	            $datos_h1[] = $value;
@@ -431,11 +423,23 @@ class CargaExcel extends MysqliDb{
 
     }
 
-     private static function convertir_fecha($numero = 0){
-    	
-    	$UNIX_DATE = ($numero - 25569) * 86400;
-		return gmdate("Y-m-d", $UNIX_DATE);
-    }
+    /**
+     * Buscamos beneficiaria por nombre
+     * @param  [type] $paterno [description]
+     * @param  [type] $materno [description]
+     * @param  [type] $nombre  [description]
+     * @return [type]          [description]
+     */
+    private static function buscaNombre($paterno,$materno,$nombre,$fecha_nacimiento = NULL) {
+   	
+ 	 //Obtenemos soundex del nombre y apellido paterno
+   	 $soundex = mujeresAvanzando::getInstance()->soundex($nombre.' '.$paterno);
+
+ 	 $mujeres_avanzando = mujeresAvanzando::get_by_soundex_fecha($soundex,$fecha_nacimiento);
+
+ 	 return $mujeres_avanzando;
+
+	}
 
     /**
      * Armamos arreglo para guardar registro en mujeres_avanzando
@@ -449,252 +453,210 @@ class CargaExcel extends MysqliDb{
 
 	//Obtenemos id de la entrevista
 	$id_entrevista_h1 = $datos_h1['B'];
+	$id_entrevista_h2 = $datos_h2['C'];    
+    
+	//Obtenemos id de la entrevista
+	$id_entrevista_h1 = $datos_h1['B'];
 	$id_entrevista_h2 = $datos_h2['C'];
-    $gr = $datos_h1['FU'];
+    
+    //Índice Global
+    $gr = $datos_h1['GE'];
     $grados = 0;
-    $n = $datos_h1['FV'];
-    $niveles = 0;
-    $cd = $datos_h1['FW'];
-    $dietas = 0;
-    $d = $datos_h1['FX'];
-    $diversidadades = 0;
-    $v = $datos_h1['FY'];
-    $variedades = 0;
-    $elc = $datos_h1['FZ'];
-    $elcs = 0;
-    
-    switch (strtoupper(trim($elc))) {
-    	case 'LEVE':
-    		$elcs = 1;
-    		break;
-    	case 'MODERADA':
-    		$elcs = 2;
-    		break;
-    	case 'SEGURA':
-    		$elcs = 3;
-    		break;
-        case 'SEVERA':
-    		$elcs = 4;
-    		break;
-        
-    
-    	default:
-    		# code...
-    		break;
-    }
-    
-    switch (strtoupper(trim($v))) {
-    	case 'NO VARIADA':
-    		$variedades = 1;
-    		break;
-    	case 'POCO VARIADA':
-    		$variedades = 2;
-    		break;
-    	case 'VARIADA':
-    		$variedades = 3;
-    		break;
-    
-    	default:
-    		# code...
-    		break;
-    }
-    
-    
-     switch (strtoupper(trim($d))) {
-    	case 'COMPLETA':
-    		$diversidadades = 1;
-    		break;
-    	case 'MODERADA':
-    		$diversidadades = 2;
-    		break;
-    	default:
-    		# code...
-    		break;
-    }
-    
-    switch (strtoupper(trim($cd))) {
-    	case 'NO SALUDABLE':
-    		$dietas = 1;
-    		break;
-    	case 'POCO SALUDABLE':
-    		$dietas = 2;
-    		break;
-    	case 'SALUDABLE':
-    		$dietas = 3;
-    		break;
-    
-    	default:
-    		# code...
-    		break;
-    }
-    
 
-    switch (strtoupper(trim($n))) {
-    	case 'ALTO':
-    		$niveles = 1;
-    		break;
-    	case 'BAJO':
-    		$niveles = 2;
-    		break;
-    	case 'MEDIO':
-    		$niveles = 3;
-    		break;
-    
-    	default:
-    		# code...
-    		break;
-    }
-	
-    
-    switch (strtoupper(trim($gr))) {
-    	case 'SEVERA':
-    		$grados = 1;
-    		break;
-    	case 'MODERADA':
-    		$grados = 2;
-    		break;
-    	case 'LEVE':
-    		$grados = 3;
-    		break;
-    	case 'SEGURA':
-    		$grados = 4;
-    		break;
-    	default:
-    		# code...
-    		break;
-    }
-	//$tel_prueba = '379-605-14 3339696809 ,referencia santa lucia';
-   
-    //echo 'resultado'.$r;
-    //exit;
-    
+    //Nivel Socioeconómico
+    $n = $datos_h1['FZ'];
+    $niveles = 0;
+
+    //Calidad de dieta
+    $cd = $datos_h1['GC'];
+    $dietas = 0;
+
+    //Diversidad de dieta
+    $d = $datos_h1['GA'];    
+    $diversidadades = 0;
+
+    //Variedad Dieta
+    $v = $datos_h1['GB'];
+    $variedades = 0;
+
+    //ELCSA
+    $elc = $datos_h1['GD'];
+    $elcs = 0;
+
 	//Programas válidos
-	$programas = array('MAP','MAC','MAS');
+	$programas = array('MAP','MAC','MAS','SOL');
 
 	//Los ID de ambas hojas deben coincidir
 	if($id_entrevista_h1 == $id_entrevista_h2){
 
-		//Vemos si hay un registro con el mismo id de entrevista
-		$obj = mujeresAvanzando::get_by_id_entr($id_entrevista_h1);
+		//Obtenemos fecha de nacimiento
+        $fecha = substr($datos_h2['H'],0,10);
+        $fecha_nacimiento = Fechas::fechadmyAymd($fecha);
+        
+		//Buscaremos registro en tabla de mujeres_avanzando
+		//mediante la búsqueda por nombre y folio
+		$mujeres_avanzando = self::buscaNombre($datos_h2['E'], 
+												$datos_h2['F'], 
+												$datos_h2['G'],
+												$fecha_nacimiento);		
 
-		//Si no encontramos una entrevista previa, procedemos a guardar
-		if($obj == NULL){
+		if(count($mujeres_avanzando) > 0){
+		
+	    switch (strtoupper(trim($elc))) {
+	    	case 'LEVE':
+	    		$elcs = 1;
+	    		break;
+	    	case 'MODERADA':
+	    		$elcs = 2;
+	    		break;
+	    	case 'SEGURA':
+	    		$elcs = 3;
+	    		break;
+	        case 'SEVERA':
+	    		$elcs = 4;
+	    		break;
+	        
+	    
+	    	default:
+	    		# code...
+	    		break;
+	    }
+	    
+	    switch (strtoupper(trim($v))) {
+	    	case 'NO VARIADA': case 'MONOTONA': case 'MONÓTONA':
+	    		$variedades = 1;
+	    		break;
+	    	case 'POCO VARIADA':
+	    		$variedades = 2;
+	    		break;
+	    	case 'VARIADA':
+	    		$variedades = 3;
+	    		break;
+	    
+	    	default:
+	    		# code...
+	    		break;
+	    }
+	    
+	    
+	     switch (strtoupper(trim($d))) {
+	    	case 'COMPLETA':
+	    		$diversidadades = 1;
+	    		break;
+	    	case 'MODERADA':
+	    		$diversidadades = 2;
+	    		break;
+	    	default:
+	    		# code...
+	    		break;
+	    }
+	    
+	    switch (strtoupper(trim($cd))) {
+	    	case 'NO SALUDABLE':
+	    		$dietas = 1;
+	    		break;
+	    	case 'POCO SALUDABLE':
+	    		$dietas = 2;
+	    		break;
+	    	case 'SALUDABLE':
+	    		$dietas = 3;
+	    		break;
+	    
+	    	default:
+	    		# code...
+	    		break;
+	    }
+	    
+
+	    switch (strtoupper(trim($n))) {
+	    	case 'ALTO':
+	    		$niveles = 1;
+	    		break;
+	    	case 'BAJO':
+	    		$niveles = 2;
+	    		break;
+	    	case 'MEDIO':
+	    		$niveles = 3;
+	    		break;
+	    
+	    	default:
+	    		# code...
+	    		break;
+	    }
+		
+	    
+	    switch (strtoupper(trim($gr))) {
+	    	case 'SEVERA':
+	    		$grados = 1;
+	    		break;
+	    	case 'MODERADA':
+	    		$grados = 2;
+	    		break;
+	    	case 'LEVE':
+	    		$grados = 3;
+	    		break;
+	    	case 'SEGURA':
+	    		$grados = 4;
+	    		break;
+	    	default:
+	    		# code...
+	    		break;
+	    }
 
 		//Obtenemos programa
-        $prog = substr($datos_h1['AH'], 0,3);
-        $fecha = substr($datos_h2['H'],0,10);
-        
+        $prog = substr($datos_h1['AE'], 0,3);
+
+        //print_r($programas);
         //echo $prog;
-        //exit;  
+        
         //Sólo los programas válidos
         if(in_array($prog,$programas)){
 	                         					        	
-			//Obtenemos información			            
-            $paterno = $datos_h2['E'];
-			$materno = $datos_h2['F'];
-            $nombres = $datos_h2['G'];			
+			//Obtenemos información del excel
+            //$excel_ma['folio'] = $datos_h1['D'];
+            $excel_ma['id_grado'] = $grados;		  
+            $excel_ma['nivel'] = $niveles;
+            $excel_ma['calidad_dieta'] = $dietas;
+            $excel_ma['diversidad'] = $diversidadades;
+            $excel_ma['variedad'] = $variedades;
+            $excel_ma['elcsa'] = $elcs;            
 
-            /*if(intval($fecha) > 0){
-        	   $fecha_nacimiento = substr(self::convertir_fecha($datos_h2['H']),0,10);
-        	}else{*/
-        		$fecha_nacimiento = Fechas::fechadmyAymd($fecha);
-        	//}
+            //print_r($excel_ma);
 
-
-			$genero = $datos_h2['J'];
-			$escolaridad = $datos_h2['K'];			
-            $ocupacion = $datos_h2['N'];   
-            $es_madre_soltera = $datos_h2['AD'];         
-
-            $folio = $datos_h1['D'];
-            $CODIGO = $datos_h1['R'];
-            //$id_ocupacion = $datos_h1['N'];
-            //$id_escolaridad = $datos_h1['K'];
-			$id_cat_municipio = str_pad($datos_h1['U'],3,"0",STR_PAD_LEFT);
-			//$id_cat_localidad = str_pad($datos_h1['W'],4,"0",STR_PAD_LEFT);			
-			$id_grado = $grados;					
-			$desc_ubicacion = 'CALLE: '.$datos_h1['AJ'].' COLONIA: '.$datos_h1['AM'];
-            $calle = $datos_h1['AJ'];
-            $num_ext = $datos_h1['AK'];
-			$num_int = $datos_h1['AL'];
-            $colonia =$datos_h1['AM'];
-	        $referencia = Permiso::procesa_tel($datos_h1['AN']);
-
-            //$referencia=$datos_h1['AN'];
-	        $programa = strtoupper($prog);
-            $nivel = $niveles;
-            $calidad_dieta = $dietas;
-            $diversidad = $diversidadades;
-            $variedad = $variedades;
-            $elcsa = $elcs;                        
-
-			/*Campos obligatorios de nuestro modelo, de momento pondremos los
-			siguientes valores predeterminados*/
-			//$CVE_VIA = 475946;
-			$CVE_EDO_RES = 14;
-			$id_estado_civil = null;
+            //Actualizamos datos del registro en la tabla de mujeres_avanzando
+            $msg_no = mujeresAvanzando::actualizaGIA($excel_ma,$mujeres_avanzando['id']);
             
-            //echo $programa;
-            //exit;
+	            if($msg_no == 1){
 
-			//Nuevo registro, procedemos a registrarlo en mujeres avanzando
-			$mujeres_avanzando = array(
-			    'nombres' => $nombres,
-			    'paterno' => $paterno,
-			    'materno' => $materno,
-			    'fecha_nacimiento' => $fecha_nacimiento,
-			    'genero' => $genero,
-			    'id_cat_estado' => 14,
-			    'id_cat_municipio' => $id_cat_municipio,
-			    //'id_cat_localidad' => $id_cat_localidad,
-			    'num_ext' => $num_ext,
-			    'num_int' => $num_int,
-			    'desc_ubicacion' => $desc_ubicacion,
-                'calle' => $calle,
-                'colonia' => $colonia,
-                'id_grado' => $id_grado,
-			    'id_pais' => 90,
-			    'CODIGO' => $CODIGO,
-			    //'CVE_VIA' => $CVE_VIA,
-			    'CVE_EDO_RES' => $CVE_EDO_RES,
-				//'id_escolaridad' => $id_escolaridad,
-				//'id_ocupacion' => $id_ocupacion,
-				'es_madre_soltera' => $es_madre_soltera,
-                'escolaridad' => $escolaridad,
-				'ocupacion' => $ocupacion,
-				'id_estado_civil' => $id_estado_civil,
-				'id_entrevista' => $id_entrevista_h1,
-				'folio' => $folio,
-	            'telefono' => $referencia,
-	            'programa' => $programa,
-                'id_caravana' => $id_caravana,
-                'visita' => $visita,
-                'nivel' => $nivel,
-                'calidad_dieta' => $calidad_dieta,
-                'diversidad' => $diversidad,
-                'variedad' => $variedad,
-                'elcsa'=> $elcsa,
-                'masiva' => 1            
-			    );    
-				
-                //print_R($mujeres_avanzando);
-                //exit;		
-                        
-                        	
-				list($msg_no,$curp,$id_generado) = mujeresAvanzando::
-													saveMujer($mujeres_avanzando);
-                                                    
-                                                    
+	            	//Nuevo registro en historico, procedemos a registrar 
+	            	//lo que previamente estaba en la tabla mujeres_avanzando
+					$historico_gia = array(
+						'id_mujeres_avanzando' => $mujeres_avanzando['id'],
+						'folio' => $datos_h1['C'],
+						'visita' => $visita,
+						'id_caravana' => $id_caravana,
+						'id_grado' => $mujeres_avanzando['id_grado'],
+						'nivel' => $mujeres_avanzando['nivel'],
+		                'calidad_dieta' => $mujeres_avanzando['calidad_dieta'],
+		                'diversidad' => $mujeres_avanzando['diversidad'],
+		                'variedad' => $mujeres_avanzando['variedad'],
+		                'elcsa'=> $mujeres_avanzando['elcsa']   
+					    );    
+
+					//print_r($historico_gia);
+
+					$msg_no = HistoricoGIA::saveHistoricoGIA($historico_gia);
+	            }			
 
 	        }
 
 		}else{
-			//Registro de Beneficiaria duplicado
-			$msg_no = 21;
+			//No existe en la tabla de mujeres_avanzando
+			$msg_no = 30;
 		}
 
 	}else{
-		//No coinciden los ID de entrevista
+		//Las entrevistas no coinciden
 		$msg_no = 22;
 	}
 

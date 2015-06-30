@@ -4,9 +4,14 @@ session_start();
 //Librería de conexión
 include ($_SESSION['inc_path']."conecta.php");
  
-//Librería de permisos
-//para poder utilizar las funciones de la clase modelo
+//Primer Formato
 include_once($_SESSION['inc_path'].'libs/CargaExcel.php');
+
+//2do formato con encabezados que ocupan más filas
+//include_once($_SESSION['inc_path'].'libs/CargaExcel2.php');
+
+//3er formato usado a partir de SEDESOL
+//include_once($_SESSION['inc_path'].'libs/CargaExcel3.php');
 
 //Obtenemos código de error
 $error = $_FILES['archivo']['error'];

@@ -31,7 +31,6 @@ if($id_mujeres_avanzando == NULL){
 list($lista,$p) = SegApoyosServ::listaApoyoServ(null,$id_mujeres_avanzando);
 ?>
 
-<script lang="javascript" type="text/javascript" src="<?php echo $_SESSION['js_path'];?>jquery.tablesorter.min.js"></script>
 <script type="text/javascript">
 $(function() {
     $("table").tablesorter({widgets: ['zebra']});

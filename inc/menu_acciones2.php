@@ -132,6 +132,10 @@
     var menu = "#menu";
     var position = {my: "left top", at: "left bottom"};
     
+    $("#menu").keypress(function( e ) {
+        console.log(e.which);      
+    });
+
     $(menu).menu({
         
         position: position,
@@ -143,6 +147,12 @@
             if ($(menu).get(0) !== $(ui).get(0).item.parent().get(0)) {
                 $(this).menu("option", "position", {my: "left top", at: "right top"});
                 }
+            //console.log(e.which);
+            //izquierda 37
+            //arriba 38
+            //derecha 39
+            //abajo 40
+            //escape 27                                          
         }
     });
  });

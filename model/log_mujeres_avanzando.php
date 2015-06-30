@@ -115,6 +115,9 @@ class logMujeresAvanzando extends MysqliDb{
     public static function listaLog($busqueda = NULL,$tipo_filtro='nombre', $id_caravana = NULL,
         $fecha_creacion = NULL){
 
+        $start = NULL;
+        $end = NULL;
+
         $sql = 
         'SELECT 
         l.folio,
@@ -153,7 +156,7 @@ class logMujeresAvanzando extends MysqliDb{
                  $params[] = '%'.$busqueda.'%';
                  break;
            }
-       }
+       }       
 
         //Verificamos si se quieren filtrar por caravana
         if($id_caravana !== NULL){
@@ -169,13 +172,16 @@ class logMujeresAvanzando extends MysqliDb{
 
         $sql .= ' order by fecha_creacion DESC ';
 
-        /*
-        echo $sql;
-        print_r($params);
-        */
+        //Evitamos que el listado dure mucho en caso de no recibir ningún
+       //filtro pues se listarían TODOS los cambios, solo pondremos los últimos 100
+       if($id_caravana == NULL && $busqueda == NULL){
+        $start = 0;
+        $end = 50;
+       }
+
        
         //Regresamos resultado
-        return Paginador::paginar($sql,$params);          
+        return Paginador::paginar($sql,$params,$start,$end);          
     }
 
     /**
@@ -225,6 +231,49 @@ class logMujeresAvanzando extends MysqliDb{
                 GROUP BY c.id; ";    
 
         return self::executar($sql,$params);
+    }
+
+    /**
+     * Obtenemos el total de reposiciones de cartilla
+     * - descartamos las que se hicieron en la misma caravana
+     * - descartamos unos registros que siempre se usan de prueba
+     * @return Array del total de folios que tienen al menos 1 reposición
+     */
+    public static function reposicionesCartilla(){
+        
+        $sql = 
+        "SELECT folio,fecha_imp,count(folio) as tot_folio FROM (
+                SELECT 
+                l.folio,
+                DATE(l.fecha_impresion) as fecha_imp
+                FROM `log_mujeres_avanzando` l
+                INNER JOIN (
+                    SELECT
+                    folio,
+                    count(folio) as total_folios
+                    from log_mujeres_avanzando 
+                    where 1 
+                    and fecha_impresion is not null
+                    and folio not in (127223,127226,127227,127228) -- Siempre se usan de prueba, se descartan
+                     GROUP BY folio
+                     HAVING total_folios > 1
+                     ORDER BY folio
+                ) l2 on l2.folio = l.folio
+                LEFT JOIN mujeres_avanzando m on m.folio = l.folio
+                LEFT JOIN caravana c on m.id_caravana = c.id
+                WHERE ?
+                AND DATE(l.fecha_impresion) != c.fecha_instalacion -- Descartamos fotos tomadas el mismo día de la caravana
+                AND l.fecha_impresion is not null
+                 GROUP BY folio,DATE(l.fecha_impresion)-- Agrupamos por folio y luego por fecha
+                 ORDER BY folio
+         )t  GROUP BY folio 
+          -- HAVING tot_folio > 1 -- Vemos cantidad de reimpresiones
+          ORDER BY tot_folio desc, fecha_imp asc ";
+
+         //Parámetros de la sentencia
+         $params = array(1);
+
+         return self::executar($sql,$params);
     }
 }
 ?> 

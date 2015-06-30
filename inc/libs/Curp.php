@@ -50,7 +50,13 @@ public static function generar_CURP($appat,$apmat,$nombre,$fecha_nac,
 
   //Si queremos omitir los 2 dígitos finales del curp
   if($omitirDigitos === false){
-    $_2digitos=self::generar_digitos($con);  
+    
+    //Al ser un curp ficticio, no tiene caso generar un número
+    //consecutivo, por lo que omitimos este paso
+    $_2digitos='00';  
+    //$_2digitos=self::generar_digitos($con);  
+    
+    
     $CURP .= $_2digitos;
   }  
 

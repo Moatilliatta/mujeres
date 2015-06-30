@@ -59,14 +59,17 @@ class Paginador extends MysqliDb
        return self::paginar($sql_pag,$params);
     }
 
-    public static function paginar($sql_pag,$params){
+    public static function paginar($sql_pag,$params,$start = NULL,$end = NULL){
+
+        //En caso de tener limites los asignamos
+        $limit = (is_int($start) && is_int($end))? " LIMIT $start, $end" : ""; 
 
         //Obtenemos el total de registro del sql a paginar
-        $sql='SELECT COUNT(*) FROM ('.$sql_pag.') pag';
+        $sql='SELECT COUNT(*) FROM ('.$sql_pag.$limit.') pag';
 
         //Hacemos consulta
         $results = self::getInstance()->rawQuery($sql,$params);        
-
+        
         //Obtenemos el total de registros
         $totalEntries = array_shift($results[0]);
 
@@ -81,15 +84,17 @@ class Paginador extends MysqliDb
         self::$styleSelect);
 
         //Obtenemos el rango de registros  mostrar
-        $start 		= $Pagination->getEntryStart();
-        $end 		= $Pagination->getEntryEnd();
+        $start = $Pagination->getEntryStart();
+        $end = $Pagination->getEntryEnd();
 
+          
         //preparamos parámetros
         $params[] = $start;
         $params[] = $end;
 
         //Armamos la consulta final
-        $sql = $sql_pag." LIMIT ?,?"; 
+        $sql = $sql_pag." LIMIT ?, ?";
+
         $results = self::getInstance()->rawQuery($sql,$params);
 
         return array($results,$Pagination);

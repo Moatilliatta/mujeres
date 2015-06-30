@@ -197,7 +197,6 @@ $(function() {
     <?php foreach($articulos->articulo_id as $key => $value):
        
        $mujer = mujeresAvanzando::get_by_id(null,$value);
-    
         //Verificamos si la imagen existe, de no estarlo ponemos imagen default
        $ruta_imagen = (file_exists($ruta_raiz.$mujer['folio_compuesto'].".png"))? $ruta.$mujer['folio_compuesto'].".png?i=". filemtime($ruta_raiz.$mujer['folio_compuesto'].'.png') : $ruta."default.png";
 
@@ -221,12 +220,34 @@ $(function() {
                 <?php echo '<br><B>MUNICIPIO:</B> '.$mujer['NOM_MUN'];?>
                 <?php echo '<br><B>C&Oacute;DIGO POSTAL:</B> '.$mujer['CODIGO'];?>
                 <?php echo '<br><B>TELEFONO:</B> '.$mujer['telefono'].'<BR>';?>
-                <a  href="edita_mujer.php?id_edicion=<?php echo $mujer['id']; ?>"><b>[Modificar Datos]</b></a>
-                
+                <a href="edita_mujer.php?id_edicion=<?php echo $mujer['id']; ?>">
+                    <b>[Modificar Datos]</b>
+                </a><br/><br/>
+                <?php if(mujeresAvanzando::verifImpCartilla($mujer['folio']) != NULL){?>                    
+                <label id="lbl<?php echo $mujer['id'];?>" 
+                for="txt<?php echo $mujer['id'];?>">
+                Motivo de Reposici&oacute;n
+                </label><br/>
+                <textarea id="txt<?php echo $mujer['id'];?>" 
+                name="txt<?php echo $mujer['id'];?>" cols="5" rows="2"></textarea>
+                <?php } ?>
             </td>
             
             <td>
               <input id="elimina_art" type="button" name="<?php  echo $key;?>" value="Quitar Del Listado" /><br />
+              
+              <?php 
+              //Aqui debería hacerse la verificación, un match entre mujeres_avanzando
+              //y log_mujeres_avanzando (mediante el folio) y que la fecha de impresión
+              //NO sea nula 
+              if(mujeresAvanzando::verifImpCartilla($mujer['folio']) != NULL){?>
+              <input id="chk<?php echo $mujer['id']?>" class='report' 
+              value="<?php echo $mujer['id']?>" checked name="reposicion[]" 
+               type="checkbox">
+               <label for="chk<?php echo $mujer['id']?>">
+               Reposici&oacute;n
+               </label>
+              <?php } ?>
              <!--
               <form name="guarda_imagen" id="guarda_imagen" action="" method="post" enctype="multipart/form-data">
                   <input type="hidden" id='folio' name="folio" value="<?php /* echo $value; ?>" />  
