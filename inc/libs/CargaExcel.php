@@ -594,11 +594,11 @@ class CargaExcel extends MysqliDb{
 			$materno = $datos_h2['F'];
             $nombres = $datos_h2['G'];			
 
-            /*if(intval($fecha) > 0){
-        	   $fecha_nacimiento = substr(self::convertir_fecha($datos_h2['H']),0,10);
-        	}else{*/
+            if(intval($fecha) > 0){
+        	$fecha_nacimiento = substr(self::convertir_fecha($datos_h2['H']),0,10);
+        	}else{
         		$fecha_nacimiento = Fechas::fechadmyAymd($fecha);
-        	//}
+        	}
 
 
 			$genero = $datos_h2['J'];

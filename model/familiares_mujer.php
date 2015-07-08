@@ -27,11 +27,7 @@ class FamiliaresMujer extends MysqliDb{
     public static function listaFamiliarGenerica($busqueda=NULL,$tipo_filtro=NULL,
       $activo = NULL,$nombre=null,$paterno=null,$materno=null,$curp=null,
       $id_mujer=NULL,$id_caravana=NULL,$id_familiar=NULL){
-        
-        //echo 'b '.$busqueda.'<br>';
-        //echo 'f '.$tipo_filtro;
-        //exit;
-
+                
         $sql = 
         'SELECT
         f.id,
@@ -43,7 +39,7 @@ class FamiliaresMujer extends MysqliDb{
         c.descripcion as nom_caravana 
         FROM `familiares_mujer` f
         LEFT JOIN mujeres_avanzando m on m.id_entrevista = f.id_entrevista
-                         -- and CONCAT(m.folio,?,m.num_folio) = f.cartilla
+                         -- and CONCAT(m.folio,"-",m.num_folio) = f.cartilla
         LEFT JOIN cat_estado ests on m.CVE_EDO_RES = ests.CVE_ENT
         LEFT JOIN cat_municipio mpos on mpos.CVE_ENT_MUN = CONCAT(m.CVE_EDO_RES,m.id_cat_municipio)
         LEFT JOIN caravana c on c.id = m.id_caravana 
@@ -54,7 +50,7 @@ class FamiliaresMujer extends MysqliDb{
                         
         //Filtro de búsqueda
         if ($busqueda !==NULL && $tipo_filtro !==NULL){
-
+            
              switch($tipo_filtro){
                 
                 case 'nombre':
@@ -120,6 +116,11 @@ class FamiliaresMujer extends MysqliDb{
            $params[] = $id_familiar;
         }
 
+        if($id_caravana !=NULL){
+           $sql.=' AND c.id = ?';
+           $params[] = $id_caravana;
+        }
+
         //Los agrupamos por su id
         $sql .= ' GROUP BY f.id ';
         
@@ -127,10 +128,12 @@ class FamiliaresMujer extends MysqliDb{
         //Regresamos resultado
         // self::executar($sql,$params);
 
-        //print_r($params);
-        //echo $sql;
-        //exit;
-
+        /*
+        print_r($params);
+        echo $sql;
+        exit;
+        */
+       
      return array($sql,$params);      
         
         
@@ -153,11 +156,15 @@ class FamiliaresMujer extends MysqliDb{
       $id_mujer=NULL,$id_caravana=NULL)
     {
         
-        
        list($sql,$params) = self::listaFamiliarGenerica($busqueda,$tipo_filtro,
        $activo,$nombre,$paterno,$materno,$curp,$id_mujer,$id_caravana);
+       
+       $obj = Paginador::paginar($sql,$params);
+
+       //echo self::getInstance()->getLastQuery();
+
        //Regresamos resultado        
-       return Paginador::paginar($sql,$params);         
+       return $obj;
         
       
      }

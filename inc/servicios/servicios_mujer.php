@@ -112,7 +112,7 @@ session_start();
     }
 
 ?>
-
+<script lang="JavaScript" type="text/javascript" src="<?php echo $_SESSION['js_path']?>fecha.js"></script>
 <script lang="javascript" type="text/javascript" src="<?php echo $_SESSION['js_path'];?>jquery.tablesorter.min.js"></script>
 <script type="text/javascript">
 $(function() {

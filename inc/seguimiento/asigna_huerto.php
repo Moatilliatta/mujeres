@@ -39,7 +39,7 @@ $lista = Seg_punto_rosa_capacitacion::listaSegPuntoRosaHuertos($punto_rosa['id']
 </div> 
 
 <?php if($lista != NULL){?>
-
+    <script lang="JavaScript" type="text/javascript" src="<?php echo $_SESSION['js_path']?>fecha.js"></script>
     <script type="text/javascript">
     $(function() {
     $("table").tablesorter({widgets: ['zebra']});

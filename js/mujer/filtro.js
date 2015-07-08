@@ -710,12 +710,10 @@ $(document).on("change",".cambia_mujer", function () {
 
     });       
     
-      //Habilitamos boton de tomar foto
+    //Habilitamos boton de tomar foto
     $(document).on("click","#vista", function () {
-        
-        var ruta,sin_foto,id_mujeres_avanzando,txt;   
+             
         var images = Array();
-        var txtr = Array();
 
         $('.foto_cred').each(function(idx, div) {
           var src = $(this).css('background-image');
@@ -727,80 +725,16 @@ $(document).on("change",".cambia_mujer", function () {
           nom = nom.substring(0, nom.length - 4);          
           images.push(nom);
         });
-        //Obtenemos número de imágenes
-        sin_foto = images.indexOf("default");                
-                      
-        //Si no hay foto, mostramos mensaje
-        //caso contrario enviamos a pantalla de impresión
+        
+        var sin_foto = images.indexOf("default");
+
         if(sin_foto >= 0){
           alert('Todas las beneficiarias deben tener foto');
         }else{
           
-          //Guardamos (de haber) los motivos por los que se
-          //reimprimirían cartillas. Obtenemos todos los textarea 
-          //en el documento actual
-          $('textarea').each(function(index,value){
-          
-          //Obtenemos texto y ID
-          txt = (typeof txt !== 'undefined')? $(this).val() : '(No se capturó motivo)';
-          id_mujeres_avanzando = $(this).attr("id").substring(3);          
-
-          //console.log(id_mujeres_avanzando);
-
-          //console.log(txtr);
-
-          //Quitamos vacíos
-          //txtr.filter(Boolean);
-        
-          //Empezamos a llenar arreglo con el par id:valor
-          txtr[id_mujeres_avanzando] = txt;
-
-          //Vaciamos variable
-          txt = undefined;
-
-          });
-
-          //Armamos arreglo de parámetros
-          var parametros = {
-            "reposiciones" : txtr
-          };
-
-          //console.log(parametros);
-        
-          //Inidicamos ruta del archivo y guardamos datos
-          ruta = '../../inc/mujer/';
-          frmAjax(parametros,'lbl'+id_mujeres_avanzando,'guarda_reposicion');    
-
-
           var ruta = "../../mujer/registro/";                      
           //window.location.href = ruta+"credencial.php";
           window.open(ruta+"credencial.php", '_credencial');
-        }     
-        
+        }
     }); 
-
-    //Habilitamos o no textarea para poner el motivo
-    //por el que una cartilla es reimpresa
-    $(document).on("click",".report", function () {
-      
-      //Obtenemos objeto
-      var obj = $(this);
-
-      //Obtenemos atributos
-      var id = obj.attr("id");
-      var name =  obj.attr("name");
-      
-      //Obtenemos nombre del area, mediante el número de ID
-      textarea = '#txt'+id.substring(3);
-      label = '#lbl'+id.substring(3);
-
-      //Detectamos si el checkbox es cliclado o no
-      var display = (obj.is(":checked") === true)? "block":"none";
-      
-      //Cambiamos visualización de atributos    
-      $(textarea).css('display',display);
-      $(label).css('display',display);
-              
-    });  
-    
 });
