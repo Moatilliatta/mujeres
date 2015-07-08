@@ -141,7 +141,8 @@ class UsuarioGrupo extends MysqliDb
         $sql = 
         'SELECT
          g.nombre,
-         ug.id
+         g.id,
+         ug.id as id_usuario_grupo
          FROM `usuario_grupo` ug
          inner join usuario u on u.id = ug.id_usuario and u.activo = 1
          inner join  grupo g on g.id= ug.id_grupo and g.activo = 1

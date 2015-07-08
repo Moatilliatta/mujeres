@@ -85,17 +85,13 @@ private static function apellido_bien($apellido) {
 }  // Fin funci
 
 private static function valida_altisonantes($palabra) {
-  $sql='SELECT palabra_correcta from altisonantes where palabra_mala LIKE ?';
+  $sql = 'SELECT palabra_correcta from altisonantes where palabra_mala LIKE ?';
   $params = array($palabra); 
-  $result= self::getInstance()->rawQuery($sql,$params);
+  $result = self::getInstance()->rawQuery($sql,$params);
   
-  if ($result != null) {
-    return $result["palabra_correcta"];
-  }
-  else {
-    
-    return $palabra;
-  }
+  $palabra = ($result != NULL)? substr($palabra, 0, 1)."X".substr($palabra, 2, 4) : $palabra;
+
+  return $palabra;
 }  // Fin función valida_altisonantes.
 
 private static function es_preposicion($prep) {

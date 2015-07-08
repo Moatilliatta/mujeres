@@ -15,65 +15,6 @@ $(".tel_office").mask("(01 99) 99-99-99-99");
 $(".tel_movil").mask("(044) 99-99-99-99-99");
 */
 
-//Validamos fecha
-$(document).on("click focus",".fecha", function () {
-     $(this).datepicker({ 
-    dayNames: [ "Domingo", "Lunes", "Martes", "Mi\u00e9rcoles", "Jueves", "Viernes", "S\u00e1bado"],
-    dayNamesMin: [ "Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa" ],
-    monthNames: [ "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],     
-    monthNamesShort: [ "Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"],
-    dateFormat: "yy-mm-dd",
-    yearRange: "1900:2014",
-    changeYear: true,
-    changeMonth: true, 
-    maxDate:new Date(),
-    showMonthAfterYear: true
-    });
-});
-
-$( ".fecha" ).datepicker({ 
-    dayNames: [ "Domingo", "Lunes", "Martes", "Mi\u00e9rcoles", "Jueves", "Viernes", "S\u00e1bado"],
-    dayNamesMin: [ "Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa" ],
-    monthNames: [ "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],     
-    monthNamesShort: [ "Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"],
-    dateFormat: "yy-mm-dd",
-    yearRange: "1900:2014",
-    changeYear: true,
-    changeMonth: true, 
-    maxDate:new Date(),
-    showMonthAfterYear: true
-    });
-
-//función para fecha
-function TodaysDate() {
- var currentTime = new Date();
- var year = currentTime.getFullYear()
- var month = currentTime.getMonth() + 1
- var day = currentTime.getDate()
- return year + "-" + month + "-" + day;
-
-}
-
-//Ponemos fecha en input
-$(document).on("click",".today", function () {
-
-    //obtener id del botón
-    var boton_id = $(this).attr("id");
-
-    //Obtenemos instancia de fecha
-    var today = new Date();
-
-    //alert('#fecha_asignado'+boton_id+TodaysDate());
-
-    //Agregamos fecha actual al input correspondiente
-    $('#fecha_asignado'+boton_id).focus();
-    $('#fecha_asignado'+boton_id).datepicker('setDate', TodaysDate());
-
-});     
-
-//Campo de fecha sólo de lectura
-$(".fecha").attr('readOnly' , 'true' );
-
 //Beneficiario_pys
 jQuery.validator.addMethod("exactlength", function(value, element, param) {
  return this.optional(element) || value.length == param;

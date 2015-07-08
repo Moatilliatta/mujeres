@@ -21,11 +21,21 @@ $busqueda = ($_GET['busqueda'])? $_GET['busqueda'] : NULL;
 $respuesta = ($_GET['r'])? $_GET['r'] : NULL;
 $id_dif = ($_GET['id_dif'])? $_GET['id_dif'] : NULL;
 
+//Validamos CURP de los usuarios
+$valida_curp = ($_POST['valida_curp'])? $_POST['valida_curp'] : NULL;
+
+//Total de CURPs
+$total_val = NULL;
+
 //Listados
 $lista_familiar = NULL;
 $p = NULL;
 $lista = NULL;
 $pm = NULL;
+
+if($valida_curp == 1){
+  $total_val = mujeresAvanzando::validaCURP();
+}
 
 //Obtenemos listado de acciones
 list($lista,$pm) = mujeresAvanzando::listaMujer($busqueda,
@@ -105,6 +115,10 @@ $(function() {
             
             <div  align="center">
             <h2 class="centro">Listado de Mujeres</h2>
+
+            <?php if($total_val !== NULL){?>
+            <div class="mensaje">Total CURP Procesados: <?php echo $total_val;?></div>
+            <?php } ?>
             
             <?php if ($lista !=null){ ?>
             <h3 class="centro"> Resultados Encontrados: <?php echo count($lista);?></h3> 
@@ -112,10 +126,23 @@ $(function() {
             
             
 
-            <div style="float: right;">
-                <form action="lista_mujer.php">
+            <div style="float: right;margin-bottom:50px;">
+                
+                <?php if(array_key_exists('activa_mujer',$central)){ ?>  
+                <div style="float:left;margin: 0 100px;">
+                  <form action="lista_mujer.php" method="POST">
+                    <input type="submit" value="Valida CURPs"/>
+                    <input type="hidden" name="valida_curp" value="1">
+                  </form>  
+                </div>
+                <?php } ?>
+
+                <div style="float:left;">
+                  <form action="lista_mujer.php">
                     <input type="submit" value="REINICIAR"/>
-                </form>
+                  </form>  
+                </div>
+                
                 <!-- 
                 <input style="float: right;" type="button" onclick="javascript:history.back(-1)" value="REGRESAR"/>
                 -->                

@@ -2,6 +2,7 @@
 <h3 class="centro"> Seguimiento De Capacitaciones En Punto Rosa </h3>
 <script lang="JavaScript" type="text/javascript" src="<?php echo $_SESSION['js_path']?><?php echo $_SESSION['module_name']?>/valida.js"></script>
 <script lang="javascript" type="text/javascript" src="<?php echo $_SESSION['js_path'];?>jquery.tablesorter.min.js"></script>
+<script lang="JavaScript" type="text/javascript" src="<?php echo $_SESSION['js_path']?>fecha.js"></script>
     <script type="text/javascript">
     $(function() {
     $("table").tablesorter({widgets: ['zebra']});

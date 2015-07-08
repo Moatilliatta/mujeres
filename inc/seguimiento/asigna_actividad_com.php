@@ -55,6 +55,7 @@ if($id_mujeres_avanzando){
 
 <script lang="JavaScript" type="text/javascript" src="<?php echo $_SESSION['js_path']?><?php echo $_SESSION['module_name']?>/valida_asign.js"></script>
 <script lang="JavaScript" type="text/javascript" src="<?php echo $_SESSION['js_path']?>seguimiento/valida.js"></script>
+<script lang="JavaScript" type="text/javascript" src="<?php echo $_SESSION['js_path']?>fecha.js"></script>
 
 <div align="center">
     <form id='formActCom' method="post" action='save_mujer_com.php'>

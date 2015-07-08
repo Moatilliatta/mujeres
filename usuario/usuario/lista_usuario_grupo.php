@@ -125,7 +125,7 @@ $("table").tablesorter({widgets: ['zebra']});
         <td><?php echo $l['nombre']; ?></td>
         <td> 
             <form id='principal' method="post" action='lista_usuario_grupo.php'>
-                <input type="hidden" name="id_usuario_grupo" value="<?php echo $l['id']?>" />
+                <input type="hidden" name="id_usuario_grupo" value="<?php echo $l['id_usuario_grupo']?>" />
                 <input type="hidden" name="id_usuario" value="<?php echo $id_usuario?>" />
                 <input type = 'submit'  id = 'enviar' name = 'enviar' value ='Eliminar' />
             </form>
