@@ -2,9 +2,9 @@
 session_start();//Habilitamos uso de variables de sesión
 
 //Si requerimos obtener totales por fecha
-$fecha_creacion_ini = ($_GET['fecha_creacion_ini'] != NULL)? $_GET['fecha_creacion_ini']: NULL;
-$fecha_creacion_fin = ($_GET['fecha_creacion_fin'] != NULL)? $_GET['fecha_creacion_fin']: NULL;
-$excel = ($_POST['excel'] != NULL)? $_POST['excel']: NULL;
+$fecha_creacion_ini = (isset($_GET['fecha_creacion_ini']))? $_GET['fecha_creacion_ini']: NULL;
+$fecha_creacion_fin = (isset($_GET['fecha_creacion_fin']))? $_GET['fecha_creacion_fin']: NULL;
+$excel = (isset($_POST['excel']))? $_POST['excel']: NULL;
 
 //Imprimimos o no cabecera de excel
 if($excel != NULL){

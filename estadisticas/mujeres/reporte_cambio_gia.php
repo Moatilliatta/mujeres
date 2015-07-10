@@ -4,9 +4,9 @@ session_start();//Habilitamos uso de variables de sesión
 //Variable de respuesta
 
 //Si requerimos obtener totales por fecha
-$fecha_creacion = ($_GET['fecha_creacion'] != NULL)? $_GET['fecha_creacion']: NULL;
-$id_caravana = ($_REQUEST['id_caravana'] != NULL)? $_REQUEST['id_caravana'] : NULL;
-$excel = ($_POST['excel'] != NULL)? $_POST['excel']: NULL;
+$fecha_creacion = (isset($_GET['fecha_creacion']))? $_GET['fecha_creacion']: NULL;
+$id_caravana = (isset($_REQUEST['id_caravana']))? $_REQUEST['id_caravana'] : NULL;
+$excel = (isset($_POST['excel']))? $_POST['excel']: NULL;
 
 //Imprimimos o no cabecera de excel
 if($excel != NULL){
