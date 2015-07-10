@@ -302,8 +302,15 @@ class FamiliaresMujer extends MysqliDb{
         $nombres = $valor['G'];
         $paterno = $valor['E'];            
         $materno = $valor['F'];
-        $fecha_nacimiento = Fechas::fechadmyAymd(trim(substr($valor['H'],0,10)));  
-                   
+        $fecha = trim($valor['H']);
+
+        if(intval($fecha) > 0){
+          $f = substr(Fechas::convertir_fecha_excel($fecha,"d/m/Y"),0,10);
+          $fecha_nacimiento = Fechas::fechadmyAymd($f);
+        }else{
+          $fecha_nacimiento = Fechas::fechadmyAymd($fecha);
+        }
+        
          $datos = array('id_entrevista' => $id_entrevista,
                         'nombres'=>$nombres,
                         'paterno'=>$paterno,

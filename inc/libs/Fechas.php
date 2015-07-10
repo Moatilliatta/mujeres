@@ -709,9 +709,10 @@ class Fechas{
 
 	}
 
-	public static function convertir_fecha_excel($numero = 0){
+	public static function convertir_fecha_excel($numero = 0,$formato = "Y-m-d")
+	{
     	
     	$UNIX_DATE = ($numero - 25569) * 86400;
-		return gmdate("Y-m-d", $UNIX_DATE);
+		return gmdate($formato, $UNIX_DATE);
     }
 }

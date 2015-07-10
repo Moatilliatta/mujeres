@@ -4,7 +4,7 @@ include($_SESSION['inc_path']."libs/Fechas.php");
 //Obtenemos la caravana
 $id_caravana = (isset($_REQUEST['id_caravana']))? $_REQUEST['id_caravana']: NULL;
 $fecha_caravana = (isset($_REQUEST['fecha_caravana']))? $_REQUEST['fecha_caravana']: NULL;
-$excel = ($_POST['excel'] != NULL)? $_POST['excel']: NULL;
+$excel = (isset($_POST['excel']))? $_POST['excel']: NULL;
 
 //Imprimimos o no cabecera de excel
 if($excel != NULL){
