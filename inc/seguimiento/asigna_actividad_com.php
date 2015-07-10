@@ -110,7 +110,7 @@ if($id_mujeres_avanzando){
                     class="fecha date" required
                      <?php echo (in_array($value['id'],$lista_seg_activacion_com_usr) === true)? '': 'disabled'; ?>
                     value="<?php echo $lista_fechas_usr[$value['id']]; ?>" />
-                    <input type="button" class="btnToday"  value="Hoy" 
+                    <input type="button" class="btnToday"  value="Hoy" class="today"
                     <?php  echo (in_array($value['id'],$lista_seg_activacion_com_usr) === true)? '': 'disabled'; ?>
                     id="btnHoy<?php echo $value['id']?>"  />
                 </td>
