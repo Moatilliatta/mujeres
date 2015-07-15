@@ -75,7 +75,7 @@ $("table").tablesorter({widgets: ['zebra']});
      <div id="page_list" align="center">        
     <p>
         <?php if(array_key_exists('alta_accion',$central)){ ?>
-        <a  href="alta_accion.php">Agregar una nueva acci&oacute;n</a>
+        <a href="alta_accion.php" class="btn" >Agregar una nueva acci&oacute;n</a>
         <?php } ?>
     </p> 
     <p>

@@ -75,7 +75,7 @@ $("table").tablesorter({widgets: ['zebra']});
     <div id="page_list" align="center">
     <p>
     <?php if(array_key_exists('alta_perfil',$central)){ ?>
-    <p><a  href="alta_perfil.php">Agregar</a></p> 
+    <p><a href="alta_perfil.php" class="btn" >Agregar</a></p> 
     <?php } ?>
     </p>
    <p>

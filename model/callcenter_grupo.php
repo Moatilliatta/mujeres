@@ -186,7 +186,7 @@ class CallCenterGrupo extends MysqliDb{
         if($nombre && $id_caravana)
         {
             $insertData = array(
-                'nombre' => $nombre,
+                'nombre' => mb_strtoupper($nombre, "UTF-8"),
                 'id_caravana' => $id_caravana,
                 'activo' => $activo,
                 'id_callcenter_filtro' => $id_callcenter_filtro,

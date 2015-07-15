@@ -85,7 +85,7 @@ class Permiso extends MysqliDb{
      * @param int $opc Opción a procesar
      * @return string $respuesta Respuesta procesada
      * */
-    public static function mensajeRespuesta($opc){
+    public static function mensajeRespuesta($opc,$param = ""){
 
         switch ($opc) {
 

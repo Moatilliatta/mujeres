@@ -122,7 +122,7 @@ $(function() {
     
     <p>
         <?php //if(array_key_exists('alta_grupo_callcenter',$central)){ ?>
-        <a  id = 'enviar' href="alta_grupo_callcenter.php">Agregar</a>
+        <a  id = 'enviar' class="btn" href="alta_grupo_callcenter.php">Agregar</a>
         <?php //} ?>
     </p> 
    <p>

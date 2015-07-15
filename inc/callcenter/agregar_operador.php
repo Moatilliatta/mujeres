@@ -183,4 +183,6 @@ $(function() {
 
     <?php } ?>
 
+<?php }else{ ?>
+    <input type="button"onclick="javascript:history.back(-1)" value="Regresar" />
 <?php } ?>

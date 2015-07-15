@@ -69,7 +69,7 @@ if(intval($id_edicion)>0){
          <tr>
         <td>
             <input type = 'text' id = 'fecha_instalacion' class="fecha date" name = 'fecha_instalacion'value="<?php echo $caravana['fecha_instalacion']; ?>" />
-            <input type="button"  value="Hoy" id="btnToday"  />
+            <input type="button"  value="Hoy" id="btnToday" class="today" />
         </td>
          </tr>
  <tr>

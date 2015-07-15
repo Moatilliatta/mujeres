@@ -67,7 +67,7 @@ $("table").tablesorter({widgets: ['zebra']});
     
     <div id="page_list" align="center">        
         <p>
-          <a  href="alta_bloqueo.php">Agregar</a>
+          <a href="alta_bloqueo.php" class="btn">Agregar</a>
         </p> 
         <p>
         <?php    

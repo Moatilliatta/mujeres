@@ -106,7 +106,7 @@ $(function() {
     <div id="page_list" align="center">        
     <p>
         <?php if(array_key_exists('alta_secretaria',$central)){ ?>
-        <a  id = 'enviar' href="alta_secretaria.php">Agregar</a>
+        <a id = 'enviar' class="btn" href="alta_secretaria.php">Agregar</a>
         <?php } ?>
     </p> 
     <p>

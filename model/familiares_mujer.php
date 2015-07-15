@@ -298,11 +298,11 @@ class FamiliaresMujer extends MysqliDb{
      */
     public static function guardaFamiliares($valor){
     
-        $id_entrevista = $valor['C'];           
-        $nombres = $valor['G'];
-        $paterno = $valor['E'];            
-        $materno = $valor['F'];
-        $fecha = trim($valor['H']);
+        $id_entrevista = $valor['B'];           
+        $nombres = $valor['F'];
+        $paterno = $valor['D'];            
+        $materno = $valor['E'];
+        $fecha = trim($valor['G']);
 
         if(intval($fecha) > 0){
           $f = substr(Fechas::convertir_fecha_excel($fecha,"d/m/Y"),0,10);

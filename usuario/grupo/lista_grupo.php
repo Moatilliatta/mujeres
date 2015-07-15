@@ -73,7 +73,7 @@ $("table").tablesorter({widgets: ['zebra']});
     <div id="page_list" align="center">
     <p>        
     <?php if(array_key_exists('alta_grupo',$central)){ ?>
-    <a  href="alta_grupo.php">Agregar un nuevo grupo</a>
+    <a href="alta_grupo.php" class="btn">Agregar un nuevo grupo</a>
     <?php } ?>
     </p> 
     <p>
