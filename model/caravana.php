@@ -4,29 +4,19 @@
  * **/ 
 
 //Inclumos librería de Paginador
+include_once($_SESSION['inc_path'].'libs/Paginador.php');
 
-include_once('../../inc/libs/Paginador.php');
+//Incluimos modelo de servicio_caravana
 include_once($_SESSION['model_path'].'servicio_caravana.php');
-class Caravana extends MysqliDb{
 
+class Caravana extends Db{
+
+    /**
+    * Tenemos que crear un constructor vacío por que 
+    * se tomarían los valores del constructor de la clase Db 
+    */
     public function __construct(){}
     
-    /**
-     * Ejecutamos sentencia sql con parámetros
-     * @param string $sql Sentencia SQL
-     * @param array $params Cada uno de los parámetros de la sentencia
-     * 
-     * @return int Resultado
-     * */
-    private static function executar($sql,$params){
-        
-        //Ejecutamos
-        $resultado = self::getInstance()->rawQuery($sql, $params);
-        //Regresamos resultado
-        return $resultado;        
-
-    }
-
 
     /**
     * Obtenemos los datos del aspirante por su id

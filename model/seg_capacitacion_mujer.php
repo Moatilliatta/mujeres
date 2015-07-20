@@ -9,27 +9,22 @@ include_once($_SESSION['inc_path'].'libs/Paginador.php');
 include_once($_SESSION['inc_path'].'libs/Fechas.php');
 include_once($_SESSION['model_path'].'seg_punto_rosa_capacitacion.php');
 
-class SegCapacitacionMujer extends MysqliDb{
+class SegCapacitacionMujer extends Db{
 
+    /**
+    * Tenemos que crear un constructor vacío por que 
+    * se tomarían los valores del constructor de la clase Db 
+    */
     public function __construct(){}
-        
-      /**
-      * Ejecutamos sentencia sql con parámetros
-      * @param string $sql Sentencia SQL
-      * @param array $params Cada uno de los parámetros de la sentencia
-      * 
-      * @return int Resultado
-      **/   
-    private static function executar($sql,$params){
-
-      //Ejecutamos
-      $resultado = self::getInstance()->rawQuery($sql, $params);
-
-      //Regresamos resultado
-      return $resultado;        
-
-    }
-
+      
+    /**
+     * Realizamos una búsqueda de registros
+     * @param  [type] $id_seg_punto_rosa_capacitacion [description]
+     * @param  [type] $id_mujeres_avanzando           [description]
+     * @param  [type] $id_seg_capacitacion            [description]
+     * @param  [type] $id_seg_punto_rosa              [description]
+     * @return [type]                                 [description]
+     */
     public static function buscaReg($id_seg_punto_rosa_capacitacion = NULL, $id_mujeres_avanzando = NULL,
       $id_seg_capacitacion = NULL, $id_seg_punto_rosa = NULL)
     {

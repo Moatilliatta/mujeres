@@ -7,30 +7,23 @@
 
 include_once($_SESSION['inc_path'].'libs/Paginador.php');
 
-class SegNoEnc extends MysqliDb{
-//oooommmmaarrr
+class SegNoEnc extends Db{
+    /**
+    * Tenemos que crear un constructor vacío por que 
+    * se tomarían los valores del constructor de la clase Db 
+    */
     public function __construct(){}
     
     /**
-     * Ejecutamos sentencia sql con parámetros
-     * @param string $sql Sentencia SQL
-     * @param array $params Cada uno de los parámetros de la sentencia
-     * 
-     * @return int Resultado
-     * */
-    private static function executar($sql,$params){
+     * Función generia para obtener el listado genérico de
+     * las personas no encontradas
+     * @param  [type] $cadena [description]
+     * @return [type]         [description]
+     */
+    public static function listaNoencontradoGenerico($cadena){
         
-        //Ejecutamos
-        $resultado = self::getInstance()->rawQuery($sql, $params);
-        //Regresamos resultado
-        return $resultado;        
-
-    }
-    
-     public static function listaNoencontradoGenerico($cadena){
-        
-        $sql = '
-        SELECT
+        $sql = 
+        'SELECT
         sn.folio, 
         sn.id,
         sn.nombres,

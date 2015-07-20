@@ -8,7 +8,7 @@ include_once($_SESSION['model_path'].'seg_punto_rosa.php');
 include_once($_SESSION['model_path'].'seg_no_enc.php');
 include_once($_SESSION['inc_path'].'libs/Permiso.php');
 
-class CargaCap extends MysqliDb{
+class CargaCap extends Db{
     
     // Variables
     var $Hojas;    

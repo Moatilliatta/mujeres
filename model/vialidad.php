@@ -4,25 +4,20 @@
  * **/ 
 //Inclumos librería Paginador
 include_once($_SESSION['inc_path'].'libs/Paginador.php');
-class Vialidad extends MysqliDb{
-    public function __construct(){}
-        
-            /**
-             * Ejecutamos sentencia sql con parámetros
-             * @param string $sql Sentencia SQL
-             * @param array $params Cada uno de los parámetros de la sentencia
-             * 
-             * @return int Resultado
-             * */   
-        
-    private static function executar($sql,$params){
-            //Ejecutamos
-    $resultado = self::getInstance()->rawQuery($sql, $params);
-            
-            //Regresamos resultado
-      return $resultado;        
-    }
 
+class Vialidad extends Db{
+    
+    /**
+    * Tenemos que crear un constructor vacío por que 
+    * se tomarían los valores del constructor de la clase Db 
+    */
+    public function __construct(){}
+              
+    /**
+     * Obtenemos el tipo de vialidad mediante su clave
+     * @param  [type] $CVE_VIA [description]
+     * @return [type]          [description]
+     */
     public static function obtenerVia($CVE_VIA = NULL){
         
         $sql = 

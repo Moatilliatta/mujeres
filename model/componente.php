@@ -2,28 +2,16 @@
 /**
  * Clase que nos permite administrar lo relacionado a la tabla Componentes
  * **/ 
-//Inclumos librería MysqliDb
+//Inclumos librería de Paginador
 include_once($_SESSION['inc_path'].'libs/Paginador.php');
 
-class Componente extends MysqliDb{
-
-    public function __construct(){}
+class Componente extends Db{
 
     /**
-     * Ejecutamos sentencia sql con parámetros
-     * @param string $sql Sentencia SQL
-     * @param array $params Cada uno de los parámetros de la sentencia
-     * 
-     * @return int Resultado
-     * */
-
-    private static function executar($sql,$params){
-        //Ejecutamos
-        $resultado = self::getInstance()->rawQuery($sql, $params);
-        //Regresamos resultado
-        return $resultado;        
-    }
-
+    * Tenemos que crear un constructor vacío por que 
+    * se tomarían los valores del constructor de la clase Db 
+    */
+    public function __construct(){}
 
     /**
      * Obtenemos listado de los componentes (programas). Predeterminadamente mostramos
@@ -66,7 +54,13 @@ class Componente extends MysqliDb{
         //Regresamos resultado
          return self::executar($sql,$params);           
     }
-    /////////////////////////////////////////////////////////////////
+    
+    /**
+     * Obtenemos un arreglo con los componentes
+     * mediante el ID de su producto_servicio
+     * @param  [type] $id_producto_servicio [description]
+     * @return [type]                       [description]
+     */
      public static function get_Componente($id_producto_servicio)
     {
 

@@ -29,7 +29,7 @@
             <input type="hidden" id="id_edicion_" name="id_edicion" value="<?php echo $id_edicion; ?>" />
             <input type="hidden" name="id_mujer_avanzando" value="<?php echo $id_mujeres_avanzando; ?>" />  
             <input type = 'text' id = 'fecha_capacitacion<?php echo $l['id']; ?>' class="fecha date" name = 'fecha_capacitacion[]'value="<?php echo $l['fecha_capacitacion']?>" />
-            <input type="button"  value="Hoy" id="<?php echo $l['id']; ?>" class="today"/>
+            <input type="button"  value="Hoy" id="<?php echo $l['id']; ?>" class="btnToday1"/>
             </td>
             <td>
               <div>                    

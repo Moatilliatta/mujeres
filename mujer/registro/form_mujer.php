@@ -415,7 +415,7 @@ if(intval($id_edicion)>0 || intval($id_aspirante)>0){
     <tr> 
         <td>
             <input type = 'text' id = 'fecha_nacimiento' class="fecha date arma_curp_" name = 'fecha_nacimiento'value="<?php echo $mujeres_avanzando['fecha_nacimiento']; ?>" />
-            <!-- <input type="button"   value="Hoy" id="btnToday" class="today"  />-->
+            <!-- <input type="button"   value="Hoy" id="btnToday"  />-->
         </td>        
         <td>
             <input type="radio" id="MUJER" name="genero" class="arma_curp_"  value="MUJER"<?php echo( ($mujeres_avanzando['genero'] == 'MUJER')? 'checked': 'checked'); ?>/><label for="MUJER">MUJER</label><br />

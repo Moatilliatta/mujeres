@@ -1,80 +1,126 @@
-jQuery(document).ready(function ($) {	        
+/* Función para enviar información via POST/GET */
+
+var envia = {
+
+  normalize : function(str) {
+  
+    var from = "ÃÀÁÄÂÈÉËÊÌÍÏÎÒÓÖÔÙÚÜÛãàáäâèéëêìíïîòóöôùúüûÑñÇç ", 
+        to   = "AAAAAEEEEIIIIOOOOUUUUaaaaaeeeeiiiioooouuuunncc_",
+        mapping = {};
+   
+    for(var i = 0, j = from.length; i < j; i++ )
+        mapping[ from.charAt( i ) ] = to.charAt( i );
     
-    //C�digo General Jquery
-    //Login
-    $("#formLogin").validate({
-        rules: {  
-            usuario:{required: true},
-            clave: {required: true},
-            id_caravana: {required: true}
-				
-        },
-        messages: {                       
-            usuario: "Escriba usuario",
-            clave: "Escriba password",
-            id_caravana : 'Seleccione Caravana'
-                 
-        }
-    });
+    var ret = [];
     
-    //C�digo de confirmaci�n
-    $('.confirmation').click(function () {
-        
-        mensaje = $(this).attr("title");
-        
-        if(mensaje == null){
-            mensaje = '\u00BFEst\u00e1s Seguro?'; 
-        }
-        
-        return  confirm(mensaje);
-        
-    });   
+    for( var i = 0, j = str.length; i < j; i++ ) {
+      
+      var c = str.charAt( i );
+      
+      if( mapping.hasOwnProperty( str.charAt( i ) ) ){
+        ret.push( mapping[ c ] );
+      }else{
+        ret.push( c );
+      }
+                
+    }      
+    
+    return ret.join( '' );
+ 
+  },
 
-/*
-    //Verificamos Caravanas del usuario
-    $(document).on("blur","#usuario", function () {    
-        
-        var nombre_usuario = $(this).val();
-        
-        var ruta = '../inc/servicios/';
+  //
+  ajax : function(action,update)
+  {
 
-        var parametros = {
-          'nombre_usuario' : nombre_usuario
-        }
+    $.ajax({ 
+            url: action,
+            success: function(data){
+                    selector = '#'+update;
+                    $(selector).html(data);
+                    }
+            }); 
+  },
 
-        //Localidad
-        frmAjax(parametros,'caravana','filtra_caravana_usuario','POST',ruta);
-
-    });   
-*/
-
-    //Form Ajax Gen�rico
-   function frmAjax(parametros,div,accion,tipo,ruta,selector){
+  //Form Ajax Genérico
+  frmAjax : function (parametros,update,accion,ruta,tipo,selector,destino,redirect,multipart)
+  {
 
     //Valores predeterminados
-    ruta = typeof ruta !== 'undefined' ? ruta : '../../inc/mujer/';
+    ruta = typeof ruta !== 'undefined' ? ruta : '../../inc/mujer/';    
     tipo = typeof tipo !== 'undefined' ? tipo : 'POST';
+    
     selector = typeof selector !== 'undefined' ? selector : '#';
-
-    //alert(selector+div);
-
-    $.ajax({
+    destino = typeof destino !== 'undefined' ? destino : ruta+accion+".php";
+    redirect = typeof redirect !== 'undefined' ? redirect : false;
+    multipart = typeof multipart !== 'undefined' ? multipart : false;    
+    
+    //Armamos objeto
+    var obj = {
       type: tipo,
-      url: ruta+accion+".php",
+      url: destino,
       data: parametros,
+      cache: false,      
       beforeSend: function(){
-        $(selector+div).html('<img src="../css/img/loader_sug.gif"/>Buscando');
+        $(selector+update).html('<img src="/escolar/img/sping.gif"/>Buscando');
         //alert(parametros.tipo+' before');
       },
       success: function( respuesta ){
-        $(selector+div).html(respuesta);    
+        $(selector+update).html(respuesta);    
         //alert(parametros.tipo+' success');                
       },
       error: function(){
-        $(selector+div).html(' ');
+        $(selector+update).html(' ');
+      },      
+      done: function(){
+        if(redirect === true){
+          window.location.href = destino;
+        }
       }
+    }
+
+    //Al ser multipart, agregamos 2 opciones
+    if(multipart === true){
+      obj.contentType = false;
+      obj.processData = false;      
+    }    
+
+    //Ejecutamos función Ajax
+    $.ajax(obj);
+    
+   },
+
+   //Form Ajax Genérico con callback
+   frmAjaxCallBack : function(parametros,div,accion,ruta,tipo,selector){
+    
+    //Valores predeterminados    
+    tipo = typeof tipo !== 'undefined' ? tipo : 'POST';
+    ruta = typeof ruta !== 'undefined' ? ruta : '../../inc/estadisticas/';
+    selector = typeof selector !== 'undefined' ? selector : '#';
+
+    //Regresamos instancia ajax para que pueda ser manipulada
+    return $.ajax({
+      type: tipo,
+      url: ruta+accion+".php",
+      data: parametros,
+      beforeSend: function(){},
+      success: function(respuesta){},
+      error: function(){}
     });
     
    }
-          
-});
+   
+}
+
+//Código de confirmación
+$('.confirmation').click(function () {
+
+  mensaje = $(this).attr("title");
+
+  if(mensaje == null){
+    mensaje = '\u00BFEst\u00e1s Seguro?'; 
+  }
+        
+  return  confirm(mensaje);
+        
+});   

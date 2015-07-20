@@ -73,7 +73,7 @@ $("table").tablesorter({widgets: ['zebra']});
     <div id="page_list" align="center">        
     <p>
         <?php if(array_key_exists('alta_menu',$central)){ ?>
-        <p><a  href="alta_menu.php">Agregar nuevo men&uacute;</a></p>
+        <p><a class="btn" href="alta_menu.php">Agregar nuevo men&uacute;</a></p>
         <?php } ?>
     </p>
     <p>

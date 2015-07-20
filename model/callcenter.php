@@ -6,25 +6,14 @@
 include_once($_SESSION['inc_path'].'libs/Paginador.php');
 include_once($_SESSION['model_path'].'callcenter_h.php');
 
-class CallCenter extends MysqliDb{
-    public function __construct(){}
-        
+class CallCenter extends Db{
+    
     /**
-    * Ejecutamos sentencia sql con parámetros
-    * @param string $sql Sentencia SQL
-    * @param array $params Cada uno de los parámetros de la sentencia
-    * 
-    * @return int Resultado
-    * */   
-        
-    private static function executar($sql,$params){
-            //Ejecutamos
-    $resultado = self::getInstance()->rawQuery($sql, $params);
+    * Tenemos que crear un constructor vacío por que 
+    * se tomarían los valores del constructor de la clase Db 
+    */
+    public function __construct(){}
             
-            //Regresamos resultado
-      return $resultado;        
-    }
-  
     /**
      * Listado para obtener a las personas que serán agregadas
      * a algún callcenter

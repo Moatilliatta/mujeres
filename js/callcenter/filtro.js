@@ -1,33 +1,7 @@
 jQuery(document).ready(function ($) {	
 
-	//Form Ajax Genérico
-   	function frmAjax(parametros,div,accion,tipo,ruta,selector){       
-
-       //Valores predeterminados
-       ruta = typeof ruta !== 'undefined' ? ruta : '../../inc/callcenter/';
-       tipo = typeof tipo !== 'undefined' ? tipo : 'POST';
-       selector = typeof selector !== 'undefined' ? selector : '#';
-
-       //alert(selector+div);
-
-       $.ajax({
-               type: tipo,
-               url: ruta+accion+".php",
-               data: parametros,
-               beforeSend: function(){
-                   $(selector+div).html('<img src="../../css/img/loader_sug.gif"/>Buscando');
-                   //alert(parametros.tipo+' before');
-               },
-               success: function( respuesta ){
-                       $(selector+div).html(respuesta);    
-                   //alert(parametros.tipo+' success');                
-                  },
-               error: function(){
-                   $(selector+div).html(' ');
-               }                
-       });
-   }
-
+//Ruta para usarse en envia.frmAjax
+var ruta = '../../inc/callcenter/';
 
 	//Listado de operadores
 	$(document).on("change","#id_usuario", function () {
@@ -45,7 +19,7 @@ jQuery(document).ready(function ($) {
 
             //console.log(parametros);
 
-            frmAjax(parametros,'car_operador','agregar_operador');
+            envia.frmAjax(parametros,'car_operador','agregar_operador',ruta);
 		})
 
 	});
@@ -60,7 +34,7 @@ jQuery(document).ready(function ($) {
           'accion': 'eliminar'
         };
 
-        frmAjax(parametros,'car_operador','agregar_operador');
+        envia.frmAjax(parametros,'car_operador','agregar_operador',ruta);
 
     });
 
@@ -71,7 +45,7 @@ jQuery(document).ready(function ($) {
           'accion': 'vaciar'
         };
 
-        frmAjax(parametros,'car_operador','agregar_operador');
+        envia.frmAjax(parametros,'car_operador','agregar_operador',ruta);
         $('#photo').html('');
     }); 
 
@@ -80,7 +54,7 @@ jQuery(document).ready(function ($) {
 
     	//Inidicamos ruta del archivo y guardamos datos
 		ruta = '../../inc/callcenter/guarda_lista_operador';
-		frmAjax(null,'car_operador','guarda_lista_operador');    
+		envia.frmAjax(null,'car_operador','guarda_lista_operador',ruta);    
         
     }); 
    
@@ -103,7 +77,7 @@ jQuery(document).ready(function ($) {
         $("#titulo_seg_cap").css("display",tag);
 
         //enviamos información
-        frmAjax(parametros,'seg_capacitacion','filtra_capacitacion');
+        envia.frmAjax(parametros,'seg_capacitacion','filtra_capacitacion',ruta);
     })
 
   });

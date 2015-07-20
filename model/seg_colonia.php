@@ -3,30 +3,19 @@
  * Clase que nos permite administrar lo relacionado a la tabla Colonia
  * **/ 
 
-//Inclumos librería de Paginador
+//Incluimos librería de Paginador
+include_once($_SESSION['model_path'].'libs/Paginador.php');
 
-include_once('../../inc/libs/Paginador.php');
+//Incluimos modelo de seg_colonia
 include_once($_SESSION['model_path'].'seg_colonia.php');
-class SegColonia extends MysqliDb{
 
-    public function __construct(){}
-    
+class SegColonia extends Db{
+
     /**
-     * Ejecutamos sentencia sql con parámetros
-     * @param string $sql Sentencia SQL
-     * @param array $params Cada uno de los parámetros de la sentencia
-     * 
-     * @return int Resultado
-     * */
-    private static function executar($sql,$params){
-        
-        //Ejecutamos
-        $resultado = self::getInstance()->rawQuery($sql, $params);
-        //Regresamos resultado
-        return $resultado;        
-
-    }
-
+    * Tenemos que crear un constructor vacío por que 
+    * se tomarían los valores del constructor de la clase Db 
+    */
+    public function __construct(){}
 
     /**
     * Obtenemos los datos del aspirante por su id

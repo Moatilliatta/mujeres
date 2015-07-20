@@ -2,29 +2,17 @@
 /**
  * Clase que nos permite administrar lo relacionado a la tabla dependencia
  * **/ 
-//Inclumos librería MysqliDb
+//Inclumos librería de Paginador
 include_once($_SESSION['inc_path'].'libs/Paginador.php');
 
-class Dependencia extends MysqliDb{
-
-    public function __construct(){}
+class Dependencia extends Db{
 
     /**
-     * Ejecutamos sentencia sql con parámetros
-     * @param string $sql Sentencia SQL
-     * @param array $params Cada uno de los parámetros de la sentencia
-     * 
-     * @return int Resultado
-     * */
-
-    private static function executar($sql,$params){
-        //Ejecutamos
-        $resultado = self::getInstance()->rawQuery($sql, $params);
-        //Regresamos resultado
-        return $resultado;        
-    }
-
-
+    * Tenemos que crear un constructor vacío por que 
+    * se tomarían los valores del constructor de la clase Db 
+    */
+    public function __construct(){}
+    
     /**
      * Obtenemos listado de los dependencias. Predeterminadamente mostramos
      * los componentes de estatus activo = 1

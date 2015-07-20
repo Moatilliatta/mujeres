@@ -7,38 +7,13 @@
 include_once($_SESSION['inc_path'].'libs/Paginador.php');
 include_once($_SESSION['inc_path'].'libs/Permiso.php');
 
-class CallcenterGrupoOperador extends MysqliDb{
-//tenemos que crear un constructor vacio por q hay variables
-//a inicializar solo funciones pra cada model de clase 
-//si no tomaria los valores del constructor de MysqliDb 
-    public function __construct(){}
-
+class CallcenterGrupoOperador extends Db{
+    
     /**
-     * Ejecutamos sentencia sql con parámetros
-     * @param string $sql Sentencia SQL
-     * @param array $params Cada uno de los parámetros de la sentencia
-     * 
-     * @return int Resultado
-     * */    
-    private static function executar($sql,$params){
-        //Ejecutamos
-        $resultado = self::getInstance()->rawQuery($sql, $params);
-        
-        //Regresamos resultado
-        return $resultado;        
-    }
-
-    /**
-     * Obtenemos la última sentencia ejecutada
-     * @return string $sql con parámetros
+     * Tenemos que crear un constructor vacío por que 
+     * se tomarían los valores del constructor de la clase Db 
      */
-    public static function ultimoQuery(){
-      //Ejecutamos
-      $resultado = "Última Sentencia: ".self::getInstance()->getLastQuery();
-      
-      //Regresamos resultado
-      return $resultado;
-    }
+    public function __construct(){}
 
     /**
      * Cambiamos el estatus del submódulo 

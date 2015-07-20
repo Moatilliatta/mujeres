@@ -2,147 +2,102 @@
 /**
  * Clase que nos permite administrar lo relacionado a los centros atencion
  * **/ 
+
 //Inclumos librería Paginador
 include_once($_SESSION['inc_path'].'libs/Paginador.php');
 
-class Centros_atencion extends MysqliDb{
+class Centros_atencion extends Db{
+
+    /**
+    * Tenemos que crear un constructor vacío por que 
+    * se tomarían los valores del constructor de la clase Db 
+    */
     public function __construct(){}
         
-            /**
-             * Ejecutamos sentencia sql con parámetros
-             * @param string $sql Sentencia SQL
-             * @param array $params Cada uno de los parámetros de la sentencia
-             * 
-             * @return int Resultado
-             * */   
+    /**
+    * Ejecutamos sentencia sql con parámetros
+    * @param string $sql Sentencia SQL
+    * @param array $params Cada uno de los parámetros de la sentencia
+    * 
+    * @return int Resultado
+    * */   
         
     private static function executar($sql,$params){
-            //Ejecutamos
-    $resultado = self::getInstance()->rawQuery($sql, $params);
-            
-            //Regresamos resultado
-      return $resultado;        
+    
+        //Ejecutamos
+        $resultado = self::getInstance()->rawQuery($sql, $params);
+                
+        //Regresamos resultado
+        return $resultado;
     }
     
     /**
-
      * Cambiamos el estatus del módulo 
-
      * 1 = Activo, 0 = Inactivo
-
      * @param int $id_modulo Módulo a actualizar
-
      * 
-
      * @return string $msg_no No. de Mensaje a regresar
-
      * */
 
     public static function activaCentros_atencion($id_centro){
 
+    //Variable que nos indica el mensaje generado al guardar el registro
+    $msg_no = 0;
 
+    //Variable donde guardamos el estatus
+    $estatus = 0;
 
-        //Variable que nos indica el mensaje generado al guardar el registro
+    //Sentencia para obtener el campo activo de la tabla Modulo
+    $sql = 'SELECT activo from `centros_atencion` where id = ?';
 
-        $msg_no = 0;
+    //parámetros para la consulta
+    $params = array($id_centro);                
 
+    //Verificamos el estatus del Modulo        
+    $registro = self::executar($sql,$params);
+    $registro = $registro[0];
 
+    //Si el registro tiene estatus de 'Eliminado', se activará
+    if($registro['activo'] == 0){
 
-        //Variable donde guardamos el estatus
-
-        $estatus = 0;
-
-
-
-        //Sentencia para obtener el campo activo de la tabla Modulo
-
-        $sql = 'SELECT activo from `centros_atencion` where id = ?'; 
-
-        
-
-        //parámetros para la consulta
-
-        $params = array($id_centro);                
-
-
-
-        //Verificamos el estatus del Modulo        
-
-        $registro = self::executar($sql,$params);
-
-        $registro = $registro[0];
-
-
-
-        //Si el registro tiene estatus de 'Eliminado', se activará
-
-        if($registro['activo'] == 0){
-
-            $estatus = 1;
-
-        }else if($registro['activo'] == 1){
+        $estatus = 1;
+    }else if($registro['activo'] == 1){
 
         //Si el registro tiene estatus de 'Activo', se eliminará
+        $estatus = 0;
+    }
 
-            $estatus = 0;
+    //Preparamos update
+    self::getInstance()->where('id',$id_centro);
 
-        }
+    //datos a actualizar
+    $updateData = array('activo' => $estatus);
 
+    //Iniciamos transacción
+    self::getInstance()->startTransaction();
 
+    if(!self::getInstance()->update('centros_atencion',$updateData)){
 
-        //Preparamos update
+        //'Error al guardar, NO se guardo el registro'
+        $msg_no = 3;
 
-        self::getInstance()->where('id',$id_centro);                                                
+        //Cancelamos los posibles campos afectados
+        self::getInstance()->rollback();  
 
+    }else{
 
-
-        //datos a actualizar
-
-        $updateData = array('activo' => $estatus);
-
+        //Campos guardados correctamente
+        $msg_no = 1;
         
-
-        //Iniciamos transacción
-
-        self::getInstance()->startTransaction();
-
-        
-
-        if(!self::getInstance()->update('centros_atencion',$updateData)){
-
-            //'Error al guardar, NO se guardo el registro'
-
-            $msg_no = 3;
-
-            
-
-            //Cancelamos los posibles campos afectados
-
-            self::getInstance()->rollback();  
-
-        }else{
-
-            //Campos guardados correctamente
-
-            $msg_no = 1;
-
-            
-
-            //Guardamos campos afectados en la tabla
-
-            self::getInstance()->commit();                       
+        //Guardamos campos afectados en la tabla
+        self::getInstance()->commit();
 
         } 
 
-
-
         return $msg_no;
-
     } 
 
-   
-   
-        /**
+    /**
      * Obtenemos listado de los centros de atención 
      * @param string $nombre Nombre de Comunidad a buscar
      * @param string $localidad Localidad a buscar
@@ -177,41 +132,23 @@ class Centros_atencion extends MysqliDb{
         //Buscamos nombre del centro           
 
         if($nombre !=null){
-           
-
-                        
-
           $sql .= ' AND ct.nombre like ? ';
-
-          $params[] = '%'.$nombre.'%';    
-
-            
-
+          $params[] = '%'.$nombre.'%';              
         }
+
         // buscamos localidad
         if($localidad !=null){
-           //echo $localidad;
-        //exit; 
-                        
 
           $sql .= ' AND loc.NOM_LOC like ? ';
-
           $params[] = '%'.$localidad.'%';    
 
-            
-
         }
+        
         // buscamos clave_comunidad
         if($clave_comunidad !=null){
 
-                        
-
           $sql .= ' AND ct.CVE_EST_MUN_LOC = ? ';
-
           $params[] = $clave_comunidad;    
-
-            
-
         }
 
         //Verificamos si se quieren filtrar los activos/inactivos

@@ -15,73 +15,40 @@
 
 jQuery(document).ready(function ($) {
     
-    
-/*
-Refrescamos select de caravana o comunidad
-*/
+var ruta = '../../inc/enhina/';
 
-$("#id_tipo_lugar").change(function(){
+  //Refrescamos select de caravana o comunidad
+    $("#id_tipo_lugar").change(function(){
 
-		$("select[name='id_tipo_lugar'] option:selected").each(function () {
+    		$("select[name='id_tipo_lugar'] option:selected").each(function () {
 
-           id_tipo_lugar = $(this).attr("value");
-           //alert(id_tipo_lugar);
+            id_tipo_lugar = $(this).attr("value");
+            //alert(id_tipo_lugar);
+            
+            var parametros = {
+              'id_tipo_lugar' : id_tipo_lugar
+            }
+
+            envia.frmAjax(parametros,'tipo_lugar','filtra_tipo_lugar',ruta);
+       })
+
+    });
         
 
-        var parametros = {
-          'id_tipo_lugar' : id_tipo_lugar
-        }
+    $(document).on("change","#id_caravana", function () {
 
-        frmAjax(parametros,'tipo_lugar','filtra_tipo_lugar');
+        $("select[name='id_caravana'] option:selected").each(function () {
 
-   })
+            id_caravana = $(this).attr("value");
+               
+            var parametros = {
+              'id_caravana' : id_caravana
+            }
 
-	});
-    
-  $(document).on("change","#id_caravana", function () {
+            envia.frmAjax(parametros,'no_visita','visita_reciente',ruta);
 
-    $("select[name='id_caravana'] option:selected").each(function () {
+       })
 
-        id_caravana = $(this).attr("value");
-           
-        var parametros = {
-          'id_caravana' : id_caravana
-        }
-
-        frmAjax(parametros,'no_visita','visita_reciente');
-
-   })
-
-  });
-    
-   //Form Ajax Genérico
-   function frmAjax(parametros,div,accion,tipo,ruta,selector){
-
-    //Valores predeterminados
-    ruta = typeof ruta !== 'undefined' ? ruta : '../../inc/enhina/';
-    tipo = typeof tipo !== 'undefined' ? tipo : 'POST';
-    selector = typeof selector !== 'undefined' ? selector : '#';
-
-    //alert(selector+div);
-
-    $.ajax({
-      type: tipo,
-      url: ruta+accion+".php",
-      data: parametros,
-      beforeSend: function(){
-        $(selector+div).html('<img src="../../css/img/loader_sug.gif"/>Buscando');
-        //alert(parametros.tipo+' before');
-      },
-      success: function( respuesta ){
-        $(selector+div).html(respuesta);    
-        //alert(parametros.tipo+' success');                
-      },
-      error: function(){
-        $(selector+div).html(' ');
-      }
     });
-    
-   }
-
     
 });

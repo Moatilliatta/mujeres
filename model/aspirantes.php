@@ -4,34 +4,22 @@
  * **/ 
 //Inclumos librería Paginador
 include_once($_SESSION['inc_path'].'libs/Paginador.php');
-class Aspirantes extends MysqliDb{
-   public function __construct(){}
 
-   /**
-   * Ejecutamos sentencia sql con parámetros
-   * @param string $sql Sentencia SQL
-   * @param array $params Cada uno de los parámetros de la sentencia
-   * 
-   * @return int Resultado
-   * */   
-   private static function executar($sql,$params){
-            //Ejecutamos
-    $resultado = self::getInstance()->rawQuery($sql, $params);
-            
-            //Regresamos resultado
-      return $resultado;        
-    }
-    
-////////////////////////ACTIVAR/DESACTIVAR
+class Aspirantes extends Db{
 
-     /**
-     * Guardamos registro en la tabla aspirantes
-     * @param array $centros Arreglo con los campos a guardar
-     * @param int $id del Modulo a editar (opcional)
-     * 
-     * @return int No. de mensaje
-     * */
-     
+  /**
+    * Tenemos que crear un constructor vacío por que 
+    * se tomarían los valores del constructor de la clase Db 
+    */
+  public function __construct(){}
+
+  /**
+  * Guardamos registro en la tabla aspirantes
+  * @param array $centros Arreglo con los campos a guardar
+  * @param int $id del Modulo a editar (opcional)
+  * 
+  * @return int No. de mensaje
+  * */    
   public static function saveAspirantes($aspirantes,$id = null){
          
   //Variable que nos indica el mensaje generado al guardar el registro

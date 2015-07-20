@@ -11,7 +11,7 @@ include_once($_SESSION['model_path'].'historico_gia.php');
 include_once($_SESSION['model_path'].'registro_excel_enhina.php');
 include_once($_SESSION['inc_path'].'libs/Permiso.php');
 
-class CargaExcelGIA extends MysqliDb{
+class CargaExcelGIA extends Db{
     
     // Variables
     var $Hojas;    

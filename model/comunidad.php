@@ -2,29 +2,17 @@
 /**
  * Clase que nos permite administrar lo relacionado a la tabla comunidad
  * **/ 
-//Inclumos librería MysqliDb
+
+//Inclumos librería de Paginador
 include_once($_SESSION['inc_path'].'libs/Paginador.php');
 
-class Comunidad extends MysqliDb{
-
-    public function __construct(){}
+class Comunidad extends Db{
 
     /**
-     * Ejecutamos sentencia sql con parámetros
-     * @param string $sql Sentencia SQL
-     * @param array $params Cada uno de los parámetros de la sentencia
-     * 
-     * @return int Resultado
-     * */
-
-    private static function executar($sql,$params){
-        //Ejecutamos
-        $resultado = self::getInstance()->rawQuery($sql, $params);
-        //Regresamos resultado
-        return $resultado;        
-    }
-
-   
+    * Tenemos que crear un constructor vacío por que 
+    * se tomarían los valores del constructor de la clase Db 
+    */
+    public function __construct(){}
 
     /**
      * Obtenemos listado de los Submódulos. Predeterminadamente mostramos
@@ -36,8 +24,8 @@ class Comunidad extends MysqliDb{
 
     public static function datos_comunidad($CVE_ENT_MUN_LOC){
 
-        $sql = '
-        SELECT 
+        $sql = 
+        'SELECT 
         cm.CVE_MUN,
         cm.NOM_MUN,
         co.nombre_comunidad,
