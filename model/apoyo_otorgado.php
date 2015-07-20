@@ -4,35 +4,25 @@
  * **/ 
 //Inclumos librería Paginador
 include_once($_SESSION['inc_path'].'libs/Paginador.php');
+
+//Incluimos librería de beneficiario_pys
 include_once($_SESSION['model_path'].'beneficiario_pys.php');
 
-class Apoyo_otorgado extends MysqliDb{
-    public function __construct(){}
-        
-            /**
-             * Ejecutamos sentencia sql con parámetros
-             * @param string $sql Sentencia SQL
-             * @param array $params Cada uno de los parámetros de la sentencia
-             * 
-             * @return int Resultado
-             * */   
-        
-    private static function executar($sql,$params){
-            //Ejecutamos
-    $resultado = self::getInstance()->rawQuery($sql, $params);
-            
-            //Regresamos resultado
-      return $resultado;        
-    }
+class Apoyo_otorgado extends Db{
     
+    /**
+    * Tenemos que crear un constructor vacío por que 
+    * se tomarían los valores del constructor de la clase Db 
+    */
+    public function __construct(){}
+            
     /**
      * Cambiamos el estatus del módulo 
      * 1 = Activo, 0 = Inactivo
      * @param int $id_modulo Módulo a actualizar
      * 
      * @return string $msg_no No. de Mensaje a regresar
-     * */
-     
+     * */     
      public static function activaApoyo_otorgado($id_apoyo){
 
         //Variable que nos indica el mensaje generado al guardar el registro

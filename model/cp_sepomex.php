@@ -4,25 +4,15 @@
  * **/ 
 //Inclumos librería Paginador
 include_once($_SESSION['inc_path'].'libs/Paginador.php');
-class Cp_sepomex extends MysqliDb{
+
+class Cp_sepomex extends Db{
+    
+    /**
+    * Tenemos que crear un constructor vacío por que 
+    * se tomarían los valores del constructor de la clase Db 
+    */
     public function __construct(){}
         
-    /**
-    * Ejecutamos sentencia sql con parámetros
-    * @param string $sql Sentencia SQL
-    * @param array $params Cada uno de los parámetros de la sentencia
-    * 
-    * @return int Resultado
-    * */   
-        
-    private static function executar($sql,$params){
-            //Ejecutamos
-    $resultado = self::getInstance()->rawQuery($sql, $params);
-            
-            //Regresamos resultado
-      return $resultado;        
-    }
-
     /**
     *Listado de códigos postales de Jalisco
     *@return array Lista de Códigos

@@ -4,28 +4,19 @@
  * **/ 
 //Inclumos librería Paginador
 include_once($_SESSION['inc_path'].'libs/Paginador.php');
+
+//Incluimos modelos
 include_once($_SESSION['model_path'].'callcenter_h.php');
 include_once($_SESSION['model_path'].'callcenter.php');
 
-class CallCenterGrupo extends MysqliDb{
-    public function __construct(){}
-        
+class CallCenterGrupo extends Db{
+
     /**
-    * Ejecutamos sentencia sql con parámetros
-    * @param string $sql Sentencia SQL
-    * @param array $params Cada uno de los parámetros de la sentencia
-    * 
-    * @return int Resultado
-    * */   
-        
-    private static function executar($sql,$params){
-            //Ejecutamos
-    $resultado = self::getInstance()->rawQuery($sql, $params);
+    * Tenemos que crear un constructor vacío por que 
+    * se tomarían los valores del constructor de la clase Db 
+    */
+    public function __construct(){}
             
-            //Regresamos resultado
-      return $resultado;        
-    }
-    
     /**
      * Cambiamos el estatus del beneficiario 
      * 1 = Activo, 0 = Inactivo

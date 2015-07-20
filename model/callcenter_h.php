@@ -5,7 +5,12 @@
 //Inclumos librería Paginador
 include_once($_SESSION['inc_path'].'libs/Paginador.php');
 
-class CallCenterH extends MysqliDb{
+class CallCenterH extends Db{
+    
+    /**
+    * Tenemos que crear un constructor vacío por que 
+    * se tomarían los valores del constructor de la clase Db 
+    */
     public function __construct(){}
         
     /**

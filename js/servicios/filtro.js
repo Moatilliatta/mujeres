@@ -1,5 +1,7 @@
 jQuery(document).ready(function ($) {	
-	
+
+var ruta = '../../inc/servicios/';
+
 	 //Filtra componentes (programas)
     $(document).on("change",".filtra_programa", function () {
 
@@ -30,7 +32,7 @@ jQuery(document).ready(function ($) {
             'id_mujeres_avanzando' : id_mujeres_avanzando
             }
             
-            frmAjax(parametros,'dependencias','filtra_dependencia');            
+            envia.frmAjax(parametros,'dependencias','filtra_dependencia',ruta);  
 
 		    })
         	
@@ -56,7 +58,7 @@ jQuery(document).ready(function ($) {
             'id_mujeres_avanzando' : id_mujeres_avanzando
             }
             //alert(ID_C_DEPENDENCIA);
-            frmAjax(parametros,'programas','filtra_programa');
+            envia.frmAjax(parametros,'programas','filtra_programa',ruta);
                       
 
 		    })  
@@ -78,7 +80,7 @@ jQuery(document).ready(function ($) {
             'id_mujeres_avanzando' : id_mujeres_avanzando
             }
             
-            frmAjax(parametros,'servicioss','filtra_servicio');            
+            envia.frmAjax(parametros,'servicioss','filtra_servicio',ruta);
 
 		    })
         	
@@ -99,7 +101,7 @@ jQuery(document).ready(function ($) {
             'id_mujeres_avanzando' : id_mujeres_avanzando
             }
             
-            frmAjax(parametros,'servicios','filtra_servicio');            
+            envia.frmAjax(parametros,'servicios','filtra_servicio',ruta);
 
 		    })
         	
@@ -115,7 +117,7 @@ jQuery(document).ready(function ($) {
           'accion': 'eliminar'
         };
 
-        frmAjax(parametros,'servicios','servicios_mujer');
+        envia.frmAjax(parametros,'servicios','servicios_mujer',ruta);
 
     });
 
@@ -147,10 +149,10 @@ jQuery(document).ready(function ($) {
         var ruta_guarda = '../../servicios/serv/';
 
         //Guardamos los servicios
-        frmAjax(parametros,'page_list','save_mujer_serv','POST',ruta_guarda);
+        envia.frmAjax(parametros,'page_list','save_mujer_serv',ruta_guarda);
         
         //Actualizamos lista de productos y servicios
-        frmAjax(parametros,'page_list','lista_serv');
+        envia.frmAjax(parametros,'page_list','lista_serv',ruta);
 
         //Ocultamos carrito
         $('#tbl_servicios').html('');   
@@ -171,34 +173,7 @@ jQuery(document).ready(function ($) {
   $('#ID_C_DEPENDENCIA')[0].options.length = 1;
 
   }
-
-  //Form Ajax Genérico
-   function frmAjax(parametros,div,accion,tipo,ruta,selector){       
-
-       //Valores predeterminados
-       ruta = typeof ruta !== 'undefined' ? ruta : '../../inc/servicios/';
-       tipo = typeof tipo !== 'undefined' ? tipo : 'POST';
-       selector = typeof selector !== 'undefined' ? selector : '#';
-
-       //alert(selector+div);
-       $.ajax({
-               type: tipo,
-               url: ruta+accion+".php",
-               data: parametros,
-                  beforeSend: function(){
-                   $(selector+div).html('<img src="../../css/img/loader_sug.gif"/>Buscando');
-                   //alert(parametros.tipo+' before');
-               },
-               success: function( respuesta ){
-                       $(selector+div).html(respuesta);    
-                   //alert(parametros.tipo+' success');                
-                  },
-               error: function(){
-                   $(selector+div).html(' ');
-               }                
-       });
-   }
-
+  
   //Tabla de productos y servicios seleccionados
   $(document).on("change","#ID_C_SERVICIO", function () {
 
@@ -215,7 +190,7 @@ jQuery(document).ready(function ($) {
 
         //alert(parametros.toSource());
 
-        frmAjax(parametros,'tbl_servicios','servicios_mujer');
+        envia.frmAjax(parametros,'tbl_servicios','servicios_mujer',ruta);
 
     })
 
@@ -237,7 +212,7 @@ jQuery(document).ready(function ($) {
     }
 
     //Localidad
-    frmAjax(parametros,'pys_g','filtra_programa_g');
+    envia.frmAjax(parametros,'pys_g','filtra_programa_g',ruta);
 
     })
 

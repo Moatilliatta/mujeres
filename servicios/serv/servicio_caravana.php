@@ -2,10 +2,10 @@
 /**
  * Clase que nos permite administrar lo relacionado a la tabla de servicios
  * **/ 
-//Inclumos librería MysqliDb
+//Inclumos librería de Paginador
 include_once($_SESSION['inc_path'].'libs/Paginador.php');
 
-class ServicioCaravana extends MysqliDb{
+class ServicioCaravana extends Db{
 
     public function __construct(){}
 

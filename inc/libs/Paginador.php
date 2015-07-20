@@ -7,7 +7,7 @@
 
 include('Pagination.php');
 
-class Paginador extends MysqliDb
+class Paginador extends Db
 {
 
     public function __construct(){}

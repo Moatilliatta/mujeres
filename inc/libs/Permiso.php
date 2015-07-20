@@ -2,7 +2,7 @@
 /**
  * Clase que nos permite administrar variables globales, restricciones y demás
  * **/
-class Permiso extends MysqliDb{
+class Permiso extends Db{
 
     /**
      * Archivos js generales para la aplicación
@@ -18,7 +18,7 @@ class Permiso extends MysqliDb{
         <script lang="javascript" type="text/javascript" src="'. $app_path_p  .'js/jquery-1.10.2.min.js"></script>        
         <script lang="javascript" type="text/javascript" src="'. $app_path_p  .'js/jquery-migrate-1.0.0.js"></script>
         <!-- jqueryui -->        
-        <script lang="javascript" type="text/javascript" src="'. $app_path_p  .'js/jquery-ui-1.10.3.custom.min.js"></script>             
+        <script lang="javascript" type="text/javascript" src="'. $app_path_p  .'js/jquery-ui-1.10.3.custom.min.js"></script>
         <script lang="javascript" type="text/javascript" src="'. $app_path_p .'js/jquery.validate.js"></script>
         <script lang="javascript" type="text/javascript" src="'. $app_path_p .'js/inicio.js"></script>
         ';
@@ -548,16 +548,6 @@ class Permiso extends MysqliDb{
 
         //Regresamos resultado
         return self::executar($sql, $params);
-    }
-
-    private static function executar($sql, $params)
-    {
-
-        //Ejecutamos
-        $resultado = self::getInstance()->rawQuery($sql, $params);
-
-        //Regresamos resultado
-        return $resultado;
     }
 
     //Obtenemos los niveles según el directorio físico actual

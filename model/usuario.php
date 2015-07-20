@@ -9,27 +9,13 @@ include_once($_SESSION['inc_path'].'libs/Permiso.php');
 include_once($_SESSION['model_path'].'usuario_caravana.php');
 include_once($_SESSION['model_path'].'usuario_secretaria.php');
 
-class Usuario extends MysqliDb{
-//tenemos que crear un constructor vacio por q hay variables
-//a inicializar solo funciones pra cada model de clase 
-//si no tomaria los valores del constructor de MysqliDb 
-    public function __construct(){}
-
+class Usuario extends Db{
+    
     /**
-     * Ejecutamos sentencia sql con parámetros
-     * @param string $sql Sentencia SQL
-     * @param array $params Cada uno de los parámetros de la sentencia
-     * 
-     * @return int Resultado
-     * */
-//se hace una instacia a MysqlDb pra poder hacer un rawQuery enviando paramtros a utilizar
-    private static function executar($sql,$params){
-        //Ejecutamos
-        $resultado = self::getInstance()->rawQuery($sql, $params);
-        
-        //Regresamos resultado
-        return $resultado;        
-    }
+    * Tenemos que crear un constructor vacío por que 
+    * se tomarían los valores del constructor de la clase Db 
+    */
+    public function __construct(){}
 
     /**
      * Buscamos un operador (y su grupo relacionado)

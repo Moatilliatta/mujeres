@@ -8,7 +8,7 @@ include_once($_SESSION['model_path'].'registro_excel_enhina.php');
 include_once($_SESSION['inc_path'].'libs/Permiso.php');
 include_once($_SESSION['inc_path'].'libs/Fechas.php');
 
-class CargaExcel2 extends MysqliDb{
+class CargaExcel2 extends Db{
     
     // Variables
     var $Hojas;    

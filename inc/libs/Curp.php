@@ -1,5 +1,5 @@
 <?php
-class Curp extends MysqliDb{
+class Curp extends Db{
     
 public static function generar_CURP($appat,$apmat,$nombre,$fecha_nac,
   $sexo,$estado,$omitirDigitos = false)

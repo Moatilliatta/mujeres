@@ -13,12 +13,12 @@
 	ini_set('display_errors', 'On'); 
 	
 	//incluimos la clase MyqliDb por que es externo a la clase 
-    include('libs/MysqliDb.php');
+    include('libs/Db.php');
     
     //hacemos una instancia ala clase MysqliDb en la variable $db
-    $db = new MysqliDb('localhost', 'root', '', 'mujeres_avanzando');
-	//$db = new MysqliDb('localhost', 'root', 'difJalisc0', 'mujeres_avanzando');
-	//$db = new MysqliDb('localhost', 'root', 'Muj3rd1f.jal', 'mujeres_avanzando');
+    $db = new Db('localhost', 'root', '', 'mujeres_avanzando');
+	//$db = new Db('localhost', 'root', 'difJalisc0', 'mujeres_avanzando');
+	//$db = new Db('localhost', 'root', 'Muj3rd1f.jal', 'mujeres_avanzando');
     
     /* Comprueba la conexión */
     if (mysqli_connect_errno()) {

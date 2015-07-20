@@ -14,6 +14,8 @@
 */
 
 jQuery(document).ready(function ($) {
+
+var ruta = '../../inc/mujer/';
     
     //Código General Jquery       
     $("#CVE_EDO_RES").change(function(){
@@ -27,13 +29,13 @@ jQuery(document).ready(function ($) {
           'CVE_EDO_RES' : CVE_EDO_RES
         }
 
-        frmAjax(parametros,'municipio','filtra_municipio');
+        envia.frmAjax(parametros,'municipio','filtra_municipio',ruta);
 
         //Localidad
-        //  frmAjax(parametros,'localidad','filtra_localidad');
+        //  envia.frmAjax(parametros,'localidad','filtra_localidad',ruta);
 
         //Código Postal
-        //frmAjax(parametros,'cp','filtra_cp');
+        //envia.frmAjax(parametros,'cp','filtra_cp',ruta);
 
         //Ponemos valores predeterminados
         reiniciaSelVialidades();
@@ -53,7 +55,7 @@ $(document).on("change","#id_cat_estado", function () {
             'id_cat_estado' : id_cat_estado
             }
 
-            frmAjax(parametros,'municipio_nacimiento','filtra_municipio_nacimiento');
+            envia.frmAjax(parametros,'municipio_nacimiento','filtra_municipio_nacimiento',ruta);
 		})
 
 	});
@@ -72,10 +74,10 @@ $(document).on("change","#id_cat_municipio", function () {
     }
 
     //Localidad
-    frmAjax(parametros,'localidad','filtra_localidad');
+    envia.frmAjax(parametros,'localidad','filtra_localidad',ruta);
 
     //Código Postal
-    frmAjax(parametros,'cp','filtra_cp');
+    envia.frmAjax(parametros,'cp','filtra_cp',ruta);
 
     //Ponemos valores predeterminados
     reiniciaSelVialidades();
@@ -96,7 +98,7 @@ $(document).on("change","#CODIGO", function () {
         }
 
         //Localidad
-        frmAjax(parametros,'asen_sepomex','filtra_asen_sepomex');
+        envia.frmAjax(parametros,'asen_sepomex','filtra_asen_sepomex',ruta);
 
       })
 
@@ -120,24 +122,21 @@ $(document).on("change","#id_cat_localidad", function () {
             'id_cat_localidad' : id_cat_localidad
             }
 
-    //Asentamiento
-    //frmAjax(parametros,'asentamiento','filtra_asentamiento','filtra_vialidad');
-
     //Vialidad
     parametros.tipo = 'vialidad';
-    frmAjax(parametros,parametros.tipo,'filtra_vialidad');
+    envia.frmAjax(parametros,parametros.tipo,'filtra_vialidad',ruta);
     
     //Calle 1
     parametros.tipo = 'calle1';
-    frmAjax(parametros,parametros.tipo,'filtra_vialidad');
+    envia.frmAjax(parametros,parametros.tipo,'filtra_vialidad',ruta);
     
     //Calle 2
     parametros.tipo = 'calle2';
-    frmAjax(parametros,parametros.tipo,'filtra_vialidad');
+    envia.frmAjax(parametros,parametros.tipo,'filtra_vialidad',ruta);
 
     //Calle Posterior    
     parametros.tipo = 'posterior';
-    frmAjax(parametros,parametros.tipo,'filtra_vialidad');
+    envia.frmAjax(parametros,parametros.tipo,'filtra_vialidad',ruta);
 
     var link = new Array();    
 
@@ -176,19 +175,19 @@ $(document).on("change","#id_cat_localidad", function () {
 
     //Tipo de vialidad en Vialidad
     parametros.tipo = 'tipo_vialidad';
-    frmAjax(parametros,parametros.tipo,'filtra_municipio_tipo_vialidad');
+    envia.frmAjax(parametros,parametros.tipo,'filtra_municipio_tipo_vialidad',ruta);
 
     //Tipo de vialidad en Calle 1
     parametros.tipo = 'tipo_vialidad_calle1';
-    frmAjax(parametros,parametros.tipo,'filtra_municipio_tipo_vialidad');
+    envia.frmAjax(parametros,parametros.tipo,'filtra_municipio_tipo_vialidad',ruta);
 
     //Tipo de vialidad en Calle 2
     parametros.tipo = 'tipo_vialidad_calle2';
-    frmAjax(parametros,parametros.tipo,'filtra_municipio_tipo_vialidad');
+    envia.frmAjax(parametros,parametros.tipo,'filtra_municipio_tipo_vialidad',ruta);
 
     //Calle Posterior
     parametros.tipo = 'tipo_vialidad_calle3';
-    frmAjax(parametros,parametros.tipo,'filtra_municipio_tipo_vialidad');
+    envia.frmAjax(parametros,parametros.tipo,'filtra_municipio_tipo_vialidad',ruta);
 
 		})
 
@@ -209,7 +208,7 @@ $(document).on("click",".formulario_new_via", function () {
     'id_cat_localidad_nueva' : id_cat_localidad_nueva,
     'actualizar' : actualizar
   }
-    frmAjax(parametros,actualizar,'agrega_vialidad');
+    envia.frmAjax(parametros,actualizar,'agrega_vialidad',ruta);
 
 });
 
@@ -244,7 +243,7 @@ $(document).on("click","#guarda_vialidad", function(e){
     actualizar = $(this).attr('name');
 
     //alert('edso: '+CVE_EDO_RES_NUEVA+' mun: '+id_cat_municipio_nueva+' loc: '+id_cat_localidad_nueva+' via: '+NOM_VIA_NUEVA+' tipo:'+CVE_TIPO_VIAL_NUEVA);
-    frmAjax(parametros,actualizar,'save_vialidad','POST',"../../mujer/registro/");
+    envia.frmAjax(parametros,actualizar,'save_vialidad',"../../mujer/registro/");
         
     //Refrescamos los campos de vialidad
     var parametros = {
@@ -255,7 +254,7 @@ $(document).on("click","#guarda_vialidad", function(e){
 
     //Vialidad
     parametros.tipo = 'vialidad';
-    frmAjax(parametros,parametros.tipo,'filtra_vialidad');
+    envia.frmAjax(parametros,parametros.tipo,'filtra_vialidad',ruta);
             
     //Ponemos valores predeterminados
     //reiniciaSelVialidades();
@@ -269,19 +268,19 @@ $(document).on("click","#guarda_vialidad", function(e){
 
     //Vialidad
     parametros.tipo = 'tipo_vialidad';
-    frmAjax(parametros,parametros.tipo,'filtra_municipio_tipo_vialidad');
+    envia.frmAjax(parametros,parametros.tipo,'filtra_municipio_tipo_vialidad',ruta);
 
     //Calle 1
     parametros.tipo = 'tipo_vialidad_calle1';
-    frmAjax(parametros,parametros.tipo,'filtra_municipio_tipo_vialidad');
+    envia.frmAjax(parametros,parametros.tipo,'filtra_municipio_tipo_vialidad',ruta);
 
     //Calle 2
     parametros.tipo = 'tipo_vialidad_calle2';
-    frmAjax(parametros,parametros.tipo,'filtra_municipio_tipo_vialidad');
+    envia.frmAjax(parametros,parametros.tipo,'filtra_municipio_tipo_vialidad',ruta);
 
     //Calle Posterior
     parametros.tipo = 'tipo_vialidad_calle3';
-    frmAjax(parametros,parametros.tipo,'filtra_municipio_tipo_vialidad');
+    envia.frmAjax(parametros,parametros.tipo,'filtra_municipio_tipo_vialidad',ruta);
 
     }
                        
@@ -330,53 +329,6 @@ $(document).on("click","#guarda_vialidad", function(e){
 
     }
 
-   //Form Ajax Genérico
-   function frmAjax(parametros,div,accion,tipo,ruta,selector,destino,redirect,multipart){
-
-    //Valores predeterminados
-    ruta = typeof ruta !== 'undefined' ? ruta : '../../inc/mujer/';
-    tipo = typeof tipo !== 'undefined' ? tipo : 'POST';
-    selector = typeof selector !== 'undefined' ? selector : '#';
-    redirect = typeof redirect !== 'undefined' ? redirect : false;
-    multipart = typeof multipart !== 'undefined' ? multipart : false;
-    destino = typeof destino !== 'undefined' ? destino+".php" : ruta+accion+".php";
-    
-    //Armamos objeto
-    var obj = {
-      type: tipo,
-      url: ruta+accion+".php",
-      data: parametros,
-      cache: false,      
-      beforeSend: function(){
-        $(selector+div).html('<img src="../../css/img/loader_sug.gif"/>Buscando');
-        //alert(parametros.tipo+' before');
-      },
-      success: function( respuesta ){
-        $(selector+div).html(respuesta);    
-        //alert(parametros.tipo+' success');                
-      },
-      error: function(){
-        $(selector+div).html(' ');
-      },      
-      done: function(){
-        if(redirect === true){
-          window.location.href = destino;
-        }
-      }
-    }
-
-    //Al ser multipart, agregamos 2 opciones
-    if(multipart === true){
-      obj.contentType = false;
-      obj.processData = false;      
-    }    
-
-    //Ejecutamos función Ajax
-    $.ajax(obj);
-    
-   }
-
-
  //TIPO_VIALIDAD
  $(document).on("change","#CVE_TIPO_VIAL", function () {
 
@@ -394,7 +346,7 @@ $(document).on("click","#guarda_vialidad", function(e){
         'CVE_EST_MUN_LOC' : CVE_EST_MUN_LOC
       }
 
-      frmAjax(parametros,'vialidad','filtra_tipo_vialidad');
+      envia.frmAjax(parametros,'vialidad','filtra_tipo_vialidad',ruta);
 
 		})
 
@@ -417,7 +369,7 @@ $(document).on("click","#guarda_vialidad", function(e){
         'CVE_EST_MUN_LOC' : CVE_EST_MUN_LOC
       }
 
-      frmAjax(parametros,'calle1','filtra_tipo_vialidad_calle1');
+      envia.frmAjax(parametros,'calle1','filtra_tipo_vialidad_calle1',ruta);
     })
 
 	}); 
@@ -440,7 +392,7 @@ $(document).on("click","#guarda_vialidad", function(e){
         'CVE_EST_MUN_LOC' : CVE_EST_MUN_LOC
       }
 
-      frmAjax(parametros,'calle2','filtra_tipo_vialidad_calle2');
+      envia.frmAjax(parametros,'calle2','filtra_tipo_vialidad_calle2',ruta);
 
     })
 
@@ -463,7 +415,7 @@ $(document).on("click","#guarda_vialidad", function(e){
         'CVE_EST_MUN_LOC' : CVE_EST_MUN_LOC
       }
 
-      frmAjax(parametros,'posterior','filtra_tipo_vialidad_calle_posterior');
+      envia.frmAjax(parametros,'posterior','filtra_tipo_vialidad_calle_posterior',ruta);
 
     })
 
@@ -488,7 +440,7 @@ $(document).on("click","#guarda_vialidad", function(e){
                 'id_pais' : id_pais
               }
 
-              frmAjax(parametros,'estado_origen','filtra_estado_origen');
+              envia.frmAjax(parametros,'estado_origen','filtra_estado_origen',ruta);
 
             //}
 
@@ -558,8 +510,8 @@ $(document).on("change",".cambia_mujer", function () {
     paterno !== 'undefined' && paterno != '' && 
     materno !== 'undefined' && materno != '' ){
 
-        //frmAjax(parametros,'mujeres_duplicados','ws_soap');
-        //frmAjax(parametros,'beneficiarios_duplicados','filtra_beneficiario');   
+        //envia.frmAjax(parametros,'mujeres_duplicados','ws_soap',ruta);
+        //envia.frmAjax(parametros,'beneficiarios_duplicados','filtra_beneficiario'); ,ruta  
   }    
 
 	});  
@@ -575,7 +527,7 @@ $(document).on("change",".cambia_mujer", function () {
         'folio' : folio
       }
 
-      frmAjax(parametros,'photo','toma_foto');    
+      envia.frmAjax(parametros,'photo','toma_foto',ruta);
 
   });
 
@@ -622,12 +574,7 @@ $(document).on("change",".cambia_mujer", function () {
   }            
 
   //alert(JSON.stringify(parametros));
-  //frmAjax(formData,'photo','guarda_imagen',undefined,undefined,undefined,undefined,undefined,true);
-
-  //frmAjax(parametros_2,'photo','guarda_foto','POST',undefined,undefined,'lista_mujer',true);     
-  //frmAjax(formData2,'tbl_beneficiarias','cartilla_mujer');
-  
-  frmAjax(formData,'photo','guarda_imagen',undefined,undefined,undefined,undefined,undefined,true);
+  envia.frmAjax(formData,'photo','guarda_imagen',ruta,undefined,undefined,undefined,undefined,true);
 
   window.setInterval(function() {
   location.reload(true);
@@ -652,10 +599,8 @@ $(document).on("change",".cambia_mujer", function () {
       }
 
       //alert(JSON.stringify(parametros));
-      frmAjax(parametros_2,'photo','guarda_foto');     
-      //frmAjax(parametros_2,'photo','guarda_foto','POST',undefined,undefined,'lista_mujer',true);     
-      frmAjax(parametros_1,'tbl_beneficiarias','cartilla_mujer');          
-      //window.location.href = window.location.href;               
+      envia.frmAjax(parametros_2,'photo','guarda_foto',ruta);
+      envia.frmAjax(parametros_1,'tbl_beneficiarias','cartilla_mujer',ruta);        
   });
 
 
@@ -672,7 +617,7 @@ $(document).on("change",".cambia_mujer", function () {
 
         //alert(parametros.toSource());
         $('#photo').html('');
-        frmAjax(parametros,'tbl_beneficiarias','cartilla_mujer');
+        envia.frmAjax(parametros,'tbl_beneficiarias','cartilla_mujer',ruta);
 
 
 
@@ -685,7 +630,7 @@ $(document).on("change",".cambia_mujer", function () {
           'accion': 'vaciar'
         };
 
-        frmAjax(parametros,'tbl_beneficiarias','cartilla_mujer');
+        envia.frmAjax(parametros,'tbl_beneficiarias','cartilla_mujer',ruta);
         $('#photo').html('');
     }); 
 
@@ -699,7 +644,7 @@ $(document).on("change",".cambia_mujer", function () {
           'accion': 'eliminar'
         };
 
-        frmAjax(parametros,'tbl_beneficiarias','cartilla_mujer');
+        envia.frmAjax(parametros,'tbl_beneficiarias','cartilla_mujer',ruta);
 
     });   
     

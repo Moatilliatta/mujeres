@@ -2,28 +2,32 @@
 /**
  * Clase que nos permite administrar lo relacionado a los familiares de la beneficiaria
  * **/ 
-//Inclumos librería MysqliDb
+//Inclumos librería de Paginador
 include_once($_SESSION['inc_path'].'libs/Paginador.php');
 include_once($_SESSION['inc_path'].'libs/Fechas.php');
 
-class FamiliaresMujer extends MysqliDb{
-
-    public function __construct(){}
+class FamiliaresMujer extends Db{
 
     /**
-     * Ejecutamos sentencia sql con parámetros
-     * @param string $sql Sentencia SQL
-     * @param array $params Cada uno de los parámetros de la sentencia
-     * 
-     * @return int Resultado
-     * */
-    private static function executar($sql,$params){
-        //Ejecutamos
-        $resultado = self::getInstance()->rawQuery($sql, $params);
-        //Regresamos resultado
-        return $resultado;        
-    }
-     /** Lista Generica **/
+    * Tenemos que crear un constructor vacío por que 
+    * se tomarían los valores del constructor de la clase Db 
+    */
+    public function __construct(){}
+    
+    /**
+     * Lista Genérica de Familiares
+     * @param  [type] $busqueda    [description]
+     * @param  [type] $tipo_filtro [description]
+     * @param  [type] $activo      [description]
+     * @param  [type] $nombre      [description]
+     * @param  [type] $paterno     [description]
+     * @param  [type] $materno     [description]
+     * @param  [type] $curp        [description]
+     * @param  [type] $id_mujer    [description]
+     * @param  [type] $id_caravana [description]
+     * @param  [type] $id_familiar [description]
+     * @return [type]              [description]
+     */
     public static function listaFamiliarGenerica($busqueda=NULL,$tipo_filtro=NULL,
       $activo = NULL,$nombre=null,$paterno=null,$materno=null,$curp=null,
       $id_mujer=NULL,$id_caravana=NULL,$id_familiar=NULL){

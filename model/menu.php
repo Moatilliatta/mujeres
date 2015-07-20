@@ -7,26 +7,14 @@
 include_once($_SESSION['inc_path'].'libs/Paginador.php');
 
 
-class Menu extends MysqliDb{
-
-    public function __construct(){}
+class Menu extends Db{
 
     /**
-     * Ejecutamos sentencia sql con parámetros
-     * @param string $sql Sentencia SQL
-     * @param array $params Cada uno de los parámetros de la sentencia
-     * 
-     * @return int Resultado
-     * */
-
-    private static function executar($sql,$params){
-        //Ejecutamos
-        $resultado = self::getInstance()->rawQuery($sql, $params);
-        
-        //Regresamos resultado
-        return $resultado;        
-    }
-
+    * Tenemos que crear un constructor vacío por que 
+    * se tomarían los valores del constructor de la clase Db 
+    */
+    public function __construct(){}
+    
     /**
      * Cambiamos el estatus del usuario 
      * 1 = Activo, 0 = Inactivo

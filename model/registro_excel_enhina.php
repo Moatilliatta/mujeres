@@ -4,28 +4,21 @@
 
 //Inclumos librería de Paginador
 
-include_once('../../inc/libs/Paginador.php');
+include_once($_SESSION['inc_path'].'libs/Paginador.php');
 include_once($_SESSION['model_path'].'servicio_caravana.php');
-class Registro_excel extends MysqliDb{
+class Registro_excel extends Db{
 
+    /**
+    * Tenemos que crear un constructor vacío por que 
+    * se tomarían los valores del constructor de la clase Db 
+    */
     public function __construct(){}
     
     /**
-     * Ejecutamos sentencia sql con parámetros
-     * @param string $sql Sentencia SQL
-     * @param array $params Cada uno de los parámetros de la sentencia
-     * 
-     * @return int Resultado
-     * */
-    private static function executar($sql,$params){
-        
-        //Ejecutamos
-        $resultado = self::getInstance()->rawQuery($sql, $params);
-        //Regresamos resultado
-        return $resultado;        
-
-    }
-     public static function listaRegistroexcel(){
+     * Obtenemos listado de registro de los exceles
+     * @return [type] [description]
+     */
+    public static function listaRegistroexcel(){
         
         $sql=  'SELECT
                 nombre, 
@@ -52,7 +45,12 @@ class Registro_excel extends MysqliDb{
         //Regresamos resultado
         return Paginador::paginar($sql,$params);
      }
-
+     
+     /**
+      * Guardamos registro en la tabla de excel
+      * @param  [type] $totales [description]
+      * @return [type]          [description]
+      */
      public static function saveRegistroexcel($totales){
 
         //Variable que nos indica el mensaje generado al guardar el registro
