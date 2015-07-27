@@ -14,7 +14,7 @@ $clase = 'info_msg';
 $mensaje = "";
 $ruta = $_SESSION['app_path_r'].'img'.$_SESSION['DS'].'mujeres'.$_SESSION['DS'];
 
-$allowedExts = array("jpeg", "jpg", "png");
+$allowedExts = array("jpeg", "jpg", "png","JPEG","JPG","PNG");
 $allowedTypes = array("image/jpeg","image/jpg","image/pjpeg","image/x-png","image/png");
 //$allowedExts = array("png");
 //$allowedTypes = array("image/png");
@@ -62,9 +62,6 @@ if(in_array($img["type"], $allowedTypes) && in_array($extension, $allowedExts)){
 		$num_folio = $porciones[1];
 	}
     
-     print_r($porciones);
-     exit;
-     
       //Guardamos fecha en que fue tomada la foto en la tabla de mujeres_avanzando
       $msg = mujeresAvanzando::actualizaFoto($folio,$num_folio);
       

@@ -8,8 +8,9 @@ include_once($_SESSION['model_path'].'log_mujeres_avanzando.php');
 include_once($_SESSION['model_path'].'mujeres_avanzando.php');
 
 //Obtenemos valores
-$img = $_POST['img'];
-$id = $_POST['id'];
+$img = (isset($_POST['img']))? $_POST['img'] : null;
+$folio = (isset($_POST['folio']))? $_POST['folio'] : null;
+$id = (isset($_POST['id']))? $_POST['id'] : null;
 $ruta = $_SESSION['app_path_r'].'img'.$_SESSION['DS'].'mujeres'.$_SESSION['DS'];
 //$ruta = 'C:\\xampp\\htdocs\\mujeres\\img\\mujeres\\';
 
@@ -19,7 +20,7 @@ $img = str_replace(' ', '+', $img);
 $data = base64_decode($img);
 
 //Guardamos archivo
-$file = $ruta . $id . '.png';
+$file = $ruta . $folio . '.png';
 $success = file_put_contents($file, $data);
 $clase = "";
 $mensaje = "";
@@ -30,7 +31,8 @@ if($success){
 	$clase = 'info_msg';	
 	
 	//Guardamos fecha en que fue tomada la foto en el log
-	$data = Array('folio' => $id,
+	$data = Array('folio' => $folio,
+				  'id' => $id,
 				  'fecha_foto' => date('Y-m-d h:i:s'));	
 
 	$msg = logMujeresAvanzando::saveLogMujeresAvanzando($data);
@@ -38,15 +40,15 @@ if($success){
 			echo 'Mensaje: '.$msg;
 		}
 
-	$porciones = explode("-", $id);
+	$porciones = explode("-", $folio);
 
 	if(count($porciones == 2)){
-		$id = $porciones[0];
+		$folio = $porciones[0];
 		$num_folio = $porciones[1];
 	}
 
 	//Guardamos fecha en que fue tomada la foto en la tabla de mujeres_avanzando
-	$msg = mujeresAvanzando::actualizaFoto($id,$num_folio);
+	$msg = mujeresAvanzando::actualizaFoto($folio,$num_folio);
 		if($msg != 1){
 			echo 'Mensaje: '.$msg;
 		}	

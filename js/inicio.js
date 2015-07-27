@@ -112,15 +112,19 @@ var envia = {
    
 }
 
-//Código de confirmación
-$('.confirmation').click(function () {
+jQuery(document).ready(function ($) { 
 
-  mensaje = $(this).attr("title");
+  //Código de confirmación
+  $('.confirmation').click(function () {
 
-  if(mensaje == null){
-    mensaje = '\u00BFEst\u00e1s Seguro?'; 
-  }
-        
-  return  confirm(mensaje);
-        
-});   
+    mensaje = $(this).attr("title");
+
+    if(mensaje == null){
+      mensaje = '\u00BFEst\u00e1s Seguro?'; 
+    }
+          
+    return  confirm(mensaje);
+          
+  });
+
+});

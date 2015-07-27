@@ -116,14 +116,13 @@ if(intval($id_edicion)>0 || intval($id_aspirante)>0){
     if($id_familiar != NULL && $mujeres_avanzando != NULL){
       $num_folio = mujeresAvanzando::getNumFolio($folio);
       $folio .= '-'.$num_folio;
-    }
-    
-   
+    }       
     
     //Verificamos si la imagen existe, de no estarlo ponemos imagen default
     $ruta_imagen = (file_exists($ruta_raiz.$folio.".png"))? $ruta.$folio.".png" : $ruta."default.png";              
 
-
+    //Verificamos si podemos modificar ciertos campos
+    $readonly = (in_array($id_admin,$grupos_usuario))? NULL : "readonly";
 ?>
 
 <script lang="JavaScript" type="text/javascript" src="<?php echo $_SESSION['js_path']?>jquery.maskedinput.js"></script>
@@ -191,7 +190,7 @@ if(intval($id_edicion)>0 || intval($id_aspirante)>0){
           
    </td>
    <td>
-    <?php if(in_array($id_admin,$grupos_usuario) == true  && $mujeres_avanzando['num_folio'] > 0  ) {  ?> 
+    <?php if($mujeres_avanzando['num_folio'] > 0  ) {  ?> 
      <label class="obligatorio">*</label><label for="num_folio">Consecutivo</label> 
     <?php } ?> 
    </td>
@@ -208,15 +207,16 @@ if(intval($id_edicion)>0 || intval($id_aspirante)>0){
                 </option>
                 <?php endforeach; ?>
         </select>  
-        <?php }elseif($id_edicion > 0){ ?>
+        <?php }elseif($id_edicion > 0 || $readonly != NULL){ ?>
            <input type="hidden" name="id_grado" value="<?php echo $mujeres_avanzando['id_grado']; ?>" />
            <label><?php echo $mujeres_avanzando['grado'] ?></label>
      <?php } ?>    
    </td>   
    <td>
     <?php if(in_array($id_admin,$grupos_usuario) == true) {  ?>
-     <input type = 'text' id = 'folio' name = 'folio' value="<?php echo $mujeres_avanzando['folio']; ?>" />
-     <?php }elseif($id_edicion > 0){ ?> 
+     <input type = 'text' id = 'folio' name = 'folio' <?php echo $readonly; ?> 
+     value="<?php echo $mujeres_avanzando['folio']; ?>" />
+     <?php }elseif($id_edicion > 0 || $readonly != NULL){ ?> 
      <input type="hidden" id="folio" name="folio" value="<?php echo $mujeres_avanzando['folio']; ?>" /> 
      <label><?php echo $mujeres_avanzando['folio_compuesto'];?> </label> 
     <!-- echo $mujeres_avanzando['folio']--> 
@@ -353,7 +353,8 @@ if(intval($id_edicion)>0 || intval($id_aspirante)>0){
         <label for="CODIGO">C&oacute;digo Postal</label>
       </td>    
       <td>
-            <label for="estado_civil">Estado Civil</label>
+        <label class="obligatorio">*</label>
+        <label for="estado_civil">Estado Civil</label>
       </td>
       <td>
             <label for="telefono">Tel&eacute;fono</label>
@@ -415,7 +416,7 @@ if(intval($id_edicion)>0 || intval($id_aspirante)>0){
     <tr> 
         <td>
             <input type = 'text' id = 'fecha_nacimiento' class="fecha date arma_curp_" name = 'fecha_nacimiento'value="<?php echo $mujeres_avanzando['fecha_nacimiento']; ?>" />
-            <!-- <input type="button"   value="Hoy" id="btnToday"  />-->
+            <!-- <input type="button"   value="Hoy" id="btnToday" class="today"  />-->
         </td>        
         <td>
             <input type="radio" id="MUJER" name="genero" class="arma_curp_"  value="MUJER"<?php echo( ($mujeres_avanzando['genero'] == 'MUJER')? 'checked': 'checked'); ?>/><label for="MUJER">MUJER</label><br />
@@ -516,7 +517,7 @@ if(intval($id_edicion)>0 || intval($id_aspirante)>0){
                 </option>
                 <?php endforeach; ?>
             </select>  
-         <?php }elseif($id_edicion > 0){ ?>
+         <?php }elseif($id_edicion > 0 || $readonly != NULL){ ?>
        <input type="hidden" id="elcsa" name="elcsa" value="<?php echo $mujeres_avanzando['elcsa']; ?>" />
        <label><?php echo $mujeres_avanzando['desc_elcsa'] ?></label>
          <?php } ?>
@@ -577,7 +578,7 @@ if(intval($id_edicion)>0 || intval($id_aspirante)>0){
                 </option>
                 <?php endforeach; ?>
         </select>  
-        <?php }elseif($id_edicion > 0){ ?>
+        <?php }elseif($id_edicion > 0 || $readonly != NULL){ ?>
      
      <input type="hidden" id="nivel" name="nivel" value="<?php echo $mujeres_avanzando['nivel']; ?>" />
      <label><?php echo $mujeres_avanzando['nivel_desc'] ?></label>
@@ -594,7 +595,7 @@ if(intval($id_edicion)>0 || intval($id_aspirante)>0){
                 </option>
                 <?php endforeach; ?>
         </select>  
-        <?php }elseif($id_edicion > 0){ ?>
+        <?php }elseif($id_edicion > 0 || $readonly != NULL){ ?>
        <input type="hidden" id="calidad_dieta" name="calidad_dieta" value="<?php echo $mujeres_avanzando['calidad_dieta']; ?>" />
        <label><?php echo $mujeres_avanzando['calidad_desc'] ?></label>
        <?php } ?> 
@@ -610,7 +611,7 @@ if(intval($id_edicion)>0 || intval($id_aspirante)>0){
                 </option>
                 <?php endforeach; ?>
         </select>   
-        <?php }elseif($id_edicion > 0){ ?>
+        <?php }elseif($id_edicion > 0 || $readonly != NULL){ ?>
         <input type="hidden" id="diversidad" name="diversidad" value="<?php echo $mujeres_avanzando['diversidad']; ?>" />
         <label><?php echo $mujeres_avanzando['diversidad_desc'] ?></label>
         <?php } ?> 
@@ -626,7 +627,7 @@ if(intval($id_edicion)>0 || intval($id_aspirante)>0){
                 </option>
                 <?php endforeach; ?>
         </select>   
-       <?php }elseif($id_edicion > 0){ ?>
+       <?php }elseif($id_edicion > 0 || $readonly != NULL){ ?>
        <input type="hidden" id="variedad" name="variedad" value="<?php echo $mujeres_avanzando['variedad']; ?>" />
         <label><?php echo $mujeres_avanzando['variedad_desc'] ?></label> 
         <?php } ?> 

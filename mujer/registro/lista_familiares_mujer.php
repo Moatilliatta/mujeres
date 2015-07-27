@@ -22,7 +22,7 @@
     });
     </script>
 
-    <table class="tablesorter">
+    <table class="tablesorter color_alt">
     <thead>
       <tr>
         <th colspan="7">
@@ -50,10 +50,12 @@
             <td><?php echo $l['fecha_nacimiento'];?></td>
             <td><?php echo $l['nom_caravana'];?></td>
             <td>
-               <?php if(array_key_exists('alta_mujer',$central)){ ?> 
+               <?php if(array_key_exists('alta_fam_cred',$central)){ ?> 
                <?php if($l['cartilla'] == null){ ?>                  
-                <div title="Agregar Servicio" class="ui-state-default ui-corner-all lista">
-                  <a class="ui-icon ui-icon-circle-triangle-e" href="alta_mujer.php?id_familiar=<?php echo $l['id']; ?>"></a>
+                <div title="Agregar Familiar a Cartilla" class="ui-state-default ui-corner-all lista">
+                  <a class="ui-icon ui-icon-circle-triangle-e confirmation" 
+                  title="&iquest;Est&aacute;s seguro de dar de alta a &eacute;ste integrante?"
+                  href="alta_fam_cred.php?id_familiar=<?php echo $l['id']; ?>"></a>
                 </div>                
                 <?php } ?>  
                  <?php } ?>    

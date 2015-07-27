@@ -87,7 +87,7 @@ $lista = Seg_punto_rosa_capacitacion::listaSegPuntoRosaCap($punto_rosa['id']);
             		value="<?php echo $lista_fechas_capacitacion[$l['id']];?>" />
                     
             <input type="button"  value="Hoy" <?php echo (in_array($l['id'],$lista_fechas_capacitacion) === true)? '': 'disabled';?>
-             id="<?php echo $l['id']; ?>" class="btnToday1"/>
+             id="<?php echo $l['id']; ?>" class="today"/>
             </td>
         </tr>
 

@@ -1,6 +1,7 @@
 <?php session_start(); 
 
-$folio = "'".$_POST['folio']."'";
+$folio = (isset($_POST['folio']))? "'".$_POST['folio']."'" : null;
+$id = (isset($_POST['id']))? $_POST['id'] : null; 
 
 ?>
 <link rel="stylesheet" href="<?php echo $_SESSION['css_path'].'foto.css' ?>" type="text/css"/>
@@ -8,10 +9,12 @@ $folio = "'".$_POST['folio']."'";
 <script type="text/javascript">
 
 $('#example').photobooth().on("image",function( event, dataUrl ){ 
-		$( "#gallery" ).html('<img id="img_'+<?php echo $folio;?>+'" src="' + dataUrl + '" >'+
-							  '<div id="tomar" style="display:none;">'+
-							  '<button class="guarda_foto" id="btn_'+<?php echo $folio;?>+'">'+
-							  'Guardar Fotograf&iacute;a</button></div>'); 
+		$( "#gallery" ).html('<img id="img_'+<?php echo $folio;?>+'" '+
+		'src="' + dataUrl + '" >'+
+		'<div id="tomar" style="display:none;">'+
+		'<button class="guarda_foto" title="'+<?php echo $id;?>+'" '+
+		' id="btn_'+<?php echo $folio;?>+'">'+
+		'Guardar Fotograf&iacute;a</button></div>'); 
 });	
 
 $('#example').data( "photobooth" ).resize( 320, 200 );

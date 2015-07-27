@@ -45,6 +45,7 @@ class logMujeresAvanzando extends Db{
         {
                 $insertData = array(
                 'folio' => $folio,
+                'id_mujeres_avanzando' => $id,
                 'fecha_foto' => $fecha_foto,
                 'fecha_impresion' => $fecha_impresion,
                 'fecha_creacion' => date('Y-m-d h:i:s'),
