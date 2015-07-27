@@ -61,10 +61,8 @@ class Cartilla{
                          
                         if ( count($this->articulo_id) < $LIMITE ){						             
 
-                        
-                        
-                        $mujer = mujeresAvanzando::get_by_id(null,$articulo_id);
-                          
+                        $mujer = mujeresAvanzando::get_by_id($articulo_id);
+                                
                          if($mujer != NULL){
   
                           $this->articulo_id[] = $articulo_id; 

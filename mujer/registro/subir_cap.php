@@ -1,7 +1,7 @@
 <?php
 session_start();//Habilitamos uso de variables de sesión
 
-$excel = ($_POST['excel'] != NULL)? $_POST['excel']: NULL;
+$excel = (isset($_POST['excel']))? $_POST['excel']: NULL;
 
 //Imprimimos o no cabecera de excel
 if($excel != NULL){
@@ -202,6 +202,7 @@ $(function() {
       </div>
     </div>
     
+    <?php if($totales != NULL){?>
     <div class="centro">        
         <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>" >
         <div>
@@ -210,6 +211,9 @@ $(function() {
         </div>        
         </form> 
     </div>
+    <?php } ?>
+
+
     <?php } ?>
     
     <?php if($lista != NULL){ ?>

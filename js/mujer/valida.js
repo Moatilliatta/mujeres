@@ -109,7 +109,7 @@ $("#formBen").validate({
             diversidad: {required: true,range: [1, 10000]},
             variedad: {required: true,range: [1, 10000]},
             elcsa: {required: true,range: [1, 10000]},
-           // id_estado_civil: {required: true,range: [1, 10000]},
+            id_estado_civil: {required: true,range: [1, 10000]},
             //comunidad_indigena: 'required',
             //dialecto: 'required',
             //CVE_TIPO_VIAL_CALLE1:{
@@ -204,7 +204,7 @@ $("#formBen").validate({
           //  CVE_ASEN: 'Seleccione Asentamiento',
             id_escolaridad: 'Seleccione Escolaridad',
             id_ocupacion: 'Seleccione Ocupaci\u00f3n',
-           // id_estado_civil: 'Seleccione Estado Civil',                        
+            id_estado_civil: 'Seleccione Estado Civil',                        
             curp: 'Verifique que su CURP est\u00e9 correcta',
             pasaporte : 'Ingrese Pasaporte',
             comunidad_indigena : 'Ingrese Comunidad Ind\u00edgena',
@@ -502,6 +502,22 @@ $("#form_nueva_vialidad").validate({
 
         }
 
-   });   
+   });
+
+   //Login
+    $("#formLogin").validate({
+        rules: {  
+            usuario:{required: true},
+            clave: {required: true},
+            id_caravana: {required: true}
+        
+        },
+        messages: {                       
+            usuario: "Escriba usuario",
+            clave: "Escriba password",
+            id_caravana : 'Seleccione Caravana'
+                 
+        }
+    });   
 
 });

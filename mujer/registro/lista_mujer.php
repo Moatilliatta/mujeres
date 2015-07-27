@@ -156,8 +156,8 @@ $(function() {
               </td>
               <td>
                 <select id="tipo_filtro" name="tipo_filtro">
-                       <option value="nombre">Nombre</option> 
                        <option value="folio">Folio</option>
+                       <option value="nombre">Nombre</option>                        
                        <option value="calle">Calle</option>                                        
                 </select>
               </td>
@@ -278,7 +278,7 @@ $(function() {
                 <?php } ?>
                  
                 <?php if(array_key_exists('credencial',$central)){ ?>                
-                <div id="<?php echo $l['folio_compuesto']; ?>" title="Cartilla" class="ui-state-default carrito ui-corner-all lista">
+                <div id="<?php echo $l['id']; ?>" title="Cartilla" class="ui-state-default carrito ui-corner-all lista">
                   <a class="ui-icon ui-icon-plus"></a>
                 </div>                
                 <?php } ?>

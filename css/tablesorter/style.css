@@ -8,13 +8,21 @@ table.tablesorter {
 	text-align: left;
 }
 table.tablesorter thead tr th, table.tablesorter tfoot tr th {
-	/*background-color: #e6EEEE;*/
-    color: white;
+	color: white;
     background-color: #990066;
 	border: 1px solid #FFF;
 	font-size: 8pt;
 	padding: 4px;
 }
+
+table.color_alt thead tr th, table.color_alt tfoot tr th {
+	background-color: #99bb77 !important;
+    color: white;
+	border: 1px solid #FFF;
+	font-size: 8pt;
+	padding: 4px;
+}
+
 table.tablesorter thead tr .header {
 	background-image: url(bg.gif);
 	background-repeat: no-repeat;

@@ -196,7 +196,7 @@ $(function() {
     <tbody>
     <?php foreach($articulos->articulo_id as $key => $value):
        
-       $mujer = mujeresAvanzando::get_by_id(null,$value);
+       $mujer = mujeresAvanzando::get_by_id($value);
         //Verificamos si la imagen existe, de no estarlo ponemos imagen default
        $ruta_imagen = (file_exists($ruta_raiz.$mujer['folio_compuesto'].".png"))? $ruta.$mujer['folio_compuesto'].".png?i=". filemtime($ruta_raiz.$mujer['folio_compuesto'].'.png') : $ruta."default.png";
 
@@ -208,7 +208,8 @@ $(function() {
                 </div>
             </td>
             <td>
-              <button id="<?php echo $value; ?>" class="foto">Tomar Foto</button>
+              <button id="<?php echo $value; ?>" name="<?php echo $mujer['folio_compuesto'];?>" 
+              class="foto">Tomar Foto</button>
             </td>
             <td>
                 <?php $calle = $mujer['calle'].' No. '.$mujer['num_ext']; ?>

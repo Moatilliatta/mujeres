@@ -1,3 +1,4 @@
+
 <?php
 session_start();
 
@@ -6,11 +7,11 @@ session_start();
 include ("../inc/conecta.php"); 
 
 //Obtenemos la respuesta al momento de querer loguearnos
-$respuesta = $_GET["r"];
+$respuesta = isset($_GET["r"])? $_GET["r"] : null ;
 
 include_once('../inc/libs/Permiso.php');
 
-//Nos ayudará a determinar el navegador del cliente
+//Nos ayudarÃ¡ a determinar el navegador del cliente
 include_once('../inc/libs/Navegador.php');
 
 //Mensaje respuesta
@@ -18,7 +19,7 @@ list($mensaje,$clase) = Permiso::mensajeRespuesta($respuesta);
 //Validamos Respuesta
 if($respuesta == 1) {
 		
-    //Actualizamos la variable de sesión del módulo
+    //Actualizamos la variable de sesiÃ³n del mÃ³dulo
     
     Permiso::updateModule();	
 	
@@ -38,6 +39,7 @@ if($respuesta == 1) {
      <!-- jqueryui -->
      <script lang="javascript" type="text/javascript" src="../js/jquery-ui-1.10.3.custom.min.js"></script>             
      <script lang="javascript" type="text/javascript" src="../js/jquery.validate.js"></script>
+     <script lang="javascript" type="text/javascript" src="../js/mujer/valida.js"></script>
      <script lang="javascript" type="text/javascript" src="../js/inicio.js"></script>       
     </head>
     <body>    
