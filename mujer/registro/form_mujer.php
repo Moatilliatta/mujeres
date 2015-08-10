@@ -84,6 +84,7 @@ if(intval($id_edicion)>0 || intval($id_aspirante)>0){
     $id_cat_municipio = $mujeres_avanzando['id_cat_municipio'];
     $id_cat_estado = $mujeres_avanzando['id_cat_estado'];
     $CODIGO = $mujeres_avanzando['CODIGO'];
+	$programa = $mujeres_avanzando['programa'];
     
         //$municipios_residencia
         if($CVE_EDO_RES && $CVE_EDO_RES != 14){
@@ -141,6 +142,9 @@ if(intval($id_edicion)>0 || intval($id_aspirante)>0){
 </style>
 <div class="mensaje">
     <label class="obligatorio"> Le recordamos que los campos con asterisco (*) son campos obligatorios<?php //echo $num_folio; ?></label>
+</div>
+<div>
+  <label class="mensaje">Programa: <?php echo $programa; ?></label>
 </div>
 <?php if ($mujeres_avanzando['folio'] !=null && $mujeres_avanzando['num_folio'] !=null) { ?>
 <div id="foto" style="display: none;">

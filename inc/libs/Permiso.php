@@ -151,6 +151,8 @@ class Permiso extends Db{
                      break;
             case 30: $respuesta = "Beneficiario no encontrado o inexistente";
                      break;
+            case 31: $respuesta = "No es un grupo de carga autorizado";
+                     break;
             case 100 : $respuesta = "Archivo cargado con éxito";
                         break;
             case 101 : $respuesta = "El archivo excede el límite de la directiva upload_max_filesize en php.ini";
@@ -176,8 +178,8 @@ class Permiso extends Db{
                     break;
             case  2: case 3: case 4: case 5: case 6: case 7: case 9: 
             case 10: case 12: case 15: case 17: case 18: case 19: case 20:
-            case 21: case 22: case 23: case 24: case 25: case 27: case 101:
-            case 102:case 103: case 104:case 105:case 106:
+            case 21: case 22: case 23: case 24: case 25: case 27: case 31:
+            case 101: case 102:case 103: case 104:case 105:case 106:
                     $clase = 'error_msg';
                     break;
             

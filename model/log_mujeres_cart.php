@@ -41,7 +41,8 @@ class logMujeresCart extends Db{
                 $insertData = array(
                 "motivo" => $motivo,
                 "id_mujeres_avanzando" => $id_mujeres_avanzando,
-                "id_usuario_creador" => $id_usuario_creador
+                "id_usuario_creador" => $id_usuario_creador,
+                "id_caravana" => $id_caravana
                 );
                 
                 //Quitamos del arreglo los valores vacíos

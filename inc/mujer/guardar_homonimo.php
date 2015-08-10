@@ -1,29 +1,27 @@
 <?php
 session_start();//Habilitamos uso de variables de sesión
 
-if( isset($_POST['nombres'])&&
-	isset($_POST['paterno'])&&
-	isset($_POST['materno'])&&
-	isset($_POST['fecha_nacimiento'])&&
-	isset($_POST['id_municipio_nacimiento'])&&
-	isset($_POST['id_cat_estado'])){
+//Obtenemos conexión
+include ($_SESSION['inc_path'] . "conecta.php");
+
+//Verificamos función de homónimo
+include_once($_SESSION['model_path'].'mujeres_avanzando.php');
+    
 
     //Obtenemos parametros    
-	$nombres = $_POST['nombres'];
-	$paterno = $_POST['paterno'];
-	$materno = $_POST['materno'];
-	$fecha_nacimiento = $_POST['fecha_nacimiento'];
-	$id_municipio_nacimiento = $_POST['id_municipio_nacimiento'];
-	$id_cat_estado = $_POST['id_cat_estado'];
-	$esHomonimo = $_POST['esHomonimo'];
-    $id_mujeres_avanzando = $_POST['id_mujeres_avanzando'];
+	$nombres = (isset($_POST['nombres']))? $_POST['nombres'] : null;
+	$paterno = (isset($_POST['paterno']))? $_POST['paterno'] : null;
+	$materno = (isset($_POST['materno']))? $_POST['materno'] : null;
+	$fecha_nacimiento = (isset($_POST['fecha_nacimiento']))? $_POST['fecha_nacimiento'] : null;
+	$id_municipio_nacimiento = (isset($_POST['id_municipio_nacimiento']))? $_POST['id_municipio_nacimiento'] : null;
+	$id_cat_estado = (isset($_POST['id_cat_estado']))? $_POST['id_cat_estado'] : null;
+	$esHomonimo = (isset($_POST['esHomonimo']))? $_POST['esHomonimo'] : null;
+    $id_mujeres_avanzando = (isset($_POST['id_mujeres_avanzando']))? $_POST['id_mujeres_avanzando'] : null;
 
-	//Obtenemos conexión
-    include ($_SESSION['inc_path'] . "conecta.php");
+if( $nombres && $paterno && $materno && $fecha_nacimiento && 
+    $id_municipio_nacimiento && $id_cat_estado)
+{
 
-    //Verificamos función de homónimo
-    include_once($_SESSION['model_path'].'mujeres_avanzando.php');
-    
     //Ejecutamos función para verificar
     $Homonimo = mujeresAvanzando::verificaHomonimo(
                                 $nombres,

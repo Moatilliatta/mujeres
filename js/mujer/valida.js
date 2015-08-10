@@ -250,6 +250,7 @@ $("#form_nueva_vialidad").validate({
         var materno = $("#materno").val();
         var fecha_nacimiento = $("#fecha_nacimiento").val();
         var id_municipio_nacimiento = $("#id_municipio_nacimiento").val();
+        var id_mujeres_avanzando = $("#id_mujeres_avanzando").val();
         var id_cat_estado = $("#id_cat_estado").val();
         var esHomonimo = $("#esHomonimo").val();
 
@@ -268,7 +269,8 @@ $("#form_nueva_vialidad").validate({
             'fecha_nacimiento': fecha_nacimiento,
             'id_municipio_nacimiento': id_municipio_nacimiento,
             'id_cat_estado': id_cat_estado,
-            'esHomonimo' : esHomonimo
+            'esHomonimo' : esHomonimo,
+            'id_mujeres_avanzando' : id_mujeres_avanzando
             };                
 
             $.ajax({
