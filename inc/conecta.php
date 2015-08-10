@@ -9,6 +9,8 @@
 	//Uso de reporte de errores más estricto
 	//error_reporting(E_ALL ^ E_STRICT);
 	
+	date_default_timezone_set('America/Mexico_City');
+
 	//comentar la siguiente linea en producción
 	ini_set('display_errors', 'On'); 
 	
@@ -16,10 +18,15 @@
     include('libs/Db.php');
     
     //hacemos una instancia ala clase MysqliDb en la variable $db
-    //$db = new Db('localhost', 'root', '', 'mujeres_avanzando');
+    $db = new Db('localhost', 'root', '', 'mujeres_avanzando');
 	//$db = new Db('localhost', 'root', 'difJalisc0', 'mujeres_avanzando');
-	$db = new Db('localhost', 'root', 'Muj3rd1f.jal', 'mujeres_avanzando');
+	//$db = new Db('localhost', 'root', 'Muj3rd1f.jal', 'mujeres_avanzando');
     
+    $ruta = "C:\\xampp\\htdocs\\padron\\";
+
+    //Habilitamos log de errores
+    $db->setErrTrack(true,$ruta);
+
     /* Comprueba la conexión */
     if (mysqli_connect_errno()) {
         printf("Connect failed: %s\n", mysqli_connect_error());

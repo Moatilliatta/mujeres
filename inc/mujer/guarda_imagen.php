@@ -57,17 +57,17 @@ if(in_array($img["type"], $allowedTypes) && in_array($extension, $allowedExts)){
     
     $porciones = explode("-", $folio);
 
-	if(count($porciones == 2)){
-		$folio = $porciones[0];
-		$num_folio = $porciones[1];
-	}
+  	//Contiene guiones
+    if(count($porciones == 2)){
+      list($folio,$num_folio) = mujeresAvanzando::obtenFolio($folio);
+    }
     
-      //Guardamos fecha en que fue tomada la foto en la tabla de mujeres_avanzando
-      $msg = mujeresAvanzando::actualizaFoto($folio,$num_folio);
+    //Guardamos fecha en que fue tomada la foto en la tabla de mujeres_avanzando
+    $msg = mujeresAvanzando::actualizaFoto($folio,$num_folio);
       
-      if($msg != 1){
+    if($msg != 1){
         echo 'Mensaje: '.$msg;
-      } 
+    } 
 
   }else{
     $mensaje = 'Imagen '.$nombre.' no se pudo copiar al destino '.$file;

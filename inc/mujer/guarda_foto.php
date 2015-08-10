@@ -42,9 +42,9 @@ if($success){
 
 	$porciones = explode("-", $folio);
 
+	//Contiene guiones
 	if(count($porciones == 2)){
-		$folio = $porciones[0];
-		$num_folio = $porciones[1];
+		list($folio,$num_folio) = mujeresAvanzando::obtenFolio($folio);
 	}
 
 	//Guardamos fecha en que fue tomada la foto en la tabla de mujeres_avanzando

@@ -1,3 +1,9 @@
 *.xls
 *.png
 *.xlsx
+*.svn-base
+.svn/entries
+.svn/wc.db
+mujer/registro/mysqli_errors.txt
+login/log/mysqli_errors.txt
+.svn/format

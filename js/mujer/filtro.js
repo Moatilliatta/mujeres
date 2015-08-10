@@ -687,6 +687,8 @@ $(document).on("change",".cambia_mujer", function () {
           alert('Todas las beneficiarias deben tener foto');
         }else{
           
+          var txtr= {};
+          
           //Guardamos (de haber) los motivos por los que se
           //reimprimirían cartillas. Obtenemos todos los textarea 
           //en el documento actual
@@ -710,6 +712,8 @@ $(document).on("change",".cambia_mujer", function () {
           txt = undefined;
 
           });
+
+          txtr = JSON.stringify(txtr);
 
           //Armamos arreglo de parámetros
           var parametros = {

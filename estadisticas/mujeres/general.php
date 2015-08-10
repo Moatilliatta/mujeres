@@ -37,7 +37,12 @@ list($lista,$p) = logMujeresAvanzando::listaLog(null,null,$id_caravana,$fecha_cr
 $caravanas = $db->get('caravana');
 
 //Obtenemos totales por caravana
+
+//Db::iniciaRastro();
 $cartillas_car = mujeresAvanzando::cartillas_car($fecha_creacion);
+//print_r(Db::ultimoQuery());
+//print_r(Db::arregloRastro());
+
 $total_cartillas_car = mujeresAvanzando::total_cartillas_car();
 
 //Obtenemos totales de cartillas entregadas en caravana

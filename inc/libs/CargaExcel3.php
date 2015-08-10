@@ -250,7 +250,8 @@ class CargaExcel3 extends Db{
         
         //Guardaremos registro
 		$msg_no = self::guarda($value,$beneficiarias[$k],$id_caravana,$visita);
-				
+		echo "Mensaje : ".$msg_no;
+
 		//Dependiendo la respuesta hacemos incrementos
 		switch ($msg_no) {
 			case 1:$total_registrados++;
@@ -608,8 +609,9 @@ class CargaExcel3 extends Db{
         
         //echo $prog;
         //exit;  
+        
         //Sólo los programas válidos
-        if(in_array($prog,$programas)){
+        //if(in_array($prog,$programas)){
 	                         					        	
 			//Obtenemos información			            
             $paterno = $datos_h2['D'];
@@ -700,15 +702,15 @@ class CargaExcel3 extends Db{
 			    );    
 				
                 //print_R($mujeres_avanzando);
-                //exit;		
-                        
+                //exit;	
                         	
 				list($msg_no,$curp,$id_generado) = mujeresAvanzando::
 													saveMujer($mujeres_avanzando);
-                                                    
-                                                    
 
-	        }
+	       /* }else{
+                //No es grupo de carga
+                $msg_no = 31;
+            }*/
 
 		}else{
 			//Registro de Beneficiaria duplicado

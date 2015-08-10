@@ -15,15 +15,6 @@ class CargaCap extends Db{
 //Muy importante especificar q el constructor esta vacio si no tomaria el constructor d la clase de la que heredas
     public function __construct(){}
     public function __destruct(){}
-    
-     private static function executar($sql,$params){
-        
-        //Ejecutamos
-        $resultado = self::getInstance()->rawQuery($sql, $params);
-        //Regresamos resultado
-        return $resultado;        
-
-    }
 
     public static function hoja1($hoja_1){
 

@@ -31,6 +31,18 @@ class Caravana extends Db{
 
         return $datos;
     }
+    
+    /**
+     * Obtenemos los datos de la caravana actual
+     * @return Array datos del registro
+     */
+    public static function caravanaActual(){
+        
+        $datos = self::getInstance()->where('activo', 1)
+                                    ->orderBy("id","DESC")
+                                    ->getOne('caravana');
+        return $datos;
+    }
 
    /**
      * Cambiamos el estatus del beneficiario 
