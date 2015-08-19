@@ -26,8 +26,8 @@ $reposicionesCart = NULL;
 $repLogMujeresCart = NULL;
 
 //Si requerimos obtener totales por fecha
-$fecha_creacion = ($_GET['fecha_creacion'] != NULL)? $_GET['fecha_creacion']: NULL;
-$id_caravana = ($_GET['id_caravana'] != NULL)? $_GET['id_caravana'] : NULL;
+$fecha_creacion = (isset($_GET['fecha_creacion']))? $_GET['fecha_creacion']: NULL;
+$id_caravana = (isset($_GET['id_caravana']))? $_GET['id_caravana'] : NULL;
 
 //Listamos los programas del beneficiario
 list($lista,$p) = logMujeresAvanzando::listaLog(null,null,$id_caravana,$fecha_creacion);
@@ -71,7 +71,10 @@ $totalesRep = logMujeresCart::total_rep();
 
 
 //Mensaje respuesta
-$respuesta = ($_GET['r'] == NULL && $lista == NULL)? 8 : $_GET['r'];
+$respuesta = (isset($_GET['r']))? $_GET['r']: null;
+
+$respuesta = ($respuesta == NULL && $lista == NULL)? 8 : $respuesta;
+
 list($mensaje,$clase) = Permiso::mensajeRespuesta($respuesta);
 
 ?>

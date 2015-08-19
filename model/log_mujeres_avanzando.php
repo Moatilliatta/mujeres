@@ -218,7 +218,7 @@ class logMujeresAvanzando extends Db{
                 where l.fecha_impresion is not null
                 GROUP BY c.id; ";    
 
-        return self::executar($sql,$params);
+        return self::executar($sql);
     }
 
     /**
