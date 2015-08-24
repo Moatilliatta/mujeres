@@ -302,11 +302,11 @@ class FamiliaresMujer extends Db{
      */
     public static function guardaFamiliares($valor){
     
-        $id_entrevista = $valor['B'];           
-        $nombres = $valor['F'];
-        $paterno = $valor['D'];            
-        $materno = $valor['E'];
-        $fecha = trim($valor['G']);
+        $id_entrevista = (isset($valor['B']))? $valor['B'] : null;
+        $nombres = (isset($valor['F']))? $valor['F']: null;
+        $paterno = (isset($valor['D']))? $valor['D']: null;   
+        $materno = (isset($valor['E']))? $valor['E']: null;
+        $fecha = (isset($valor['G']))? $valor['G'] : null;
 
         if(intval($fecha) > 0){
           $f = substr(Fechas::convertir_fecha_excel($fecha,"d/m/Y"),0,10);
@@ -350,12 +350,12 @@ class FamiliaresMujer extends Db{
         //$insertData = array_filter($insertData, create_function('$a','return preg_match("#\S#", $a);'));
 
         //Si recibimos id para editar
-        if(intval($id)>0){
+        /*if(intval($id)>0){
             //Indicamos que haremos un update
             $accion = 'update';
             //Agregamos condición para indicar qué id se actualiza
             self::getInstance()->where('id',$id);
-        }
+        }*/
 
         //Iniciamos transacción
         self::getInstance()->startTransaction();

@@ -5,7 +5,8 @@ session_start();//Habilitamos uso de variables de sesión
 include('../../inc/header.php');
 
 //Variable de respuesta
-$respuesta = intval($_GET['r']);
+$respuesta = (isset($_GET['r']))? intval($_GET['r']) : null;
+
 //obtenemos datos de caravana
 $db->where ('activo', 1);
 $caravana = $db->get('caravana');

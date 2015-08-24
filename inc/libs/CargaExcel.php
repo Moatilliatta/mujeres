@@ -46,7 +46,8 @@ class CargaExcel extends Db{
 	//Recorremos cada registro y solo guardamos los que tengan datos
 	for ($i=0; $i <= $maxFila ; $i++) { 
 
-		if($B[$i]['B'] != NULL && $D[$i]['D'] != NULL){
+		if( isset($B[$i]['B'])&& $B[$i]['B'] != NULL && 
+            isset($D[$i]['D']) && $D[$i]['D'] != NULL){
 
 			$H[] =$B[$i]+$D[$i]+$R[$i]+$U[$i]+$Z[$i]+$AH[$i]+$AJ_AN[$i]+$FU_FZ[$i];
 			
@@ -114,7 +115,8 @@ class CargaExcel extends Db{
 
      //Recorremos cada registro y solo guardamos los que tengan datos
      for ($i=0; $i <= $maxFila ; $i++) { 
-		if($C[$i]['C'] != NULL){
+		
+        if(isset($C[$i]['C']) && $C[$i]['C'] != NULL){
 
 			$H2[] =$C[$i]+$E_H[$i]+$J_K[$i]+$N[$i]+$X[$i]+$AD[$i];	
 
@@ -240,8 +242,10 @@ class CargaExcel extends Db{
 		//Obtenemos ID del registro donde coincide
 		$k = self::searchForId($value['B'], $beneficiarias);   				
 
+        $benef = (isset($beneficiarias[$k]))? $beneficiarias[$k] : null;
+
         //Guardaremos registro
-		$msg_no = self::guarda($value,$beneficiarias[$k],$id_caravana,$visita);
+		$msg_no = self::guarda($value,$benef,$id_caravana,$visita);
 				
 		//Dependiendo la respuesta hacemos incrementos
 		switch ($msg_no) {
@@ -250,14 +254,14 @@ class CargaExcel extends Db{
 			case 21://Registro de Beneficiario duplicado
 		            $total_duplicados++;
 		            //Guardamos el ID de entrevista para no duplicar los familiares
-		            $id_entrevista_dup[]=$beneficiarias[$k]['C'];
+		            $id_entrevista_dup[]=$benef['C'];
 		            break;
 		    case 22://No coinciden ID de entrevista
 		    		$total_no_coinciden++;
 		    		$id_entrevista_noc[$value['D']]=$value['B'];
-		    		$id_entrevista_dup[]=$beneficiarias[$k]['C'];
+		    		$id_entrevista_dup[]=$benef['C'];
 		    		break;
-		    default:$id_entrevista_dup[]=$beneficiarias[$k]['C'];
+		    default:$id_entrevista_dup[]=$benef['C'];
 		    		break;
 		}
 

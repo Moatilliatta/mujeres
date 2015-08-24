@@ -5,7 +5,7 @@ session_start();//Habilitamos uso de variables de sesión
 include_once('../../inc/header.php'); 
 
 //Variable de respuesta
-$respuesta = intval($_GET['r']);
+$respuesta = (isset($_GET['r']))? intval($_GET['r']) : null;
 
 //Mensaje respuesta
 list($mensaje,$clase) = Permiso::mensajeRespuesta($respuesta);
