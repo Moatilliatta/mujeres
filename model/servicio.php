@@ -119,11 +119,11 @@ class Servicio extends Db{
         }
 
         //Verificamos si filtraremos por algún listado de componentes (programas)
-        if($lista_comp != NULL){
+        /*if($lista_comp != NULL){
             $codigo = implode(',',$lista_comp);
             $sql .= " AND c.codigo IN (?) ";
             $params[] = $codigo;
-        }
+        }*/
 
         //Verificamos si se quieren filtrar los activos/inactivos
         if($activo !== NULL){

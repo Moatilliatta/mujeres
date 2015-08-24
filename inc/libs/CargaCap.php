@@ -100,7 +100,8 @@ class CargaCap extends Db{
 	//Recorremos cada registro y solo guardamos los que tengan datos
 	for ($i=0; $i <= $maxFila ; $i++) { 
 
-		if($G[$i]['G'] != NULL && $I[$i]['I'] != NULL){
+		if(isset($G[$i]['G']) && $G[$i]['G'] != NULL && 
+            isset($I[$i]['I']) && $I[$i]['I'] != NULL){
 
 			$Hoja[] =$E[$i]+$F[$i]+$G[$i]+ $H[$i]+ $I[$i]+ $K[$i]+ $L[$i]+$N[$i]+$O[$i]+$P[$i]+
 				  $Q[$i]+$R[$i]+ $Y[$i]+ $Z[$i]+ $AC[$i]+ $AF[$i]+
@@ -211,134 +212,130 @@ class CargaCap extends Db{
 
 		list($duplicados,$unicos) = SegCapacitacionMujer::foliosDuplicados($folios);
 		
-		//Recorremos total de filas en el excel
-		foreach ($datos_h1 as $key => $value):
-        
-        //Obtenemos ID del registro donde coincide
-		//Búsqueda por nombre y folio
-        $mujeres_avanzando = self::buscaFolio($value['E'], //folio 
-       	                          $value['G'], //paterno
-					               $value['H'], //materno
-								   $value['I']); // nombre				
-	
-		if(count($mujeres_avanzando) > 0){
+        if(count($datos_h1) > 0){
 
-			//Obtenemos punto rosa y fecha de capacitación
-			$id_caravana = $mujeres_avanzando['id_caravana'];
-            $id_mujeres_avanzando = $mujeres_avanzando['id'];
-			
-            //echo $id_caravana;
-            //exit;
-           	//Lo ideal es obtener la información directa del excel
-			//$id_seg_punto_rosa = $value['X'];
-			//$fecha_capacitacion = $value['Y'];			
-			$seg_punto_rosa = SegPuntoRosa::get_by_id_caravana($id_caravana);
-             //print_r($seg_punto_rosa);
-             //exit;
-			$id_seg_punto_rosa = (isset($seg_punto_rosa['id']))? $seg_punto_rosa['id'] : NULL;
-
-			//Obtenemos arreglo de las capacitaciones
-			list($capacitaciones,$H,$HD) = self::getCap($value);
-        //print_r($capacitaciones).'<br>';
-	
-			//Si tiene al menos una capacitación, guardaremos el registro			
-			if(count($capacitaciones) > 0){
-
-				//La búsqueda la realizamos con nombre + paterno (soundex)
-				//evitaremos duplicados de familiares que son padres e hijos
-				if(!in_array($id_mujeres_avanzando, $id_mujer)){
-					
-					//Guardaremos registro
-					$msg_no = self::guarda($id_mujeres_avanzando,
-									$id_seg_punto_rosa,
-									$capacitaciones,
-                                    $H,
-                                    $HD);
-                                   			
-
-					$id_mujer[] = $id_mujeres_avanzando;
-					$total_cap += count($capacitaciones);
-				}else{
-					//Duplicado o tiene el mismo nombre propio y apellido paterno
-					$total_duplicados++;
-				}					
-
-			}else{
-				$total_sin_cap++;
-			}
+            //Recorremos total de filas en el excel
+            foreach ($datos_h1 as $key => $value):
             
-           
-            //$selected = ($g['id'] == $mujeres_avanzando['id_grado'])? 'selected': '';
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////           
-            $menores_edad = ($value['O'] == 'X')?'SI':'NO';
-            $embarazadas_lactando = ($value['P'] == 'X')?'SI':'NO';
-            $no_gas = ($value['BL'] == 'X')?'SI':'NO';
-            $si_chimenea = ($value['BM'] == 'X')?'SI':'NO';
-             self::getInstance()->startTransaction();
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////              
-            //Actualizamos campos nuevos en tabla mujeres_avanzando
-                    $datos = Array (
-                    'numero_tarjeta' => $value['F'],
-                    'menores_edad' => $menores_edad,
-                    'embarazadas_lactando' => $embarazadas_lactando,
-                    'num_hijos' => $value['N'],
-                    'no_gas' => $no_gas,
-                    'si_chimenea' => $si_chimenea
-                    
-                    
-               );
+            //Obtenemos ID del registro donde coincide
+            //Búsqueda por nombre y folio
+            $mujeres_avanzando = self::buscaFolio($value['E'], //folio 
+                                      $value['G'], //paterno
+                                       $value['H'], //materno
+                                       $value['I']); // nombre              
+        
+            if(count($mujeres_avanzando) > 0){
+
+                //Obtenemos punto rosa y fecha de capacitación
+                $id_caravana = $mujeres_avanzando['id_caravana'];
+                $id_mujeres_avanzando = $mujeres_avanzando['id'];
                 
-                //print_r($datos);
+                //echo $id_caravana;
                 //exit;
-                self::getInstance()->where ('id', $id_mujeres_avanzando);
+                //Lo ideal es obtener la información directa del excel
+                //$id_seg_punto_rosa = $value['X'];
+                //$fecha_capacitacion = $value['Y'];            
+                $seg_punto_rosa = SegPuntoRosa::get_by_id_caravana($id_caravana);
+                 //print_r($seg_punto_rosa);
+                 //exit;
+                $id_seg_punto_rosa = (isset($seg_punto_rosa['id']))? $seg_punto_rosa['id'] : NULL;
+
+                //Obtenemos arreglo de las capacitaciones
+                list($capacitaciones,$H,$HD) = self::getCap($value);
+            //print_r($capacitaciones).'<br>';
+        
+                //Si tiene al menos una capacitación, guardaremos el registro           
+                if(count($capacitaciones) > 0){
+
+                    //La búsqueda la realizamos con nombre + paterno (soundex)
+                    //evitaremos duplicados de familiares que son padres e hijos
+                    if(!in_array($id_mujeres_avanzando, $id_mujer)){
+                        
+                        //Guardaremos registro
+                        $msg_no = self::guarda($id_mujeres_avanzando,
+                                        $id_seg_punto_rosa,
+                                        $capacitaciones,
+                                        $H,
+                                        $HD);
+                                                
+
+                        $id_mujer[] = $id_mujeres_avanzando;
+                        $total_cap += count($capacitaciones);
+                    }else{
+                        //Duplicado o tiene el mismo nombre propio y apellido paterno
+                        $total_duplicados++;
+                    }                   
+
+                }else{
+                    $total_sin_cap++;
+                }
+
+                $menores_edad = ($value['O'] == 'X')?'SI':'NO';
+                $embarazadas_lactando = ($value['P'] == 'X')?'SI':'NO';
+                $no_gas = ($value['BL'] == 'X')?'SI':'NO';
+                $si_chimenea = ($value['BM'] == 'X')?'SI':'NO';
+                 self::getInstance()->startTransaction();
+
+                //Actualizamos campos nuevos en tabla mujeres_avanzando
                 
-                $obj = self::getInstance()->update ('mujeres_avanzando', $datos);
+                $datos = Array (
+                        'numero_tarjeta' => $value['F'],
+                        'menores_edad' => $menores_edad,
+                        'embarazadas_lactando' => $embarazadas_lactando,
+                        'num_hijos' => $value['N'],
+                        'no_gas' => $no_gas,
+                        'si_chimenea' => $si_chimenea
+                        );
+                    
+                    //print_r($datos);
+                    //exit;
+                    self::getInstance()->where ('id', $id_mujeres_avanzando);
+                    
+                    $obj = self::getInstance()->update ('mujeres_avanzando', $datos);
+                    
+                    self::getInstance()->commit();
+            }else{
+                //No se encontró al beneficiario
                 
-                self::getInstance()->commit();
-        }else{
-			//No se encontró al beneficiario
+                $msg_no = 30;
+
+                $seg_no_enc = array('folio' => $value['E'],
+                                    'nombres' => $value['I'],
+                                    'paterno' => $value['G'],
+                                    'materno' => $value['H'],
+                                    'colonia' => $value['K'],
+                                    'telefono' => $value['L']);         
+                
+             list($resp,$id) = SegNoEnc::saveSegNoEnc($seg_no_enc);
+             
+             if ($resp == 1) {
+             
+             $no_encontrado[] = $id;
+             
+             }
             
-			$msg_no = 30;
 
-		    $seg_no_enc = array('folio' => $value['E'],
-								'nombres' => $value['I'],
-								'paterno' => $value['G'],
-								'materno' => $value['H'],
-								'colonia' => $value['K'],
-								'telefono' => $value['L']);			
+            }
 
-			
-         list($resp,$id) = SegNoEnc::saveSegNoEnc($seg_no_enc);
-         
-         if ($resp == 1) {
-         
-         $no_encontrado[] = $id;
-         
-         }
+            //Dependiendo la respuesta hacemos incrementos
+            switch ($msg_no) {
+                case 1:
+                        break;
+                case 21://Registro de Beneficiario duplicado
+                        $total_duplicados++;
+                        break;
+                case 30://No se encontró coincidencia de beneficiario
+                        $total_sin_coinc++;
+                        break;
+                default:
+                        break;
+            }
+            
         
+            endforeach;
 
-		}
-
-		//Dependiendo la respuesta hacemos incrementos
-		switch ($msg_no) {
-			case 1:
-					break;
-			case 21://Registro de Beneficiario duplicado
-		            $total_duplicados++;
-		            break;
-		    case 30://No se encontró coincidencia de beneficiario
-		    		$total_sin_coinc++;
-		    		break;
-		    default:
-		    		break;
-		}
-		
-	
-		endforeach;
+        }		
         
-        //print_R($no_encontrado);
-        //exit;
-		
 		//Obtenemos total de registrados
 		$total_registrados = count($id_mujer);
 
@@ -367,7 +364,7 @@ class CargaCap extends Db{
     private static function getCap($fila){
         //print_r($fila);
         //exit;
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////  	
+        
     	//Arreglo donde cada letra es una columna y corresponde
     	//con el ID que se tiene en la tabla seg_capacitacion    	
     	$columnas = array(1 => 'AC',2 => 'AF',3 => 'AI', 4 => 'AL', 5 => 'AO',
@@ -484,16 +481,16 @@ class CargaCap extends Db{
     
     public static function buscaFamiliar($folio=null,$paterno=null,$materno=null,$nombre=null){
         
-        $sql='
-                SELECT
+        $sql='SELECT
                 m.id,
                 m.nombres,
                 m.materno,
                 m.paterno
                 FROM `mujeres_avanzando` m
-                where m.nombres = ? and m.paterno = ? and m.materno = ? and m.folio = ?
-        ';
-        
+                where m.nombres = ? and 
+                        m.paterno = ? and 
+                        m.materno = ? and 
+                        m.folio = ? ';        
         
         $params = array($nombre,$paterno,$materno,$folio);
         
@@ -512,8 +509,6 @@ class CargaCap extends Db{
     public static function guarda($id_mujeres_avanzando,$id_seg_punto_rosa,
     	$capacitaciones,$H,$HD,$fecha_capacitacion = NULL)
     {
-        //echo $id_seg_punto_rosa;
-        //exit;
 	                        
 	//Actualizaremos el registro en mujeres avanzando
 	$data = array(
@@ -523,7 +518,6 @@ class CargaCap extends Db{
                 );    
 
 	$msg_no = SegCapacitacionMujer::saveSegCapMujer($data,$id_mujeres_avanzando,$H,$HD);
-
 
 	return $msg_no;    	
 	

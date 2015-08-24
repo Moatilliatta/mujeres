@@ -47,7 +47,8 @@ class CargaExcel3 extends Db{
 	//Recorremos cada registro y solo guardamos los que tengan datos
 	for ($i=0; $i <= $maxFila ; $i++) { 
 
-		if($A[$i]['A'] != NULL && $B[$i]['B'] != NULL){
+		if(isset($A[$i]['A']) && $A[$i]['A'] != NULL && 
+            isset($B[$i]['B']) && $B[$i]['B'] != NULL){
 
 			$H[] =$A[$i]+$B[$i]+$P[$i]+$S[$i]+$X[$i]+$AD[$i]+$AF_AJ[$i]+$FY_GD[$i];
 			
@@ -119,7 +120,7 @@ class CargaExcel3 extends Db{
 
      //Recorremos cada registro y solo guardamos los que tengan datos
      for ($i=0; $i <= $maxFila ; $i++) { 
-		if($B[$i]['B'] != NULL){
+		if(isset($B[$i]['B']) && $B[$i]['B'] != NULL){
 
 			$H2[] =$B[$i]+$D_G[$i]+$I_J[$i]+$M[$i]+$W[$i]+$AC[$i];	
 
@@ -242,73 +243,75 @@ class CargaExcel3 extends Db{
 		$total_enc_completo = count($datos_h1);
 		$total_enc_inc = count($datos_h1_false);		
 
-		//Recorremos total de filas en el excel
-		foreach ($datos_h1 as $key => $value):				
+        if(count($datos_h1) > 0){
+            //Recorremos total de filas en el excel
+            foreach ($datos_h1 as $key => $value):              
 
-		//Obtenemos ID del registro donde coincide
-		$k = self::searchForId($value['A'], $beneficiarias);   				
-        
-        //Guardaremos registro
-		$msg_no = self::guarda($value,$beneficiarias[$k],$id_caravana,$visita);
-		echo "Mensaje : ".$msg_no;
+            //Obtenemos ID del registro donde coincide
+            $k = self::searchForId($value['A'], $beneficiarias);                
+            
+            //Guardaremos registro
+            $msg_no = self::guarda($value,$beneficiarias[$k],$id_caravana,$visita);
+            echo "Mensaje : ".$msg_no;
 
-		//Dependiendo la respuesta hacemos incrementos
-		switch ($msg_no) {
-			case 1:$total_registrados++;
-					break;
-			case 21://Registro de Beneficiario duplicado
-		            $total_duplicados++;
-		            //Guardamos el ID de entrevista para no duplicar los familiares
-		            $id_entrevista_dup[]=$beneficiarias[$k]['B'];
-		            break;
-		    case 22://No coinciden ID de entrevista
-		    		$total_no_coinciden++;
-		    		$id_entrevista_noc[$value['B']]=$value['A'];
-		    		$id_entrevista_dup[]=$beneficiarias[$k]['B'];
-		    		break;
-		    default:$id_entrevista_dup[]=$beneficiarias[$k]['B'];
-		    		break;
-		}
-
-		//Obtenemos programa
-		$prog = substr($value['AD'], 0,3);
-        
-        //echo $prog;
-        //exit;
-
-		//Dependiendo el programa evaluamos
-		switch ($prog) {
-			case 'MAC': $total_prog_mac++;
-			            break;
-			case 'MAP': $total_prog_map++;
-						break;
-            case 'MAS': $total_prog_mas++;
-						break;
-            case 'SOL': $total_prog_sol++;
+            //Dependiendo la respuesta hacemos incrementos
+            switch ($msg_no) {
+                case 1:$total_registrados++;
                         break;
-			case 'PIO': $total_prog_pio++;
+                case 21://Registro de Beneficiario duplicado
+                        $total_duplicados++;
+                        //Guardamos el ID de entrevista para no duplicar los familiares
+                        $id_entrevista_dup[]=$beneficiarias[$k]['B'];
                         break;
-			default: break;
-		}
+                case 22://No coinciden ID de entrevista
+                        $total_no_coinciden++;
+                        $id_entrevista_noc[$value['B']]=$value['A'];
+                        $id_entrevista_dup[]=$beneficiarias[$k]['B'];
+                        break;
+                default:$id_entrevista_dup[]=$beneficiarias[$k]['B'];
+                        break;
+            }
 
-		//Obtenemos grado de inseguridad
-		$grado_ins = $value['GD'];
+            //Obtenemos programa
+            $prog = substr($value['AD'], 0,3);
+            
+            //echo $prog;
+            //exit;
 
-		//Dependiendo el programa evaluamos
-		switch (trim(strtoupper($grado_ins))){
-			case 'SEVERA':$total_severa++;
-		    			  	break;
-		    case 'MODERADA': $total_moderada++;
-					    	break;
-			case 'LEVE': $total_leve++;
-							break;
-			case 'SEGURA': $total_segura++;
-					    	break;
-			default: $total_otra++;
-				            break;
-		}
+            //Dependiendo el programa evaluamos
+            switch ($prog) {
+                case 'MAC': $total_prog_mac++;
+                            break;
+                case 'MAP': $total_prog_map++;
+                            break;
+                case 'MAS': $total_prog_mas++;
+                            break;
+                case 'SOL': $total_prog_sol++;
+                            break;
+                case 'PIO': $total_prog_pio++;
+                            break;
+                default: break;
+            }
 
-		endforeach;
+            //Obtenemos grado de inseguridad
+            $grado_ins = $value['GD'];
+
+            //Dependiendo el programa evaluamos
+            switch (trim(strtoupper($grado_ins))){
+                case 'SEVERA':$total_severa++;
+                                break;
+                case 'MODERADA': $total_moderada++;
+                                break;
+                case 'LEVE': $total_leve++;
+                                break;
+                case 'SEGURA': $total_segura++;
+                                break;
+                default: $total_otra++;
+                                break;
+            }
+
+            endforeach;
+        }		
 
 		$id_entrevista_dup = ($id_entrevista_dup == NULL)? array(0) : $id_entrevista_dup ;
 		$id_entrevista_noc = ($id_entrevista_noc == NULL)? array() : $id_entrevista_noc ;

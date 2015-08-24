@@ -8,12 +8,15 @@ include('../../inc/header.php');
 include_once($_SESSION['model_path'].'familiares_mujer.php');
 
 //Variable de respuesta
-$respuesta = intval($_GET['r']);
+$respuesta = (isset($_GET['r']))? intval($_GET['r']) : null;
+
 //obtenemos datos de caravana
 $db->where ('activo', 1);
 $caravana = $db->get('caravana');
+
 //Obtemos datos de tipo_lugar
 $tipo_lugar = $db->get('tipo_lugar');
+
 //Mensaje respuesta
 list($mensaje,$clase) = Permiso::mensajeRespuesta($respuesta);
 
@@ -67,7 +70,7 @@ $(function() {
     
     <?php if($totales != NULL){?>
 
-      <?php if($totales['total_duplicados']){ ?>
+      <?php if(isset($totales['total_duplicados']) && $totales['total_duplicados']){ ?>
       <div class="mensaje adv_msg">
         Hubo <?php echo $totales['total_duplicados']; ?> registros que previamente habían sido 
         agregados y no fueron tomados en cuenta en esta carga.
@@ -88,50 +91,50 @@ $(function() {
     <tbody>
       <tr>
       <td>Total Encuestados:</td>
-      <td><?php echo $totales['total_encuestados'];?></td>
+      <td><?php echo (isset($totales['total_encuestados']))? $totales['total_encuestados'] : null;?></td>
     </tr>
     <tr>
        <td>Total Encuestas Completas:</td> 
-       <td><?php echo $totales['total_enc_completo'];?></td> 
+       <td><?php echo (isset($totales['total_enc_completo']))? $totales['total_enc_completo'] : null;?></td> 
     </tr> 
     <tr>
        <td>Total Encuestas Incompletas:</td> 
-       <td><?php echo $totales['total_enc_inc'];?></td>
+       <td><?php echo (isset($totales['total_enc_inc']))? $totales['total_enc_inc'] : null;?></td>
     </tr> 
     <tr>
       <td>Total de Personas Registradas:</td>
-      <td><?php echo $totales['total_familiares'];?></td>
+      <td><?php echo (isset($totales['total_familiares']))? $totales['total_familiares'] : null;?></td>
     </tr>
     
-    <?php if($totales['total_prog_mac'] > 0){ ?>
+    <?php if(isset($totales['total_prog_mac']) && $totales['total_prog_mac'] > 0){ ?>
     <tr>
       <td>Total Encuestados en Programa MAC:</td> 
       <td><?php echo $totales['total_prog_mac'];?></td>
     </tr>
     <?php } ?>
 
-    <?php if($totales['total_prog_map'] > 0){ ?>
+    <?php if(isset($totales['total_prog_map']) && $totales['total_prog_map'] > 0){ ?>
     <tr>
       <td>Total Encuestados en Programa MAP:</td>
       <td><?php echo $totales['total_prog_map'];?></td>
     </tr>
     <?php } ?>
 
-    <?php if($totales['total_prog_mas'] > 0){ ?>
+    <?php if(isset($totales['total_prog_mas']) && $totales['total_prog_mas'] > 0){ ?>
     <tr>
       <td>Total Encuestados en Programa MAS:</td>
       <td><?php echo $totales['total_prog_mas'];?></td>
     </tr>
     <?php } ?>
 
-    <?php if($totales['total_prog_sol'] > 0){ ?>
+    <?php if(isset($totales['total_prog_sol']) && $totales['total_prog_sol'] > 0){ ?>
     <tr>
       <td>Total Encuestados en Programa SOL:</td> 
       <td><?php echo $totales['total_prog_sol'];?></td>
     </tr>
     <?php } ?>
 
-    <?php if($totales['total_prog_pio'] > 0){ ?>
+    <?php if(isset($totales['total_prog_pio']) && $totales['total_prog_pio'] > 0){ ?>
     <tr>
       <td>Total Encuestados en Programa PIO:</td> 
       <td><?php echo $totales['total_prog_pio'];?></td>
@@ -140,29 +143,29 @@ $(function() {
 
     <tr>
        <td>Total Duplicados:</td>
-       <td><?php echo $totales['total_duplicados']?></td>
+       <td><?php echo (isset($totales['total_duplicados']))? $totales['total_duplicados'] : null;?></td>
     </tr>
     <tr>
       <td>Total Entrevistas no coinciden:</td>
-      <td><?php echo $totales['total_no_coinciden']?></td>
+      <td><?php echo (isset($totales['total_no_coinciden']))? $totales['total_no_coinciden'] : null;?></td>
     </tr>
    <tr>
      <td>Total de Encuestados Registrados:</td> 
-      <td><?php echo $totales['total_registrados']?></td>
+      <td><?php echo (isset($totales['total_registrados']))? $totales['total_registrados'] : null;?></td>
    </tr>
    <tr>
      <td>Total de Grado de Inseguridad Severo:</td> 
-      <td><?php echo $totales['total_severa']?></td>
+      <td><?php echo (isset($totales['total_severa']))?$totales['total_severa'] : null;?></td>
    </tr><tr>
      <td>Total de Grado de Inseguridad Moderado:</td> 
-      <td><?php echo $totales['total_moderada']?></td>
+      <td><?php echo (isset($totales['total_moderada']))?$totales['total_moderada'] : null;?></td>
    </tr><tr>
      <td>Total de Grado de Inseguridad Leve:</td> 
-      <td><?php echo $totales['total_leve']?></td>
+      <td><?php echo (isset($totales['total_leve']))? $totales['total_leve']: null;?></td>
    </tr>
    <tr>
      <td>Total de Grado de Inseguridad Seguro:</td> 
-      <td><?php echo $totales['total_segura']?></td>
+      <td><?php echo (isset($totales['total_segura']))? $totales['total_segura']: null;?></td>
    </tr>
    
    <?php if($totales['total_otra'] > 0){?>

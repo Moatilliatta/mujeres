@@ -98,13 +98,10 @@ class Db extends MysqliDb {
      * 
      * @return int Resultado
      * */
-    public static function executar($sql,$params){        
+    public static function executar($sql,$params = null){        
 
         //Ejecutamos
         $resultado = self::getInstance()->rawQuery($sql, $params);     
-
-        $data = Array ("id_perfil" => 666);        
-        self::getInstance()->insert('usuario', $data);
 
         //Regresamos resultado
         return $resultado;        

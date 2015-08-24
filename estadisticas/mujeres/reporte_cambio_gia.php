@@ -7,6 +7,7 @@ session_start();//Habilitamos uso de variables de sesión
 $fecha_creacion = (isset($_GET['fecha_creacion']))? $_GET['fecha_creacion']: NULL;
 $id_caravana = (isset($_REQUEST['id_caravana']))? $_REQUEST['id_caravana'] : NULL;
 $excel = (isset($_POST['excel']))? $_POST['excel']: NULL;
+$beneficiariasCambio = array();
 
 //Imprimimos o no cabecera de excel
 if($excel != NULL){
@@ -58,8 +59,10 @@ if($id_caravana){
 
 }
 
+$respuesta = null;
+
 //Mensaje respuesta
-if($_GET['id_caravana'] != NULL && $beneficiariasCambio == NULL){
+if($id_caravana != NULL && $beneficiariasCambio == NULL){
     $respuesta =  8;
 }
 

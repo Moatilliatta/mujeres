@@ -9,7 +9,7 @@ include_once('../../inc/libs/Permiso.php');
 include_once($_SESSION['model_path'].'familiares_mujer.php');
 
 //Obtenemos valores de post
-$id_c = $_POST['id_caravana'];
+$id_c = (isset($_POST['id_caravana']))? $_POST['id_caravana'] : null;
 
 if($id_c > 1){    
   $db->where('id_caravana',$id_c);
@@ -28,7 +28,7 @@ $tipo_lugar = $db->get('tipo_lugar');
        <input style="float: right;" type="button" onclick="javascript:history.back(-1)" value="REGRESAR"   />
       </div> 
     
-      <?php if($respuesta > 0){?>
+      <?php if(isset($respuesta) && $respuesta){?>
       
       <div class="mensaje <?php echo $clase; ?>"><?php echo $mensaje;?></div>
       

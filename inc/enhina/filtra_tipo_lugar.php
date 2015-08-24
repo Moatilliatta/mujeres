@@ -23,7 +23,7 @@ $caravana= $db->rawQuery($sql,$params);
 <select id="id_caravana"  name="id_caravana">
    <option value=''>Seleccione Tipo De Importaci&oacute;n</option>
    <?php foreach($caravana as $c):?>
-<option value='<?php echo $c['id'] ?>' <?php echo $selected;?> > <?php echo $c['descripcion'];?></option>
+<option value='<?php echo $c['id'] ?>' > <?php echo $c['descripcion'];?></option>
     <?php endforeach; ?>
 </select>   
 

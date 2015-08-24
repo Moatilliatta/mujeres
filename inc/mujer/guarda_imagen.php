@@ -58,7 +58,7 @@ if(in_array($img["type"], $allowedTypes) && in_array($extension, $allowedExts)){
     $porciones = explode("-", $folio);
 
   	//Contiene guiones
-    if(count($porciones == 2)){
+    if(count($porciones > 2)){
       list($folio,$num_folio) = mujeresAvanzando::obtenFolio($folio);
     }
     

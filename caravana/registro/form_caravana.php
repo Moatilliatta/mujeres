@@ -1,5 +1,5 @@
 <?php
-session_start();
+//session_start();
 include_once($_SESSION['model_path'].'servicio.php');
 include_once($_SESSION['model_path'].'caravana.php');
 //traemos los status
@@ -10,9 +10,13 @@ $lugar = $db->get('tipo_lugar');
 
 //obtenemos servicios
 $servicio = Servicio::listado();
-//print_r($servicio);
+
+$selected = '';
+
+$caravana = array();
+
 //Si editamos el registro
-if(intval($id_edicion)>0){
+if(isset($id_edicion) && intval($id_edicion)>0){
        
         //Obtenemos el registro del caravana
         $db->where('id',$id_edicion);
@@ -57,7 +61,7 @@ if(intval($id_edicion)>0){
         <tr>
           <td>
             <input type="hidden" name="id_edicion" value="<?php echo $id_edicion; ?>" />
-            <input type = 'text'  id = 'descripcion' name = 'descripcion' value="<?php echo $caravana['descripcion']; ?>" />
+            <input type = 'text'  id = 'descripcion' name = 'descripcion' value="<?php echo (isset($caravana['descripcion']))? $caravana['descripcion'] : null; ?>" />
           </td>
         </tr>
         <tr>
@@ -68,7 +72,7 @@ if(intval($id_edicion)>0){
         </tr>
          <tr>
         <td>
-            <input type = 'text' id = 'fecha_instalacion' class="fecha date" name = 'fecha_instalacion'value="<?php echo $caravana['fecha_instalacion']; ?>" />
+            <input type = 'text' id = 'fecha_instalacion' class="fecha date" name = 'fecha_instalacion'value="<?php echo (isset($caravana['fecha_instalacion']))? $caravana['fecha_instalacion'] : null; ?>" />
             <input type="button"  value="Hoy" id="btnToday" class="today"  />
         </td>
          </tr>
@@ -80,7 +84,7 @@ if(intval($id_edicion)>0){
         </tr>
          <tr>
         <td>
-          <textarea name = 'direccion' cols="50" rows="5" ><?php echo $caravana['direccion']; ?></textarea>
+          <textarea name = 'direccion' cols="50" rows="5" ><?php echo (isset($caravana['direccion']))?$caravana['direccion']:null; ?></textarea>
         </td>
          </tr>
     
@@ -95,8 +99,12 @@ if(intval($id_edicion)>0){
         <select id="activo" name="activo">
           <option value="">Seleccione</option>
           <?php foreach($estatus as $e){                         
-              $selected = ($e['valor'] == $caravana['activo'])? "selected" : '' ;
-              ?>
+              
+              if(isset($caravana['activo'])){
+                $selected = ($e['valor'] == $caravana['activo'])? "selected" : '' ;
+              }
+
+          ?>
           <option value='<?php echo $e['valor'] ?>' <?php echo $selected;?> > 
           <?php echo $e['nombre'];?>
           </option>
@@ -115,8 +123,10 @@ if(intval($id_edicion)>0){
       <td>
         <select id="id_tipo_lugar" name="id_tipo_lugar">
           <?php foreach($lugar as $l){                         
-              $selected = ($l['id'] == $caravana['id_tipo_lugar'])? "selected" : '' ;
-              ?>
+              if(isset($caravana['id_tipo_lugar'])){
+                $selected = ($l['id'] == $caravana['id_tipo_lugar'])? "selected" : '' ;
+              }
+          ?>
           <option value='<?php echo $l['id'] ?>' <?php echo $selected;?> > 
           <?php echo $l['tipo_importacion'];?>
           </option>
@@ -132,7 +142,7 @@ if(intval($id_edicion)>0){
         </tr>
         <tr>
           <td>
-             <textarea  name = 'observaciones'   cols="50" rows="5" ><?php echo $caravana['observaciones']; ?></textarea>
+             <textarea  name = 'observaciones'   cols="50" rows="5" ><?php echo (isset($caravana['observaciones']))? $caravana['observaciones'] : null; ?></textarea>
           </td>
         </tr>
         <tr>
@@ -142,7 +152,7 @@ if(intval($id_edicion)>0){
         </tr>
         <tr>
           <td>
-             <input type = 'text' class="nombre texto_largo" id = 'longitud' name = 'longitud' value="<?php echo $caravana['longitud']; ?>" />
+             <input type = 'text' class="nombre texto_largo" id = 'longitud' name = 'longitud' value="<?php echo (isset($caravana['longitud']))? $caravana['longitud'] : null; ?>" />
           </td>
         </tr>
         <tr>
@@ -152,7 +162,7 @@ if(intval($id_edicion)>0){
         </tr>
         <tr>
           <td>
-             <input type = 'text' class="nombre texto_largo" id = 'latitud' name = 'latitud' value="<?php echo $caravana['latitud']; ?>" />
+             <input type = 'text' class="nombre texto_largo" id = 'latitud' name = 'latitud' value="<?php echo (isset($caravana['latitud']))? $caravana['latitud'] : null; ?>" />
           </td>
         </tr>
           

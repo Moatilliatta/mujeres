@@ -4,10 +4,10 @@
 	//error_reporting(0); 
 	
 	//Uso de reporte de errores anteriores
-	error_reporting(E_ERROR | E_WARNING | E_PARSE | E_USER_ERROR);
+	//error_reporting(E_ERROR | E_WARNING | E_PARSE | E_USER_ERROR);
 	
 	//Uso de reporte de errores más estricto
-	//error_reporting(E_ALL ^ E_STRICT);
+	error_reporting(E_ALL ^ E_STRICT);
 	
 	date_default_timezone_set('America/Mexico_City');
 

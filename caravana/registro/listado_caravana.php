@@ -8,18 +8,16 @@ include('../../inc/header.php');
 include_once($_SESSION['model_path'].'caravana.php');
 
 //Variable de respuesta
-$respuesta = intval($_GET['r']);
+$respuesta = (isset($_GET['r']))? intval($_GET['r']) : null;
 
 //Mensaje respuesta
 list($mensaje,$class) = Permiso::mensajeRespuesta($respuesta);
 
 //Valores de la búsqueda
-$descripcion=$_GET['descripcion'];
-$fecha_instalacion=$_GET['fecha_instalacion'];
-$status=$_GET['status'];
+$descripcion = (isset($_GET['descripcion']))? $_GET['descripcion'] : null;
+$fecha_instalacion = (isset($_GET['fecha_instalacion']))? $_GET['fecha_instalacion'] : null;
+$status = (isset($_GET['status']))? $_GET['status'] : null;
 
-
-//print_r($_GET);
 //Listamos los programas del beneficiario
 list($lista,$p) = caravana::listaCaravana($descripcion,
                                           $fecha_instalacion,

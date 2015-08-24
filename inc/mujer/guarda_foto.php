@@ -43,7 +43,7 @@ if($success){
 	$porciones = explode("-", $folio);
 
 	//Contiene guiones
-	if(count($porciones == 2)){
+	if(count($porciones > 2)){
 		list($folio,$num_folio) = mujeresAvanzando::obtenFolio($folio);
 	}
 

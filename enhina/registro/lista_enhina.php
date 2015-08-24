@@ -17,7 +17,7 @@ $sql = 'SELECT CVE_LOC, NOM_LOC FROM `cat_localidad` where CVE_ENT = 14';
 $localidad = $db->query($sql);     */
 
 //Variable de respuesta
-$respuesta = intval($_GET['r']);
+$respuesta = (isset($_GET['r']))? intval($_GET['r']) : null;
 
 //Mensaje respuesta
 list($mensaje,$class) = Permiso::mensajeRespuesta($respuesta);
